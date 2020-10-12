@@ -1,3 +1,5 @@
+## code to prepare `DATASET` dataset goes here
+
 library(GEOquery)
 eSet <- getGEO("GSE85871", GSEMatrix=T, AnnotGPL=FALSE)
 
@@ -34,5 +36,3 @@ save(exprdf_uniq,pdata,file ="GSE85871_simple_pdata.Rdata" )
 
 usethis::use_data(exprdf_uniq)
 usethis::use_data(pdata)
-
-usethis::use_package('GEOquery')

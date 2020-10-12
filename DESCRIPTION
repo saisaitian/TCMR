@@ -1,0 +1,26 @@
+Type: Package
+Package: TCMR
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Authors@R: 
+    c(person(given = "Saisai",
+             family = "Tian",
+             role = c("aut", "cre")),
+      person(given = "Shixiang",
+             family = "Wang",
+             role = c("aut", "ctb"),
+             email = "w_shixiang@163.com",
+             comment = c(ORCID = "0000-0001-9855-7357")))
+Maintainer: Saisai Tian <yourself@somewhere.net>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Depends: 
+    R (>= 2.10)
+Imports: 
+    GEOquery
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE, roclets = c("collate",
+    "namespace", "rd", "roxytest::testthat_roclet"))
+RoxygenNote: 7.1.0

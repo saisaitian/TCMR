@@ -29,4 +29,13 @@ devtools::install_github("saisaitian/TCM_Microarray")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to solve a common problem.
+
+### Load example dataset
+
+``` r
+library(TCMR)
+data <- load_example_dataset()
+#> Loading dataset GSE85871...
+#> Done.
+```

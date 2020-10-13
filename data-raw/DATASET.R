@@ -1,7 +1,8 @@
 ## code to prepare `DATASET` dataset goes here
+setwd("data-raw/")
 
-library(GEOquery)
-eSet <- getGEO("GSE85871", GSEMatrix=T, AnnotGPL=FALSE)
+# library(GEOquery)
+# eSet <- getGEO("GSE85871", GSEMatrix=T, AnnotGPL=FALSE)
 
 exprSet_simple=exprs(eSet[[1]])
 pdata=pData(eSet[[1]])
@@ -32,7 +33,14 @@ exprdf_uniq
 
 #保存所有基因的表达矩阵到文件
 
-save(exprdf_uniq,pdata,file ="GSE85871_simple_pdata.Rdata" )
+# save(exprdf_uniq,pdata,file ="GSE85871_simple_pdata.Rdata" )
 
-usethis::use_data(exprdf_uniq)
-usethis::use_data(pdata)
+library(dplyr)
+expr <- exprdf_uniq %>% tibble::rownames_to_column('symbol')
+# 减少一些磁盘占用
+vroom::vroom_write(expr, path = "../inst/extdata/GSE85871_expr.tsv.gz")
+vroom::vroom_write(pdata, path = "../inst/extdata/GSE85871_pdata.tsv.gz")
+#xx = data.table::fread("../inst/extdata/GSE85871_expr.tsv.gz")
+#xx = data.table::fread("../inst/extdata/GSE85871_pdata.tsv.gz")
+
+setwd("../")

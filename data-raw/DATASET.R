@@ -44,3 +44,13 @@ vroom::vroom_write(pdata, path = "../inst/extdata/GSE85871_pdata.tsv.gz")
 #xx = data.table::fread("../inst/extdata/GSE85871_pdata.tsv.gz")
 
 setwd("../")
+
+load("~/Documents/GitHub/TCM_Microarray/data-raw/pdata.rda")
+
+pdata %>%
+  dplyr::select(c("title", "geo_accession", "platform_id",
+                  "cell line:ch1", "duration:ch1",
+                  "group:ch1","perturbagen:ch1")) %>%
+  setNames(c("title", "geo_accession", "platform_id", "cell_line",
+             "duration", "group", "perturbagen")) -> pdata
+vroom::vroom_write(pdata, path = "inst/extdata/GSE85871_pdata.tsv.gz")

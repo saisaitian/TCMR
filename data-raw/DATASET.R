@@ -45,7 +45,7 @@ vroom::vroom_write(pdata, path = "../inst/extdata/GSE85871_pdata.tsv.gz")
 
 setwd("../")
 
-load("~/Documents/GitHub/TCM_Microarray/data-raw/pdata.rda")
+load("data-raw/pdata.rda")
 
 pdata %>%
   dplyr::select(c("title", "geo_accession", "platform_id",

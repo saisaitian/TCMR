@@ -2,4 +2,5 @@
 
 export("%>%")
 export(load_example_dataset)
+export(load_example_deg)
 importFrom(magrittr,"%>%")

@@ -23,8 +23,9 @@ load_example_dataset <- function(id = "GSE85871") {
     pdata <- data.table::fread(system.file(
       "extdata", "GSE85871_pdata.tsv.gz", package = "TCMR", mustWork = TRUE
     ), data.table = FALSE)
-    pdata$title <- sub("尾", "beta", pdata$title)
-    pdata$perturbagen <- sub("尾", "beta", pdata$perturbagen)
+    pdata$title <- sub("渭", "μ", pdata$title)
+    pdata$title <- gsub("灏戼㹥", "β", pdata$title)
+    pdata$perturbagen <- sub("渭", "μ", pdata$perturbagen)
     message("Done.")
     return(list(
       expr = expr,
@@ -32,3 +33,8 @@ load_example_dataset <- function(id = "GSE85871") {
     ))
   }
 }
+
+
+
+
+

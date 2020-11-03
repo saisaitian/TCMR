@@ -2,20 +2,20 @@
 % Please edit documentation in R/load_example_deg.R
 \name{load_example_deg}
 \alias{load_example_deg}
-\title{Load all deg}
+\title{Load Example Dataset for Differential Expression Analysis}
 \usage{
-load_example_deg(id = "GSE85871")
+load_example_deg(id = "GSE85871", i)
 }
 \arguments{
-\item{id}{A dataset identifier}
+\item{id}{i the compound number in GSE85871}
 }
 \value{
 a \code{list}.
 }
 \description{
-Load all deg
+Load Example Dataset for Differential Expression Analysis
 }
 \examples{
-deg.all <- load_example_deg()
-
+deg <- load_example_deg(id = "GSE85871",i)
+deg.all <- lapply(c(1:30,32:64,66:105), function(x) load_example_deg(id = "GSE85871",x))
 }

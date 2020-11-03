@@ -47,8 +47,8 @@ deg.cal <- function(i){
   names(mixcache)=group_list[1]
   mixcache
 }
-
-
+num(1)
+data$expr[,c(1,2,61,62)]
 aa=deg.cal(1)
 
 deg.all =lapply(c(1:30,32:64,66:105), function(x)deg.cal(x))

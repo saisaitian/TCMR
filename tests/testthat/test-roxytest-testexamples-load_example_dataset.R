@@ -3,11 +3,9 @@
 context("File R/load_example_dataset.R: @testexamples")
 
 test_that("Function load_example_dataset() @ L15", {
-  
   x <- load_example_dataset()
   head(x$expr)
   head(x$pdata)
-  
+
   expect_is(x, "list")
 })
-

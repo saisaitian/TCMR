@@ -7,7 +7,7 @@ devtools::load_all()
 # 第一步：获取GEO数据
 load("data-raw/GSE85871_simple_pdata.Rdata")
 # 第二步：处理数据，获取想要的信息
-data = load_example_dataset()
+data <- load_example_dataset()
 pdata[c(61, 62, 129, 130, 211, 212), 1]
 
 # 第三步：pd里面能找到里面的分组信息，生成一个group_list向量。

@@ -9,20 +9,19 @@
 #' @export
 #'
 #' @examples
-#' data=load_example_dataset()
-#' expr=data$expr[,c(1,2,61,62)]
-#' group_list=group_list_all[c(1,2,61,62)]
-#' tmp=deg.cal(expr,group=group_list,level=group_list[c(3,1)],method='limma')
-#'
-deg.cal <- function(data= expr,group,level, method='limma'){
-  if(method == 'limma'){
+#' data <- load_example_dataset()
+#' expr <- data$expr[, c(1, 2, 61, 62)]
+#' group_list <- group_list_all[c(1, 2, 61, 62)]
+#' tmp <- deg.cal(expr, group = group_list, level = group_list[c(3, 1)], method = "limma")
+deg.cal <- function(data = expr, group, level, method = "limma") {
+  if (method == "limma") {
     message("Now method is ", method, "...")
-    design = model.matrix(~factor(group,levels=level) )
-    fit = limma::lmFit(exp,design)
-    fit = limma::eBayes(fit)
-    deg = limma::topTable(fit,coef=2,number = Inf)
-    deg = dplyr::mutate(symbol=rownames(deg),deg)
-    deg = dplyr::select(deg,'symbol', dplyr::everything())
+    design <- model.matrix(~ factor(group, levels = level))
+    fit <- limma::lmFit(exp, design)
+    fit <- limma::eBayes(fit)
+    deg <- limma::topTable(fit, coef = 2, number = Inf)
+    deg <- dplyr::mutate(symbol = rownames(deg), deg)
+    deg <- dplyr::select(deg, "symbol", dplyr::everything())
     message("Done")
   }
   return(deg)
@@ -45,4 +44,4 @@ deg.cal <- function(data= expr,group,level, method='limma'){
 #   return(result)
 # }
 
-#aa=batchcal(1,data = data)
+# aa=batchcal(1,data = data)

@@ -46,3 +46,38 @@ library(TCMR)
 data <- load_example_dataset()
 ```
 
+### Load analyzed DEG data
+
+```{r}
+data("AnalyzedDEG")
+head(AnalyzedDEG)
+```
+
+Use a subset of `AnalyzedDEG` to select corresponding DEG results.
+
+```{r}
+head5_reports <- head(AnalyzedDEG) %>% 
+  load_analyzedDEG()
+
+str(head5_reports, max.level = 1)
+```
+
+```{r}
+one_report <- load_analyzedDEG(2)
+head(one_report)
+```
+
+### Run DEG analysis
+
+```{r}
+ix <- c(1, 2, 61, 62)
+expr <- data$expr[, ix]
+group <- data$pdata$perturbagen[ix]
+
+# Run DEG analysis
+report <- deg_caller(expr, group = group, level = group[c(3, 1)])
+head(report)
+```
+
+
+See `?deg_caller` for more details.

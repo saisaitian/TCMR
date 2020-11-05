@@ -3,5 +3,6 @@
 export("%>%")
 export(deg_batch_caller)
 export(deg_caller)
+export(load_analyzedDEG)
 export(load_example_dataset)
 importFrom(magrittr,"%>%")

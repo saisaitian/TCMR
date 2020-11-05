@@ -40,8 +40,12 @@ deg_caller <- function(data, group, level = NULL) {
     level <- unique(group)
   }
 
+  stable <- table(group)
+  message("Info: ", level[2], " vs ", level[1], " (reference group)")
+  message(paste0("N: ", paste0(paste(names(stable), stable, sep = ":#"), collapse = "  ")))
+
   message("Constructing design matrix...")
-  design <- stats::model.matrix(~factor(group, levels = level))
+  design <- stats::model.matrix(~ factor(group, levels = level))
 
   message("Running DEG analysis with limma...")
   fit <- limma::lmFit(data, design)
@@ -63,13 +67,14 @@ deg_batch_caller <- function(data, groups, ref_group) {
   stopifnot(is.data.frame(data), !is.null(rownames(data)), length(ref_group) == 1L)
 
   contrast_groups <- setdiff(unique(groups), ref_group)
-  reports <- purrr::map(contrast_groups,
-                        ~deg_caller(
-                          data[, groups %in% c(., ref_group)],
-                          group = groups[groups %in% c(., ref_group)],
-                          level = c(ref_group, .)))
+  reports <- purrr::map(
+    contrast_groups,
+    ~ deg_caller(
+      data[, groups %in% c(., ref_group)],
+      group = groups[groups %in% c(., ref_group)],
+      level = c(ref_group, .)
+    )
+  )
   names(reports) <- paste(contrast_groups, ref_group, sep = ":")
   reports
 }
-
-

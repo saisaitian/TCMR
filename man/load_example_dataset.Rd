@@ -19,5 +19,4 @@ Load Example Dataset for Analysis
 x <- load_example_dataset()
 head(x$expr)
 head(x$pdata)
-
 }

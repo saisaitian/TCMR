@@ -96,7 +96,7 @@ expr <- data$expr[, ix]
 group <- data$pdata$perturbagen[ix]
 
 # Run DEG analysis
-report <- deg_caller(expr, group = group, level = group[c(3, 1)])
+report <- deg_caller(expr, group = group, ref_group = group[3])
 #> Info: Glycyrrhizic acid vs DMSO (reference group)
 #> N: DMSO:#2  Glycyrrhizic acid:#2
 #> Constructing design matrix...

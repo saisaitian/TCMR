@@ -2,7 +2,7 @@
 
 context("File R/deg_caller.R: @testexamples")
 
-test_that("Function deg_caller() @ L32", {
+test_that("Function deg_caller() @ L34", {
   
   data <- load_example_dataset()
   
@@ -12,13 +12,16 @@ test_that("Function deg_caller() @ L32", {
   group <- data$pdata$perturbagen[ix]
   
   # Run DEG analysis
-  report <- deg_caller(expr, group = group, level = group[c(3, 1)])
+  report <- deg_caller(expr, group = group, ref_group = group[3])
+  head(report)
   
   # Run batch DEG analysis
   reports <- deg_batch_caller(expr, groups = group, ref_group = group[3])
+  head(reports)
   
   identical(report, reports[[1]])
   expect_is(report, "data.table")
   expect_is(reports, "list")
+  expect_identical(report, reports[[1]])
 })
 

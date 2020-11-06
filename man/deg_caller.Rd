@@ -5,7 +5,7 @@
 \alias{deg_batch_caller}
 \title{Differential Expression Analysis}
 \usage{
-deg_caller(data, group, level = NULL)
+deg_caller(data, group, ref_group)
 
 deg_batch_caller(data, groups, ref_group)
 }
@@ -14,12 +14,9 @@ deg_batch_caller(data, groups, ref_group)
 
 \item{group}{A character vector specifying 1 of 2 groups which samples belong to.}
 
-\item{level}{Levels for group, should be length-2 vector, the first indicates the reference group.
-At default, it is \code{NULL}, the group for the first sample will be used as reference group.}
+\item{ref_group}{A string specifying the reference group.}
 
 \item{groups}{A character vector specifying the group which samples belong to. Should at least 2 groups.}
-
-\item{ref_group}{A string specifying the reference group.}
 }
 \value{
 A \code{data.frame} or a \code{list} of \code{data.frame}.
@@ -39,10 +36,12 @@ expr <- data$expr[, ix]
 group <- data$pdata$perturbagen[ix]
 
 # Run DEG analysis
-report <- deg_caller(expr, group = group, level = group[c(3, 1)])
+report <- deg_caller(expr, group = group, ref_group = group[3])
+head(report)
 
 # Run batch DEG analysis
 reports <- deg_batch_caller(expr, groups = group, ref_group = group[3])
+head(reports)
 
 identical(report, reports[[1]])
 }

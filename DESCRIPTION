@@ -24,7 +24,11 @@ Imports:
     magrittr,
     stringr,
     tibble,
-    purrr
+    purrr,
+    ggplot2,
+    clusterProfiler,
+    org.Hs.eg.db,
+    DOSE
 Suggests: 
     R.utils,
     testthat

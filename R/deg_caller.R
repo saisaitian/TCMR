@@ -78,3 +78,4 @@ deg_batch_caller <- function(data, groups, ref_group) {
   names(reports) <- paste(contrast_groups, ref_group, sep = ":")
   reports
 }
+

@@ -2,6 +2,7 @@ devtools::load_all()
 library(purrr)
 
 data <- load_example_dataset()
+
 groups <- data$pdata$perturbagen
 
 # DMSO are the controls
@@ -18,7 +19,10 @@ reports <- purrr::map(batch_list, function(b) {
   deg_batch_caller(df, batch_groups, ref_group = "DMSO")
 })
 
+head(str(reports))
 reports2 <- purrr::flatten(reports)
+
+str(reports2)
 
 AnalyzedDEG <- data.frame(
   id = 1:103,

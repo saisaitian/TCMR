@@ -24,7 +24,7 @@
 #'   load_analyzedsigpath()
 #'
 #' # only the second
-#' one_report <- load_analyzedDEG(2)
+#' one_report <- load_analyzedsigpath(2)
 #'
 
 

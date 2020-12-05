@@ -2,7 +2,7 @@
 #'
 #' Currently, the top ten pathways results are for GSE85871.
 #'
-#' @param id A vector for subset of `id` column in [Analyzedsigpath] or just a subset of [Analyzedsigpath].
+#' @param id A vector for subset of `id` column in [AnalyzedSigPathway] or just a subset of [AnalyzedSigPathway].
 #'
 #' @return A `data.frame` or a list of `data.frame`.
 #' @export
@@ -10,33 +10,30 @@
 #' @examples
 #'
 #' # Firstly, check the dataset
-#' data("Analyzedsigpath")
-#' head(Analyzedsigpath)
+#' data("AnalyzedSigPathway")
+#' head(AnalyzedSigPathway)
 #'
 #' # Pick up what you want to load
-#' # A subset of Analyzedsigpath is recommended,
+#' # A subset of AnalyzedSigPathway is recommended,
 #' # you can use %>%
 #' # Otherwise specify a subset of id column
 #'
 #' # e.g. head 5 sets
-#' head5_reports <- Analyzedsigpath %>%
+#' head5_reports <- AnalyzedSigPathway %>%
 #'   head(n = 5) %>%
-#'   load_analyzedsigpath()
+#'   load_AnalyzedSigPathwayway()
 #'
 #' # only the second
-#' one_report <- load_analyzedsigpath(2)
-#'
-
-
-load_analyzedsigpath <- function(id) {
+#' one_report <- load_AnalyzedSigPathwayway(2)
+load_AnalyzedSigPathwayway <- function(id) {
   if (is.data.frame(id)) {
     filename <- id$filename
     if (is.null(filename)) {
-      stop("When input a data.frame, should be a subset of Analyzedsigpath!")
+      stop("When input a data.frame, should be a subset of AnalyzedSigPathway!")
     }
   } else if (is.numeric(id)) {
-    Analyzedsigpath <- get("Analyzedsigpath", envir = as.environment("package:TCMR"))
-    filename <- Analyzedsigpath[Analyzedsigpath$id %in% as.integer(id), ]$filename
+    AnalyzedSigPathway <- get("AnalyzedSigPathway", envir = as.environment("package:TCMR"))
+    filename <- AnalyzedSigPathway[AnalyzedSigPathway$id %in% as.integer(id), ]$filename
   } else {
     stop("Invalid input for 'id', check the documentation!")
   }
@@ -52,9 +49,3 @@ load_analyzedsigpath <- function(id) {
     res
   }
 }
-
-
-
-
-
-

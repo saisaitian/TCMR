@@ -72,4 +72,3 @@ pdata$title <- sub("尾", "β", pdata$title)
 pdata$perturbagen <- sub("尾", "β", pdata$perturbagen)
 
 vroom::vroom_write(pdata, path = "inst/extdata/GSE85871_pdata.tsv.gz")
-

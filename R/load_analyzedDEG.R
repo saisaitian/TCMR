@@ -25,7 +25,6 @@
 #'
 #' # only the second
 #' one_report <- load_analyzedDEG(2)
-#'
 #' @testexamples
 #' expect_is(head5_reports, "list")
 #' expect_is(one_report, "data.frame")

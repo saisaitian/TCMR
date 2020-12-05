@@ -33,5 +33,4 @@ head5_reports <- AnalyzedDEG \%>\%
 
 # only the second
 one_report <- load_analyzedDEG(2)
-
 }

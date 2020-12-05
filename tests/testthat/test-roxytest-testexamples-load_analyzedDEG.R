@@ -2,7 +2,7 @@
 
 context("File R/load_analyzedDEG.R: @testexamples")
 
-test_that("Function load_analyzedDEG() @ L32", {
+test_that("Function load_analyzedDEG() @ L31", {
   
   
   # Firstly, check the dataset
@@ -21,7 +21,6 @@ test_that("Function load_analyzedDEG() @ L32", {
   
   # only the second
   one_report <- load_analyzedDEG(2)
-  
   expect_is(head5_reports, "list")
   expect_is(one_report, "data.frame")
 })

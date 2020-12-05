@@ -9,3 +9,12 @@
 #' @examples
 #' data("AnalyzedDEG")
 NULL
+
+#' Information of Analyzed Signature Pathway
+#' @docType data
+#' @name AnalyzedSigPathway
+#' @format A data.frame
+#' @source See `data-raw/`
+#' @examples
+#' data("AnalyzedSigPathway")
+NULL

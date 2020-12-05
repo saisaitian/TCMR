@@ -5,8 +5,8 @@ one_report <- load_analyzedDEG(2)
 
 degreports <- purrr::map(1:103, function(i) {
   one_report <- load_analyzedDEG(i)
-  deg <- subset(one_report,abs(logFC)>1&P.Value<0.05)
-  aa <- getsigpath(deg,p.cutoff = 0.05,p.adj.cutoff = 1,n.path = 10)
+  deg <- subset(one_report, abs(logFC) > 1 & P.Value < 0.05)
+  aa <- getsigpath(deg, p.cutoff = 0.05, p.adj.cutoff = 1, n.path = 10)
   return(aa)
 })
 

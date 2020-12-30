@@ -28,13 +28,21 @@ Imports:
     ggplot2,
     clusterProfiler,
     org.Hs.eg.db,
-    DOSE
+    DOSE,
+    enrichplot,
+    CoreGx,
+    SummarizedExperiment,
+    ExperimentHub,
+    cowplot
 Suggests: 
     R.utils,
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
 biocViews:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("collate",
     "namespace", "rd", "roxytest::testthat_roclet"))
 RoxygenNote: 7.1.1
+VignetteBuilder: knitr

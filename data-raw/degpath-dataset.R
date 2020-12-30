@@ -22,4 +22,8 @@ purrr::map2(degreports, Analyzedsigpath$filename, function(DEG, filename) {
   saveRDS(DEG, file = paste0("inst/extdata/", filename))
 })
 
-usethis::use_data(Analyzedsigpath, overwrite = TRUE)
+AnalyzedSigPathway <- Analyzedsigpath
+
+AnalyzedSigPathway$vs <- gsub('尾-','',AnalyzedSigPathway$vs)
+
+usethis::use_data(AnalyzedSigPathway, overwrite = TRUE)

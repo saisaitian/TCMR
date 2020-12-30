@@ -46,7 +46,8 @@ Run GSEA
 }
 \examples{
 one_report <- load_analyzedDEG(2)
-msigdb.path <- system.file("extdata", "c2.cp.kegg.v7.2.symbols.gmt", package = "TCMR", mustWork = TRUE)
+msigdb.path <- system.file("extdata", "c2.cp.kegg.v7.2.symbols.gmt",
+package = "TCMR", mustWork = TRUE)
 runGSEA(
   data = one_report,
   dirct = "up",

@@ -12,10 +12,20 @@
 #'
 #' @return A plot.
 #' @export
-#'
+#' @importFrom ggplot2 xlab
+#' @importFrom ggplot2 scale_color_manual
+#' @importFrom ggplot2 geom_hline
+#' @importFrom ggplot2 margin
+#' @importFrom ggplot2 geom_linerange
+#' @importFrom ggplot2 scale_y_continuous
+#' @importFrom ggplot2 geom_segment
+#' @importFrom ggplot2 scale_fill_manual
+#' @importFrom ggplot2 labs
+#' @importFrom cowplot plot_grid
 #' @examples
 #' one_report <- load_analyzedDEG(2)
-#' msigdb.path <- system.file("extdata", "c2.cp.kegg.v7.2.symbols.gmt", package = "TCMR", mustWork = TRUE)
+#' msigdb.path <- system.file("extdata", "c2.cp.kegg.v7.2.symbols.gmt",
+#' package = "TCMR", mustWork = TRUE)
 #' runGSEA(
 #'   data = one_report,
 #'   dirct = "up",
@@ -67,7 +77,7 @@ runGSEA <- function(data = NULL,
     if (!is.null(p.cutoff) & !is.null(p.adj.cutoff)) {
       gsea.dat <- gsea.dat[which(gsea.dat$pvalue < p.cutoff & gsea.dat$p.adjust < p.adj.cutoff), ]
     }
-    write.table(gsea.dat, file = paste0(res.path, "/gsea_up_results.txt"), row.names = TRUE, col.names = NA, sep = "\t", quote = FALSE)
+    utils::write.table(gsea.dat, file = paste0(res.path, "/gsea_up_results.txt"), row.names = TRUE, col.names = NA, sep = "\t", quote = FALSE)
     gsea.dat <- gsea.dat[order(gsea.dat$NES, decreasing = TRUE), ]
 
     if (nrow(gsea.dat) > n.path) {
@@ -92,7 +102,7 @@ runGSEA <- function(data = NULL,
       gsea.dat <- gsea.dat[which(gsea.dat$pvalue < p.cutoff & gsea.dat$p.adjust < p.adj.cutoff), ]
     }
 
-    write.table(gsea.dat, file = paste0(res.path, "/gsea_down_results.txt"), row.names = TRUE, col.names = NA, sep = "\t", quote = FALSE)
+    utils::write.table(gsea.dat, file = paste0(res.path, "/gsea_down_results.txt"), row.names = TRUE, col.names = NA, sep = "\t", quote = FALSE)
     gsea.dat <- gsea.dat[order(gsea.dat$NES, decreasing = TRUE), ]
     if (nrow(gsea.dat) > n.path) {
       gsea.dat <- gsea.dat[1:n.path, ]
@@ -102,7 +112,7 @@ runGSEA <- function(data = NULL,
     geneSetID <- rownames(gsea.dat)
   }
   message("GSEA done...")
-  gsdata <- do.call(rbind, lapply(geneSetID, enrichplot:::gsInfo, object = gsea.list))
+  gsdata <- do.call(rbind, lapply(geneSetID, .gsInfo, object = gsea.list))
 
   gsym.fc.id.sorted <- names(geneList)
 
@@ -160,7 +170,7 @@ runGSEA <- function(data = NULL,
   df2$y <- p.res$data$geneList[df2$x]
   df2$gsym <- p.res$data$gsym[df2$x]
 
-  p.pos <- ggplot(selectgenes, aes(x, y, fill = Description, color = Description, label = gsym)) +
+  p.pos <- ggplot(df2, aes(x, y, fill = Description, color = Description, label = gsym)) +
     geom_segment(
       data = df2, aes_(x = ~x, xend = ~x, y = ~y, yend = 0),
       color = "grey"
@@ -188,5 +198,70 @@ runGSEA <- function(data = NULL,
       axis.ticks.x = element_line(),
       axis.text.x = element_text(size = 12, face = "bold")
     )
-  plot_grid(plotlist = plotlist, ncol = 1, align = "v", rel_heights = rel_heights)
+  cowplot::plot_grid(plotlist = plotlist, ncol = 1, align = "v", rel_heights = rel_heights)
 }
+
+
+
+.gsInfo <- function(object, geneSetID){
+  geneList <- object@geneList
+  if (is.numeric(geneSetID))
+    geneSetID <- object@result[geneSetID, "ID"]
+  geneSet <- object@geneSets[[geneSetID]]
+  exponent <- object@params[["exponent"]]
+  df <- .gseaScores(geneList, geneSet, exponent, fortify = TRUE)
+  df$ymin <- 0
+  df$ymax <- 0
+  pos <- df$position == 1
+  h <- diff(range(df$runningScore))/20
+  df$ymin[pos] <- -h
+  df$ymax[pos] <- h
+  df$geneList <- geneList
+  df$Description <- object@result[geneSetID, "Description"]
+  return(df)
+}
+
+
+
+
+.gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
+  geneSet <- intersect(geneSet, names(geneList))
+
+  N <- length(geneList)
+  Nh <- length(geneSet)
+
+  Phit <- Pmiss <- numeric(N)
+  hits <- names(geneList) %in% geneSet ## logical
+
+  Phit[hits] <- abs(geneList[hits])^exponent
+  NR <- sum(Phit)
+  Phit <- cumsum(Phit/NR)
+
+  Pmiss[!hits] <-  1/(N-Nh)
+  Pmiss <- cumsum(Pmiss)
+
+  runningES <- Phit - Pmiss
+
+  ## ES is the maximum deviation from zero of Phit-Pmiss
+  max.ES <- max(runningES)
+  min.ES <- min(runningES)
+  if( abs(max.ES) > abs(min.ES) ) {
+    ES <- max.ES
+  } else {
+    ES <- min.ES
+  }
+
+  df <- data.frame(x=seq_along(runningES),
+                   runningScore=runningES,
+                   position=as.integer(hits)
+  )
+
+  if(fortify==TRUE) {
+    return(df)
+  }
+
+  df$gene = names(geneList)
+  res <- list(ES=ES, runningES = df)
+  return(res)
+}
+

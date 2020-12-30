@@ -33,7 +33,7 @@ get_sig_GO <- function(data,
   message("The number of gene is: ", paste0(nrow(identifiers), collapse = "  "), " for next analysis")
   kk <- suppressWarnings(enrichGO(
     gene = identifiers$ENTREZID,
-    OrgDb = org.Hs.eg.db,
+    OrgDb = org.Hs.eg.db::org.Hs.eg.db,
     ont = ont,
     pvalueCutoff = p.cutoff,
     qvalueCutoff = p.adj.cutoff,

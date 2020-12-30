@@ -18,3 +18,12 @@ NULL
 #' @examples
 #' data("AnalyzedSigPathway")
 NULL
+
+#' Information of Analyzed DEG
+#' @docType data
+#' @name data_logFC
+#' @format A data.frame
+#' @source See `data-raw/`
+#' @examples
+#' data("data_logFC")
+NULL

@@ -35,6 +35,12 @@ This is a basic example which shows you how to solve a common problem.
 
 ``` r
 library(TCMR)
+#> 
+#> 
+#> 载入程辑包：'TCMR'
+#> The following object is masked from 'package:graphics':
+#> 
+#>     barplot
 data <- load_example_dataset()
 #> Loading dataset GSE85871...
 #> Done.

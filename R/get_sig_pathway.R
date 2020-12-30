@@ -43,7 +43,7 @@ get_sig_pathway <- function(data,
   ))
 
   df <- as.data.frame(
-    setReadable(kk, OrgDb = org.Hs.eg.db, keyType = "ENTREZID")
+    setReadable(kk, OrgDb = org.Hs.eg.db::org.Hs.eg.db, keyType = "ENTREZID")
   )
 
   df <- df[order(df[, sortby], df$GeneRatio), ]

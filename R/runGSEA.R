@@ -26,7 +26,8 @@
 #' @examples
 #' one_report <- load_analyzedDEG(2)
 #' msigdb.path <- system.file("extdata", "c2.cp.kegg.v7.2.symbols.gmt",
-#' package = "TCMR", mustWork = TRUE)
+#'   package = "TCMR", mustWork = TRUE
+#' )
 #' runGSEA(
 #'   data = one_report,
 #'   dirct = "up",
@@ -173,7 +174,8 @@ runGSEA <- function(data = NULL,
 
   p.pos <- ggplot(
     df2,
-    aes_string(x = "x", y = "y", fill = "Description", color = "Description", label = "gsym")) +
+    aes_string(x = "x", y = "y", fill = "Description", color = "Description", label = "gsym")
+  ) +
     geom_segment(
       data = df2, aes_(x = ~x, xend = ~x, y = ~y, yend = 0),
       color = "grey"
@@ -206,17 +208,18 @@ runGSEA <- function(data = NULL,
 
 
 
-.gsInfo <- function(object, geneSetID){
+.gsInfo <- function(object, geneSetID) {
   geneList <- object@geneList
-  if (is.numeric(geneSetID))
+  if (is.numeric(geneSetID)) {
     geneSetID <- object@result[geneSetID, "ID"]
+  }
   geneSet <- object@geneSets[[geneSetID]]
   exponent <- object@params[["exponent"]]
   df <- .gseaScores(geneList, geneSet, exponent, fortify = TRUE)
   df$ymin <- 0
   df$ymax <- 0
   pos <- df$position == 1
-  h <- diff(range(df$runningScore))/20
+  h <- diff(range(df$runningScore)) / 20
   df$ymin[pos] <- -h
   df$ymax[pos] <- h
   df$geneList <- geneList
@@ -227,7 +230,7 @@ runGSEA <- function(data = NULL,
 
 
 
-.gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
+.gseaScores <- function(geneList, geneSet, exponent = 1, fortify = FALSE) {
   geneSet <- intersect(geneSet, names(geneList))
 
   N <- length(geneList)
@@ -238,9 +241,9 @@ runGSEA <- function(data = NULL,
 
   Phit[hits] <- abs(geneList[hits])^exponent
   NR <- sum(Phit)
-  Phit <- cumsum(Phit/NR)
+  Phit <- cumsum(Phit / NR)
 
-  Pmiss[!hits] <-  1/(N-Nh)
+  Pmiss[!hits] <- 1 / (N - Nh)
   Pmiss <- cumsum(Pmiss)
 
   runningES <- Phit - Pmiss
@@ -248,23 +251,23 @@ runGSEA <- function(data = NULL,
   ## ES is the maximum deviation from zero of Phit-Pmiss
   max.ES <- max(runningES)
   min.ES <- min(runningES)
-  if( abs(max.ES) > abs(min.ES) ) {
+  if (abs(max.ES) > abs(min.ES)) {
     ES <- max.ES
   } else {
     ES <- min.ES
   }
 
-  df <- data.frame(x=seq_along(runningES),
-                   runningScore=runningES,
-                   position=as.integer(hits)
+  df <- data.frame(
+    x = seq_along(runningES),
+    runningScore = runningES,
+    position = as.integer(hits)
   )
 
-  if(fortify==TRUE) {
+  if (fortify == TRUE) {
     return(df)
   }
 
-  df$gene = names(geneList)
-  res <- list(ES=ES, runningES = df)
+  df$gene <- names(geneList)
+  res <- list(ES = ES, runningES = df)
   return(res)
 }
-

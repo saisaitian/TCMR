@@ -10,77 +10,80 @@
 #' @importFrom ExperimentHub ExperimentHub
 #' @examples
 #' data("data_logFC")
-#' upset <- rownames(data_logFC")[1:100]
-#' downset <- rownames(data_logFC")[400:550]
-#' input = list(upset=upset, downset=downset)
-#' cmap_kk <- cmap(input = input,data = data_logFC",method = 'CMAP')
-#'
-cmap <- function(input,data,method) {
-
+#' upset <- rownames(data_logFC)[1:100]
+#' downset <- rownames(data_logFC)[400:550]
+#' input <- list(upset = upset, downset = downset)
+#' cmap_kk <- cmap(input = input, data = data_logFC, method = "CMAP")
+cmap <- function(input, data, method) {
   data <- as.matrix(data)
-  if(is(input, "list")){
-    if(is.element(method, c("cmap"))) {
+  if (is(input, "list")) {
+    if (is.element(method, c("cmap"))) {
       upset <- input$upset
       downset <- input$downset
-      if(!is.null(upset)){
-
+      if (!is.null(upset)) {
         num <- sum(upset %in% rownames(data))
-        if(num<=10){
+        if (num <= 10) {
           stop("the up gene less than 10")
         }
-        message(paste(sum(upset %in% rownames(data)), "/", length(upset),
-                      "genes in up set share identifiers with reference database"))
+        message(paste(
+          sum(upset %in% rownames(data)), "/", length(upset),
+          "genes in up set share identifiers with reference database"
+        ))
 
         upset <- upset[upset %in% rownames(data)]
-
       }
-      if(!is.null(downset)){
-
+      if (!is.null(downset)) {
         num <- sum(downset %in% rownames(data))
-        if(num<=10){
+        if (num <= 10) {
           stop("the down gene less than 10")
         }
-        message(paste(sum(downset %in% rownames(data)),"/",length(downset),
-                      "genes in down set share identifiers with reference database"))
+        message(paste(
+          sum(downset %in% rownames(data)), "/", length(downset),
+          "genes in down set share identifiers with reference database"
+        ))
         downset <- downset[downset %in% rownames(data)]
-
       }
-      if(is.null(upset) & is.null(downset)){
+      if (is.null(upset) & is.null(downset)) {
         stop("Both upset and downset share zero identifiers with reference database,
           please make sure that at least one share identifiers!")
       }
-      input$upset = upset
-      input$downset = downset
+      input$upset <- upset
+      input$downset <- downset
     }
-
   }
 
-  rankLup <- lapply(colnames(data), function(x)sort(rank(-1*data[,x])[upset]))
-  rankLdown <- lapply(colnames(data),
-                      function(x) sort(rank(-1*data[,x])[downset]))
-  raw.score <- vapply(seq_along(rankLup), function(x)
-    .s(rankLup[[x]], rankLdown[[x]], n=nrow(data)),
-    FUN.VALUE=numeric(1))
+  rankLup <- lapply(colnames(data), function(x) sort(rank(-1 * data[, x])[upset]))
+  rankLdown <- lapply(
+    colnames(data),
+    function(x) sort(rank(-1 * data[, x])[downset])
+  )
+  raw.score <- vapply(seq_along(rankLup), function(x) {
+    .s(rankLup[[x]], rankLdown[[x]], n = nrow(data))
+  },
+  FUN.VALUE = numeric(1)
+  )
   score <- .S(raw.score)
   eh <- suppressMessages(ExperimentHub::ExperimentHub())
   CSnull <- suppressMessages(eh[["EH3234"]])
-  CSnull[CSnull[, "Freq"]==0, "Freq"] <- 1
-  myrounding <- max(nchar(as.character(CSnull[,"WTCS"]))) - 3
+  CSnull[CSnull[, "Freq"] == 0, "Freq"] <- 1
+  myrounding <- max(nchar(as.character(CSnull[, "WTCS"]))) - 3
   camp_round <- round(as.numeric(raw.score), myrounding)
 
   CS_pval <- vapply(camp_round, function(x) {
-    sum(CSnull[abs(CSnull[,"WTCS"]) > abs(x),"Freq"])/sum(CSnull[,"Freq"])
+    sum(CSnull[abs(CSnull[, "WTCS"]) > abs(x), "Freq"]) / sum(CSnull[, "Freq"])
   }, FUN.VALUE = numeric(1))
   CS_fdr <- stats::p.adjust(CS_pval, "fdr")
-  result <- data.frame(set = colnames(data),
-                       trend = ifelse(score >=0, "up", "down"),
-                       raw_score = raw.score,
-                       scaled_score = score,
-                       Pval = CS_pval,
-                       FDR = CS_fdr,
-                       N_upset = length(upset),
-                       N_downset = length(downset), stringsAsFactors = FALSE)
-  result <- result[order(abs(result$scaled_score), decreasing=TRUE), ]
+  result <- data.frame(
+    set = colnames(data),
+    trend = ifelse(score >= 0, "up", "down"),
+    raw_score = raw.score,
+    scaled_score = score,
+    Pval = CS_pval,
+    FDR = CS_fdr,
+    N_upset = length(upset),
+    N_downset = length(downset), stringsAsFactors = FALSE
+  )
+  result <- result[order(abs(result$scaled_score), decreasing = TRUE), ]
   rownames(result) <- NULL
   return(result)
 }
@@ -88,16 +91,16 @@ cmap <- function(input,data,method) {
 
 
 ## Fct to compute a and b
-.ks <- function( V, n ) {
-  t <- length( V )
-  if( t == 0 )  {
-    return( 0 )
+.ks <- function(V, n) {
+  t <- length(V)
+  if (t == 0) {
+    return(0)
   } else {
     if (is.unsorted(V)) V <- sort(V)
     d <- seq_len(t) / t - V / n
-    a <- max( d )
-    b <- -min( d ) + 1 / t
-    ifelse( a > b, a, -b )
+    a <- max(d)
+    b <- -min(d) + 1 / t
+    ifelse(a > b, a, -b)
   }
 }
 
@@ -114,4 +117,3 @@ cmap <- function(input,data,method) {
   q <- min(scores)
   ifelse(scores == 0, 0, ifelse(scores > 0, scores / p, -scores / q))
 }
-

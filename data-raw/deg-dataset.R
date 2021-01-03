@@ -33,41 +33,29 @@ purrr::map2(reports2, AnalyzedDEG$filename, function(DEG, filename) {
   saveRDS(DEG, file = paste0("inst/extdata/", filename))
 })
 
-data <- reports2[[1]][,c(1,2)]
+data <- reports2[[1]][, c(1, 2)]
 
 for (i in 2:103) {
-
-  tmp <- reports2[[i]][,2]
-  data <- cbind.data.frame(data,tmp)
-
+  tmp <- reports2[[i]][, 2]
+  data <- cbind.data.frame(data, tmp)
 }
 
-names(data)[2:104] <- gsub(':DMSO',"",as.character(AnalyzedDEG$vs) )
+names(data)[2:104] <- gsub(":DMSO", "", as.character(AnalyzedDEG$vs))
 
 str(data)
-data <- data.frame(data,stringsAsFactors = F)
+data <- data.frame(data, stringsAsFactors = F)
 
 rownames(data) <- data$identifier
 
-data <- data[,-1]
+data <- data[, -1]
 data_logFC <- data
 
 
 
-names(data_logFC) <- gsub('尾.','',names(data_logFC) )
+names(data_logFC) <- gsub("尾.", "", names(data_logFC))
 
-AnalyzedDEG$vs <- gsub('尾-','',AnalyzedDEG$vs)
+AnalyzedDEG$vs <- gsub("尾-", "", AnalyzedDEG$vs)
 
 usethis::use_data(data_logFC, overwrite = TRUE)
 
 usethis::use_data(AnalyzedDEG, overwrite = TRUE)
-
-
-
-
-
-
-
-
-
-

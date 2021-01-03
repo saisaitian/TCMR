@@ -10,38 +10,44 @@
 #' @export
 #' @importFrom ExperimentHub ExperimentHub
 #' @examples
-#' query2 <- data[1:60,1,drop=FALSE]
-#' gcmap_kk=gcmap_cs(input = query2,data=data_logFC)
-#'
-gcmap_cs <- function(input,data,higher=1,lower=-1) {
-
-  if(is(input, 'data.frame')){
+#' query2 <- data[1:60, 1, drop = FALSE]
+#' gcmap_kk <- gcmap_cs(input = query2, data = data_logFC)
+gcmap_cs <- function(input, data, higher = 1, lower = -1) {
+  if (is(input, "data.frame")) {
     num <- sum(rownames(input) %in% rownames(data))
-    if(num<=10){
+    if (num <= 10) {
       stop("the commom gene less than 10")
     }
-    message(paste( num , "/", length(rownames(data)),
-                   "genes in input share identifiers with reference database"))
-    if(is.null(input)){
+    message(paste(
+      num, "/", length(rownames(data)),
+      "genes in input share identifiers with reference database"
+    ))
+    if (is.null(input)) {
       stop(" Input is NULL !")
     }
-  }else{
+  } else {
     stop(" Input is not data.frame !")
   }
-  data2 <- ifelse(data>higher,1,ifelse(data>-lower,0,-1))
+  data2 <- ifelse(data > higher, 1, ifelse(data > -lower, 0, -1))
   ## subset objects to shared genes
   matched.features <- match(rownames(input), rownames(data2))
-  matched.sets <- data2[stats::na.omit(matched.features),]
+  matched.sets <- data2[stats::na.omit(matched.features), ]
 
   ## extract scores for each gene set
-  sets.up <- lapply(seq(ncol(matched.sets)),
-                    function(x) which(matched.sets[ ,x ] == 1))
+  sets.up <- lapply(
+    seq(ncol(matched.sets)),
+    function(x) which(matched.sets[, x] == 1)
+  )
 
-  sets.down <- lapply(seq(ncol(matched.sets)),
-                      function(x) which(matched.sets[ ,x] == -1))
+  sets.down <- lapply(
+    seq(ncol(matched.sets)),
+    function(x) which(matched.sets[, x] == -1)
+  )
 
   ## transform experiment to (reverse) ranks
-  rank.matrix <- apply(input, 2, function(x) {length(x)-rank(x)+1})
+  rank.matrix <- apply(input, 2, function(x) {
+    length(x) - rank(x) + 1
+  })
 
   ## calculate connectivity score
   raw.score <- apply(rank.matrix, 2, function(r) {
@@ -50,39 +56,40 @@ gcmap_cs <- function(input,data,higher=1,lower=-1) {
     }, FUN.VALUE = numeric(1))
   })
 
-  raw.score <- matrix(raw.score, ncol=ncol(input))
+  raw.score <- matrix(raw.score, ncol = ncol(input))
 
   eh <- suppressMessages(ExperimentHub::ExperimentHub())
   CSnull <- suppressMessages(eh[["EH3234"]])
-  CSnull[CSnull[, "Freq"]==0, "Freq"] <- 1
-  myrounding <- max(nchar(as.character(CSnull[,"WTCS"]))) - 3
+  CSnull[CSnull[, "Freq"] == 0, "Freq"] <- 1
+  myrounding <- max(nchar(as.character(CSnull[, "WTCS"]))) - 3
   gcmap_round <- round(as.numeric(raw.score), myrounding)
 
   CS_pval <- vapply(gcmap_round, function(x) {
-    sum(CSnull[abs(CSnull[,"WTCS"]) > abs(x),"Freq"])/sum(CSnull[,"Freq"])
+    sum(CSnull[abs(CSnull[, "WTCS"]) > abs(x), "Freq"]) / sum(CSnull[, "Freq"])
   }, FUN.VALUE = numeric(1))
   CS_fdr <- stats::p.adjust(CS_pval, "fdr")
 
-  score <- matrix(raw.score, ncol=ncol(input))
+  score <- matrix(raw.score, ncol = ncol(input))
   ## store results
-  results <- data.frame(tcm = colnames(data2),
-                        direction = ifelse(score[,1] >=0, "up", "down"),
-                        raw_score = score[,1],
-                        Pval = CS_pval,
-                        FDR = CS_fdr,
-                        Nset = colSums(as.matrix(abs(matched.sets))))
+  results <- data.frame(
+    tcm = colnames(data2),
+    direction = ifelse(score[, 1] >= 0, "up", "down"),
+    raw_score = score[, 1],
+    Pval = CS_pval,
+    FDR = CS_fdr,
+    Nset = colSums(as.matrix(abs(matched.sets)))
+  )
 
 
   ## Apply scaling of scores to full data set
-  results[,"scaled_score"] <-.S(results$raw_score)
+  results[, "scaled_score"] <- .S(results$raw_score)
 
-  results <- results[order(abs(results$scaled_score), decreasing=TRUE), ]
-  results<- results[, c("tcm", "direction", "raw_score",
-                      "scaled_score","Pval","FDR",'Nset')]
+  results <- results[order(abs(results$scaled_score), decreasing = TRUE), ]
+  results <- results[, c(
+    "tcm", "direction", "raw_score",
+    "scaled_score", "Pval", "FDR", "Nset"
+  )]
 
-  results <- results[order(abs(results$scaled_score), decreasing=TRUE), ]
+  results <- results[order(abs(results$scaled_score), decreasing = TRUE), ]
   return(results)
 }
-
-
-

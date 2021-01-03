@@ -24,6 +24,6 @@ purrr::map2(degreports, Analyzedsigpath$filename, function(DEG, filename) {
 
 AnalyzedSigPathway <- Analyzedsigpath
 
-AnalyzedSigPathway$vs <- gsub('尾-','',AnalyzedSigPathway$vs)
+AnalyzedSigPathway$vs <- gsub("尾-", "", AnalyzedSigPathway$vs)
 
 usethis::use_data(AnalyzedSigPathway, overwrite = TRUE)

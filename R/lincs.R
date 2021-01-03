@@ -10,70 +10,72 @@
 #' @importFrom ExperimentHub ExperimentHub
 #' @examples
 #' data("data_logFC")
-#' upset <- rownames(data_logFC")[1:100]
-#' downset <- rownames(data_logFC")[400:550]
-#' input = list(upset=upset, downset=downset)
-#' lincs_kk <- lincsscore(input,data_logFC",method ="lincs" )
-
-
-lincsscore <- function(input,data,method) {
-
+#' upset <- rownames(data_logFC)[1:100]
+#' downset <- rownames(data_logFC)[400:550]
+#' input <- list(upset = upset, downset = downset)
+#' lincs_kk <- lincsscore(input, data_logFC, method = "lincs")
+lincsscore <- function(input, data, method) {
   data <- as.matrix(data)
 
-  if(is(input, "list")){
-    if(is.element(method, c("lincs"))) {
+  if (is(input, "list")) {
+    if (is.element(method, c("lincs"))) {
       upset <- input$upset
       downset <- input$downset
-      if(!is.null(upset)){
-
+      if (!is.null(upset)) {
         num <- sum(upset %in% rownames(data))
-        if(num<=10){
+        if (num <= 10) {
           stop("the up gene less than 10")
         }
-        message(paste(sum(upset %in% rownames(data)), "/", length(upset),
-                      "genes in up set share identifiers with reference database"))
+        message(paste(
+          sum(upset %in% rownames(data)), "/", length(upset),
+          "genes in up set share identifiers with reference database"
+        ))
 
         upset <- upset[upset %in% rownames(data)]
-
       }
-      if(!is.null(downset)){
-
+      if (!is.null(downset)) {
         num <- sum(downset %in% rownames(data))
-        if(num<=10){
+        if (num <= 10) {
           stop("the down gene less than 10")
         }
-        message(paste(sum(downset %in% rownames(data)),"/",length(downset),
-                      "genes in down set share identifiers with reference database"))
+        message(paste(
+          sum(downset %in% rownames(data)), "/", length(downset),
+          "genes in down set share identifiers with reference database"
+        ))
         downset <- downset[downset %in% rownames(data)]
-
       }
-      if(is.null(upset) & is.null(downset)){
+      if (is.null(upset) & is.null(downset)) {
         stop("Both upset and downset share zero identifiers with reference database,
           please make sure that at least one share identifiers!")
       }
     }
-
   }
 
 
-  lincsup <- apply(data, 2, function(x)
-    calES(sigvec=sort(x, decreasing = TRUE),
-          Q=upset))
+  lincsup <- apply(data, 2, function(x) {
+    calES(
+      sigvec = sort(x, decreasing = TRUE),
+      Q = upset
+    )
+  })
 
-  lincsdown <- apply(data, 2, function(x)
-    calES(sigvec=sort(x, decreasing = TRUE),
-          Q=downset))
+  lincsdown <- apply(data, 2, function(x) {
+    calES(
+      sigvec = sort(x, decreasing = TRUE),
+      Q = downset
+    )
+  })
 
-  lincsout <- ifelse(sign(lincsup) != sign(lincsdown), (lincsup - lincsdown)/2, 0)
+  lincsout <- ifelse(sign(lincsup) != sign(lincsdown), (lincsup - lincsdown) / 2, 0)
 
   eh <- suppressMessages(ExperimentHub::ExperimentHub())
   CSnull <- suppressMessages(eh[["EH3234"]])
-  CSnull[CSnull[, "Freq"]==0, "Freq"] <- 1
-  myrounding <- max(nchar(as.character(CSnull[,"WTCS"]))) - 3
+  CSnull[CSnull[, "Freq"] == 0, "Freq"] <- 1
+  myrounding <- max(nchar(as.character(CSnull[, "WTCS"]))) - 3
   lincs_round <- round(as.numeric(lincsout), myrounding)
 
   CS_pval <- vapply(lincs_round, function(x) {
-    sum(CSnull[abs(CSnull[,"WTCS"]) > abs(x),"Freq"])/sum(CSnull[,"Freq"])
+    sum(CSnull[abs(CSnull[, "WTCS"]) > abs(x), "Freq"]) / sum(CSnull[, "Freq"])
   }, FUN.VALUE = numeric(1))
   CS_fdr <- stats::p.adjust(CS_pval, "fdr")
   # grouping <- paste(gsub("^.*?_", "", names(lincsout)),
@@ -98,11 +100,11 @@ lincsscore <- function(input,data,method) {
     Pval = CS_pval,
     FDR = CS_fdr,
     N_upset = length(upset),
-    N_downset = length(downset), stringsAsFactors = FALSE)
-  result <- result[order(abs(result$scaled_score), decreasing=TRUE), ]
+    N_downset = length(downset), stringsAsFactors = FALSE
+  )
+  result <- result[order(abs(result$scaled_score), decreasing = TRUE), ]
   row.names(result) <- NULL
   return(result)
-
 }
 
 calES <- function(sigvec, Q) {
@@ -114,11 +116,10 @@ calES <- function(sigvec, Q) {
   miss_index <- 1 - hit_index
   R <- abs(as.numeric(sigvec))
   NR <- sum(R[hit_index == 1])
-  if(NR == 0) return(0)
-  ESvec <- cumsum((hit_index * R * 1/NR) - (miss_index * 1/Ns))
+  if (NR == 0) {
+    return(0)
+  }
+  ESvec <- cumsum((hit_index * R * 1 / NR) - (miss_index * 1 / Ns))
   ES <- ESvec[which.max(abs(ESvec))]
   return(ES)
 }
-
-
-

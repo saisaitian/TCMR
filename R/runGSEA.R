@@ -12,6 +12,7 @@
 #'
 #' @return A plot.
 #' @export
+#' @importFrom ggplot2 aes_string
 #' @importFrom ggplot2 xlab
 #' @importFrom ggplot2 scale_color_manual
 #' @importFrom ggplot2 geom_hline
@@ -170,7 +171,9 @@ runGSEA <- function(data = NULL,
   df2$y <- p.res$data$geneList[df2$x]
   df2$gsym <- p.res$data$gsym[df2$x]
 
-  p.pos <- ggplot(df2, aes(x, y, fill = Description, color = Description, label = gsym)) +
+  p.pos <- ggplot(
+    df2,
+    aes_string(x = "x", y = "y", fill = "Description", color = "Description", label = "gsym")) +
     geom_segment(
       data = df2, aes_(x = ~x, xend = ~x, y = ~y, yend = 0),
       color = "grey"

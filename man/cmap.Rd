@@ -19,3 +19,10 @@ a data.frame
 \description{
 Title CMAP methods
 }
+\examples{
+data("data_logFC")
+upset <- rownames(data_logFC)[1:100]
+downset <- rownames(data_logFC)[400:550]
+input <- list(upset = upset, downset = downset)
+cmap_kk <- cmap(input = input, data = data_logFC, method = "CMAP")
+}

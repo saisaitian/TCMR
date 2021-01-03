@@ -21,8 +21,8 @@ Title Cor method
 }
 \examples{
 data("data_logFC")
-query2 <- data_logFC[1:60,1,drop=FALSE]
-aa=cor_tcm(query2,data_logFC,method = 'pearson')
-aaa=cor_tcm(query2,data_logFC,method = "spearman")
-aaaa=cor_tcm(query2,data_logFC,method = "kendall")
+query2 <- data_logFC[1:60, 1, drop = FALSE]
+aa <- cor_tcm(query2, data_logFC, method = "pearson")
+aaa <- cor_tcm(query2, data_logFC, method = "spearman")
+aaaa <- cor_tcm(query2, data_logFC, method = "kendall")
 }

@@ -23,6 +23,4 @@ Dotplot of enrichResult
 data("Analyzedsigpath")
 one_report <- load_analyzedsigpath(1)
 getdotplot(one_report)
-
-
 }

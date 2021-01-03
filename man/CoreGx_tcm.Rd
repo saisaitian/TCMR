@@ -19,6 +19,6 @@ Title CoreGx method
 }
 \examples{
 data("data_logFC")
-query2 <- data_logFC[1:60,1,drop=FALSE]
-txp <- CoreGx_tcm(query2,data_logFC[1:3])
+query2 <- data_logFC[1:60, 1, drop = FALSE]
+txp <- CoreGx_tcm(query2, data_logFC[1:3])
 }

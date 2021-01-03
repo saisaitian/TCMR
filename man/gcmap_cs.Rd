@@ -22,7 +22,6 @@ a data.frame
 Title gcmap Method
 }
 \examples{
-query2 <- data[1:60,1,drop=FALSE]
-gcmap_kk=gcmap_cs(input = query2,data=data_logFC)
-
+query2 <- data[1:60, 1, drop = FALSE]
+gcmap_kk <- gcmap_cs(input = query2, data = data_logFC)
 }

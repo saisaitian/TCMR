@@ -1,9 +1,9 @@
 
-#' Title Lincs methods
+#' Title CMAP methods
 #'
 #' @param input input is a list contains up and down genes
 #' @param data a data.frame contains logFC value data from 103 compounds
-#' @param method a method is lincs
+#' @param method a method is cmap
 #'
 #' @return a data.frame
 #' @export
@@ -13,12 +13,11 @@
 #' upset <- rownames(data_logFC)[1:100]
 #' downset <- rownames(data_logFC)[400:550]
 #' input <- list(upset = upset, downset = downset)
-#' lincs_kk <- lincsscore(input, data_logFC, method = "lincs")
-lincsscore <- function(input, data, method) {
+#' cmap_kk <- ss_cmap(input = input, data = data_logFC, method = "cmap")
+ss_cmap <- function(input, data, method) {
   data <- as.matrix(data)
-
   if (is(input, "list")) {
-    if (is.element(method, c("lincs"))) {
+    if (is.element(method, c("cmap"))) {
       upset <- input$upset
       downset <- input$downset
       if (!is.null(upset)) {
@@ -48,54 +47,36 @@ lincsscore <- function(input, data, method) {
         stop("Both upset and downset share zero identifiers with reference database,
           please make sure that at least one share identifiers!")
       }
+      input$upset <- upset
+      input$downset <- downset
     }
   }
 
-
-  lincsup <- apply(data, 2, function(x) {
-    calES(
-      sigvec = sort(x, decreasing = TRUE),
-      Q = upset
-    )
-  })
-
-  lincsdown <- apply(data, 2, function(x) {
-    calES(
-      sigvec = sort(x, decreasing = TRUE),
-      Q = downset
-    )
-  })
-
-  lincsout <- ifelse(sign(lincsup) != sign(lincsdown), (lincsup - lincsdown) / 2, 0)
-
+  rankLup <- lapply(colnames(data), function(x) sort(rank(-1 * data[, x])[upset]))
+  rankLdown <- lapply(
+    colnames(data),
+    function(x) sort(rank(-1 * data[, x])[downset])
+  )
+  raw.score <- vapply(seq_along(rankLup), function(x) {
+    .s(rankLup[[x]], rankLdown[[x]], n = nrow(data))
+  },
+  FUN.VALUE = numeric(1)
+  )
+  score <- .S(raw.score)
   eh <- suppressMessages(ExperimentHub::ExperimentHub())
   CSnull <- suppressMessages(eh[["EH3234"]])
   CSnull[CSnull[, "Freq"] == 0, "Freq"] <- 1
   myrounding <- max(nchar(as.character(CSnull[, "WTCS"]))) - 3
-  lincs_round <- round(as.numeric(lincsout), myrounding)
+  camp_round <- round(as.numeric(raw.score), myrounding)
 
-  CS_pval <- vapply(lincs_round, function(x) {
+  CS_pval <- vapply(camp_round, function(x) {
     sum(CSnull[abs(CSnull[, "WTCS"]) > abs(x), "Freq"]) / sum(CSnull[, "Freq"])
   }, FUN.VALUE = numeric(1))
   CS_fdr <- stats::p.adjust(CS_pval, "fdr")
-  # grouping <- paste(gsub("^.*?_", "", names(lincsout)),
-  #                   as.character(ifelse(ESout > 0, "up", "down")), sep="_")
-
-  # lincsout_na <- as.numeric(lincsout)
-  # lincsout_na[lincsout_na == 0] <- NA
-
-  # groupmean <- tapply(lincsout_na, grouping, mean, na.rm=TRUE)
-  # groupmean[is.na(groupmean)] <- 0
-  #
-  # groupmean[groupmean==0] <- 10^-12
-  #
-  # ncs <- as.numeric(lincsout) / abs(groupmean[grouping])
-  score <- .S(lincsout)
-
   result <- data.frame(
-    name = names(lincsout),
-    trend = as.character(ifelse(lincsout > 0, "up", "down")),
-    raw_score = as.numeric(lincsout),
+    set = colnames(data),
+    trend = ifelse(score >= 0, "up", "down"),
+    raw_score = raw.score,
     scaled_score = score,
     Pval = CS_pval,
     FDR = CS_fdr,
@@ -103,23 +84,36 @@ lincsscore <- function(input, data, method) {
     N_downset = length(downset), stringsAsFactors = FALSE
   )
   result <- result[order(abs(result$scaled_score), decreasing = TRUE), ]
-  row.names(result) <- NULL
+  rownames(result) <- NULL
   return(result)
 }
 
-calES <- function(sigvec, Q) {
-  L <- names(sigvec)
-  N <- length(L)
-  NH <- length(Q)
-  Ns <- N - NH
-  hit_index <- as.numeric(L %in% Q)
-  miss_index <- 1 - hit_index
-  R <- abs(as.numeric(sigvec))
-  NR <- sum(R[hit_index == 1])
-  if (NR == 0) {
+
+
+## Fct to compute a and b
+.ks <- function(V, n) {
+  t <- length(V)
+  if (t == 0) {
     return(0)
+  } else {
+    if (is.unsorted(V)) V <- sort(V)
+    d <- seq_len(t) / t - V / n
+    a <- max(d)
+    b <- -min(d) + 1 / t
+    ifelse(a > b, a, -b)
   }
-  ESvec <- cumsum((hit_index * R * 1 / NR) - (miss_index * 1 / Ns))
-  ES <- ESvec[which.max(abs(ESvec))]
-  return(ES)
+}
+
+
+.s <- function(V_up, V_down, n) {
+  ks_up <- .ks(V_up, n)
+  ks_down <- .ks(V_down, n)
+  ifelse(sign(ks_up) == sign(ks_down), 0, ks_up - ks_down)
+}
+
+## Fct to scale scores
+.S <- function(scores) {
+  p <- max(scores)
+  q <- min(scores)
+  ifelse(scores == 0, 0, ifelse(scores > 0, scores / p, -scores / q))
 }

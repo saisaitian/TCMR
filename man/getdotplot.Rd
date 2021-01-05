@@ -20,7 +20,7 @@ ggplot object
 Dotplot of enrichResult
 }
 \examples{
-data("Analyzedsigpath")
-one_report <- load_analyzedsigpath(1)
+data("AnalyzedSigPathway")
+one_report <- load_AnalyzedSigPathway(1)
 getdotplot(one_report)
 }

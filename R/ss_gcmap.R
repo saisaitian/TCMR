@@ -10,9 +10,10 @@
 #' @export
 #' @importFrom ExperimentHub ExperimentHub
 #' @examples
-#' query2 <- data[1:60, 1, drop = FALSE]
-#' gcmap_kk <- gcmap_cs(input = query2, data = data_logFC)
-gcmap_cs <- function(input, data, higher = 1, lower = -1) {
+#' data("data_logFC")
+#' query2 <- data_logFC[1:60, 1, drop = FALSE]
+#' gcmap_kk <- ss_gcmap(input = query2, data = data_logFC)
+ss_gcmap <- function(input, data, higher = 1, lower = -1) {
   if (is(input, "data.frame")) {
     num <- sum(rownames(input) %in% rownames(data))
     if (num <= 10) {

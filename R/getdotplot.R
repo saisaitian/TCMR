@@ -17,8 +17,8 @@
 #' @importFrom ggplot2 labs
 #' @importFrom ggplot2 theme
 #' @examples
-#' data("Analyzedsigpath")
-#' one_report <- load_analyzedsigpath(1)
+#' data("AnalyzedSigPathway")
+#' one_report <- load_AnalyzedSigPathway(1)
 #' getdotplot(one_report)
 getdotplot <- function(data,
                        fill = "pvalue",

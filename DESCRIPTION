@@ -36,7 +36,7 @@ Imports:
     cowplot
 Suggests: 
     R.utils,
-    testthat,
+    testthat (>= 3.0.0),
     knitr,
     rmarkdown
 biocViews:
@@ -46,3 +46,4 @@ Roxygen: list(markdown = TRUE, roclets = c("collate",
     "namespace", "rd", "roxytest::testthat_roclet"))
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
+Config/testthat/edition: 3

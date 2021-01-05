@@ -21,11 +21,11 @@
 #' # e.g. head 5 sets
 #' head5_reports <- AnalyzedSigPathway %>%
 #'   head(n = 5) %>%
-#'   load_AnalyzedSigPathwayway()
+#'   load_AnalyzedSigPathway()
 #'
 #' # only the second
-#' one_report <- load_AnalyzedSigPathwayway(2)
-load_AnalyzedSigPathwayway <- function(id) {
+#' one_report <- load_AnalyzedSigPathway(2)
+load_AnalyzedSigPathway <- function(id) {
   if (is.data.frame(id)) {
     filename <- id$filename
     if (is.null(filename)) {

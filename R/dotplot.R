@@ -19,7 +19,7 @@
 #' @importFrom ggplot2 theme
 #' @examples
 #' data("AnalyzedSigPathway")
-#' one_report <- load_AnalyzedSigPathwayway(1)
+#' one_report <- load_AnalyzedSigPathway(1)
 #' dotplot(one_report)
 dotplot <- function(data,
                     fill = "pvalue",

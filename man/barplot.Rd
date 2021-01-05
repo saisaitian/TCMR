@@ -38,6 +38,6 @@ Barplot of enrichResult
 \examples{
 
 data("AnalyzedSigPathway")
-one_report <- load_AnalyzedSigPathwayway(1)
+one_report <- load_AnalyzedSigPathway(1)
 barplot(one_report)
 }

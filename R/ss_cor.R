@@ -10,10 +10,10 @@
 #' @examples
 #' data("data_logFC")
 #' query2 <- data_logFC[1:60, 1, drop = FALSE]
-#' aa <- cor_tcm(query2, data_logFC, method = "pearson")
-#' aaa <- cor_tcm(query2, data_logFC, method = "spearman")
-#' aaaa <- cor_tcm(query2, data_logFC, method = "kendall")
-cor_tcm <- function(input, data, method) {
+#' aa <- ss_cor(query2, data_logFC, method = "pearson")
+#' aaa <- ss_cor(query2, data_logFC, method = "spearman")
+#' aaaa <- ss_cor(query2, data_logFC, method = "kendall")
+ss_cor <- function(input, data, method) {
   if (is.element(method, c("pearson", "spearman", "kendall"))) {
     if (is(input, "data.frame")) {
       num <- sum(rownames(input) %in% rownames(data))

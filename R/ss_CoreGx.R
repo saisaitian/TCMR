@@ -10,8 +10,8 @@
 #' @examples
 #' data("data_logFC")
 #' query2 <- data_logFC[1:60, 1, drop = FALSE]
-#' txp <- CoreGx_tcm(query2, data_logFC[1:3])
-CoreGx_tcm <- function(input, data) {
+#' txp <- ss_CoreGx(query2, data_logFC[1:3])
+ss_CoreGx <- function(input, data) {
   if (is(input, "data.frame")) {
     num <- sum(rownames(input) %in% rownames(data))
     if (num <= 10) {

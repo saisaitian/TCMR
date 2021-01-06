@@ -33,7 +33,8 @@ Imports:
     CoreGx,
     SummarizedExperiment,
     ExperimentHub,
-    cowplot
+    cowplot,
+    forcats
 Suggests: 
     R.utils,
     testthat (>= 3.0.0),

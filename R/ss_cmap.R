@@ -14,6 +14,7 @@
 #' downset <- rownames(data_logFC)[400:550]
 #' input <- list(upset = upset, downset = downset)
 #' cmap_kk <- ss_cmap(input = input, data = data_logFC, method = "cmap")
+
 ss_cmap <- function(input, data, method) {
   data <- as.matrix(data)
   if (is(input, "list")) {
@@ -84,6 +85,7 @@ ss_cmap <- function(input, data, method) {
     N_downset = length(downset), stringsAsFactors = FALSE
   )
   result <- result[order(abs(result$scaled_score), decreasing = TRUE), ]
+  names(result) <- c("tcm", "direction", "raw_score","scaled_score", "pvalue", "fdr", "Nupset",'Ndownset')
   rownames(result) <- NULL
   return(result)
 }

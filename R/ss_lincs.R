@@ -103,6 +103,7 @@ ss_lincsscore <- function(input, data, method) {
     N_downset = length(downset), stringsAsFactors = FALSE
   )
   result <- result[order(abs(result$scaled_score), decreasing = TRUE), ]
+  names(result) <- c("tcm", "direction", "raw_score","scaled_score", "pvalue", "fdr", "Nupset",'Ndownset')
   row.names(result) <- NULL
   return(result)
 }

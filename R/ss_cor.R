@@ -61,7 +61,9 @@ ss_cor <- function(input, data, method) {
       "tcm", "direction", "raw_score",
       "scaled_score", "p", "fdr", "Nset"
     )]
+    names(result) <- c("tcm", "direction", "raw_score","scaled_score", "pvalue", "fdr", "Nset")
     rownames(result) <- NULL
     return(result)
   }
 }
+

@@ -14,41 +14,39 @@
 #' cmap_kk <- ss_cmap(input = input, data = data_logFC)
 
 ss_cmap <- function(input, data) {
-  stopifnot(all(c("upset", "downset") %in% names(input)))
+  stopifnot(all(c("upset", "downset") %in% names(input)), is.list(input))
   data <- as.matrix(data)
-  if (is(input, "list")) {
-      upset <- input$upset
-      downset <- input$downset
-      if (!is.null(upset)) {
-        num <- sum(upset %in% rownames(data))
-        if (num <= 10) {
-          stop("the up gene less than 10")
-        }
-        message(paste(
-          sum(upset %in% rownames(data)), "/", length(upset),
-          "genes in up set share identifiers with reference database"
-        ))
+  upset <- input$upset
+  downset <- input$downset
+  if (!is.null(upset)) {
+    num <- sum(upset %in% rownames(data))
+    if (num <= 10) {
+      stop("the up gene less than 10")
+    }
+    message(paste(
+      sum(upset %in% rownames(data)), "/", length(upset),
+      "genes in up set share identifiers with reference database"
+    ))
 
-        upset <- upset[upset %in% rownames(data)]
-      }
-      if (!is.null(downset)) {
-        num <- sum(downset %in% rownames(data))
-        if (num <= 10) {
-          stop("the down gene less than 10")
-        }
-        message(paste(
-          sum(downset %in% rownames(data)), "/", length(downset),
-          "genes in down set share identifiers with reference database"
-        ))
-        downset <- downset[downset %in% rownames(data)]
-      }
-      if (is.null(upset) & is.null(downset)) {
-        stop("Both upset and downset share zero identifiers with reference database,
-          please make sure that at least one share identifiers!")
-      }
-      input$upset <- upset
-      input$downset <- downset
+    upset <- upset[upset %in% rownames(data)]
   }
+  if (!is.null(downset)) {
+    num <- sum(downset %in% rownames(data))
+    if (num <= 10) {
+      stop("the down gene less than 10")
+    }
+    message(paste(
+      sum(downset %in% rownames(data)), "/", length(downset),
+      "genes in down set share identifiers with reference database"
+    ))
+    downset <- downset[downset %in% rownames(data)]
+  }
+  if (is.null(upset) & is.null(downset)) {
+    stop("Both upset and downset share zero identifiers with reference database,
+          please make sure that at least one share identifiers!")
+  }
+  input$upset <- upset
+  input$downset <- downset
 
   rankLup <- lapply(colnames(data), function(x) sort(rank(-1 * data[, x])[upset]))
   rankLdown <- lapply(

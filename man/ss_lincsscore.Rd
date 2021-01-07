@@ -2,27 +2,25 @@
 % Please edit documentation in R/ss_lincs.R
 \name{ss_lincsscore}
 \alias{ss_lincsscore}
-\title{Title Lincs methods}
+\title{Lincs method for Signature Search}
 \usage{
-ss_lincsscore(input, data, method)
+ss_lincsscore(input, data)
 }
 \arguments{
-\item{input}{input is a list contains up and down genes}
+\item{input}{A list containing UP (in \code{upset} element) and DOWN (in \code{downset} element) genes.}
 
-\item{data}{a data.frame contains logFC value data from 103 compounds}
-
-\item{method}{a method is lincs}
+\item{data}{A \code{data.frame} containing \code{logFC} value data from 103 compounds.}
 }
 \value{
-a data.frame
+A data.frame.
 }
 \description{
-Title Lincs methods
+Lincs method for Signature Search
 }
 \examples{
 data("data_logFC")
 upset <- rownames(data_logFC)[1:100]
 downset <- rownames(data_logFC)[400:550]
 input <- list(upset = upset, downset = downset)
-lincs_kk <- ss_lincsscore(input, data_logFC, method = "lincs")
+lincs_kk <- ss_lincsscore(input, data_logFC)
 }

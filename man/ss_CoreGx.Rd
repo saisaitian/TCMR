@@ -2,20 +2,20 @@
 % Please edit documentation in R/ss_CoreGx.R
 \name{ss_CoreGx}
 \alias{ss_CoreGx}
-\title{Title CoreGx method}
+\title{CoreGx method for Signature Search}
 \usage{
 ss_CoreGx(input, data)
 }
 \arguments{
-\item{input}{a data.frame contains logFC value, which rownames should be geme symbols}
+\item{input}{A \code{data.frame} containing \code{logFC} value, which \code{rownames} should be gene symbols.}
 
-\item{data}{a data.frame contains logFC value data from 103 compounds}
+\item{data}{A \code{data.frame} contains \code{logFC} value data from 103 compounds.}
 }
 \value{
-a data.frame
+A data.frame.
 }
 \description{
-Title CoreGx method
+CoreGx method for Signature Search
 }
 \examples{
 data("data_logFC")

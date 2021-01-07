@@ -1,10 +1,6 @@
-
-#' Title CoreGx method
+#' CoreGx method for Signature Search
 #'
-#' @param input a data.frame contains logFC value, which rownames should be geme symbols
-#' @param data a data.frame contains logFC value data from 103 compounds
-#'
-#' @return a data.frame
+#' @inherit ss_cor
 #' @export
 #'
 #' @examples
@@ -12,21 +8,16 @@
 #' query2 <- data_logFC[1:60, 1, drop = FALSE]
 #' txp <- ss_CoreGx(query2, data_logFC[1:3])
 ss_CoreGx <- function(input, data) {
-  if (is(input, "data.frame")) {
-    num <- sum(rownames(input) %in% rownames(data))
-    if (num <= 10) {
-      stop("the commom gene less than 10")
-    }
-    message(paste(
-      num, "/", length(rownames(data)),
-      "genes in input share identifiers with reference database"
-    ))
-    if (is.null(input)) {
-      stop(" Input is NULL !")
-    }
-  } else {
-    stop(" Input is not data.frame !")
+  stopifnot(is.data.frame(input))
+  num <- sum(rownames(input) %in% rownames(data))
+  if (num <= 10) {
+    stop("the commom gene less than 10")
   }
+  message(paste(
+    num, "/", length(rownames(data)),
+    "genes in input share identifiers with reference database"
+  ))
+
   res_list <- NULL
   common <- intersect(rownames(input), rownames(data))
   input2 <- input[common, , drop = F]

@@ -2,22 +2,22 @@
 % Please edit documentation in R/ss_cor.R
 \name{ss_cor}
 \alias{ss_cor}
-\title{Title Cor method}
+\title{Cor method for for Signature Search}
 \usage{
-ss_cor(input, data, method)
+ss_cor(input, data, method = c("pearson", "spearman", "kendall"))
 }
 \arguments{
-\item{input}{a data.frame contains logFC value, which rownames should be geme symbols}
+\item{input}{A \code{data.frame} containing \code{logFC} value, which \code{rownames} should be gene symbols.}
 
-\item{data}{a data.frame contains logFC value data from 103 compounds}
+\item{data}{A \code{data.frame} contains \code{logFC} value data from 103 compounds.}
 
-\item{method}{a method from 'pearson',"spearman","kendall"}
+\item{method}{A string specifying correlation calculation method, should be one of "pearson", "spearman", "kendall".}
 }
 \value{
-a data.frame
+A data.frame.
 }
 \description{
-Title Cor method
+Cor method for for Signature Search
 }
 \examples{
 data("data_logFC")

@@ -2,27 +2,25 @@
 % Please edit documentation in R/ss_cmap.R
 \name{ss_cmap}
 \alias{ss_cmap}
-\title{Title CMAP methods}
+\title{CMAP method for Signature Search}
 \usage{
-ss_cmap(input, data, method)
+ss_cmap(input, data)
 }
 \arguments{
-\item{input}{input is a list contains up and down genes}
+\item{input}{A list containing UP (in \code{upset} element) and DOWN (in \code{downset} element) genes.}
 
-\item{data}{a data.frame contains logFC value data from 103 compounds}
-
-\item{method}{a method is cmap}
+\item{data}{A \code{data.frame} containing \code{logFC} value data from 103 compounds.}
 }
 \value{
-a data.frame
+A data.frame.
 }
 \description{
-Title CMAP methods
+CMAP method for Signature Search
 }
 \examples{
 data("data_logFC")
 upset <- rownames(data_logFC)[1:100]
 downset <- rownames(data_logFC)[400:550]
 input <- list(upset = upset, downset = downset)
-cmap_kk <- ss_cmap(input = input, data = data_logFC, method = "cmap")
+cmap_kk <- ss_cmap(input = input, data = data_logFC)
 }

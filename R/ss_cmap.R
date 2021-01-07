@@ -1,11 +1,9 @@
-
-#' Title CMAP methods
+#' CMAP method for Signature Search
 #'
-#' @param input input is a list contains up and down genes
-#' @param data a data.frame contains logFC value data from 103 compounds
-#' @param method a method is cmap
+#' @param input A list containing UP (in `upset` element) and DOWN (in `downset` element) genes.
+#' @param data A `data.frame` containing `logFC` value data from 103 compounds.
 #'
-#' @return a data.frame
+#' @return A data.frame.
 #' @export
 #' @importFrom ExperimentHub ExperimentHub
 #' @examples
@@ -13,12 +11,12 @@
 #' upset <- rownames(data_logFC)[1:100]
 #' downset <- rownames(data_logFC)[400:550]
 #' input <- list(upset = upset, downset = downset)
-#' cmap_kk <- ss_cmap(input = input, data = data_logFC, method = "cmap")
+#' cmap_kk <- ss_cmap(input = input, data = data_logFC)
 
-ss_cmap <- function(input, data, method) {
+ss_cmap <- function(input, data) {
+  stopifnot(all(c("upset", "downset") %in% names(input)))
   data <- as.matrix(data)
   if (is(input, "list")) {
-    if (is.element(method, c("cmap"))) {
       upset <- input$upset
       downset <- input$downset
       if (!is.null(upset)) {
@@ -50,7 +48,6 @@ ss_cmap <- function(input, data, method) {
       }
       input$upset <- upset
       input$downset <- downset
-    }
   }
 
   rankLup <- lapply(colnames(data), function(x) sort(rank(-1 * data[, x])[upset]))

@@ -1,4 +1,3 @@
-
 #' Title Lincs methods
 #'
 #' @param input input is a list contains up and down genes

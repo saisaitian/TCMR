@@ -2,24 +2,26 @@
 % Please edit documentation in R/ss_gcmap.R
 \name{ss_gcmap}
 \alias{ss_gcmap}
-\title{Title gcmap Method}
+\title{gcmap Method for Signature Search}
 \usage{
 ss_gcmap(input, data, higher = 1, lower = -1)
 }
 \arguments{
-\item{input}{a data.frame contains logFC value, which rownames should be geme symbols}
+\item{input}{A \code{data.frame} containing \code{logFC} value, which \code{rownames} should be gene symbols.}
 
-\item{data}{a data.frame contains logFC value data from 103 compounds}
+\item{data}{A \code{data.frame} contains \code{logFC} value data from 103 compounds.}
 
-\item{higher}{a cutoff value. If logFC larger than or equal to 'higher' will be included in the gene set with  +1}
+\item{higher}{A cutoff value. If \code{logFC} larger than or equal to \code{higher} will be included
+in the gene set with  \code{+1}.}
 
-\item{lower}{a cutoff value. If logFC smaller than or equal to 'higher' will be included in the gene set with  -1, the othres should be set 0.}
+\item{lower}{A cutoff value. If \code{logFC} smaller than or equal to \code{higher} will be included
+in the gene set to \code{-1}, others should be set to \code{0}.}
 }
 \value{
-a data.frame
+A data.frame.
 }
 \description{
-Title gcmap Method
+gcmap Method for Signature Search
 }
 \examples{
 data("data_logFC")

@@ -1,12 +1,11 @@
-
-#' Title gcmap Method
+#' gcmap Method for Signature Search
 #'
-#' @param input a data.frame contains logFC value, which rownames should be geme symbols
-#' @param data  a data.frame contains logFC value data from 103 compounds
-#' @param higher a cutoff value. If logFC larger than or equal to 'higher' will be included in the gene set with  +1
-#' @param lower a cutoff value. If logFC smaller than or equal to 'higher' will be included in the gene set with  -1, the othres should be set 0.
+#' @inherit ss_cor
+#' @param higher A cutoff value. If `logFC` larger than or equal to `higher` will be included
+#' in the gene set with  `+1`.
+#' @param lower A cutoff value. If `logFC` smaller than or equal to `higher` will be included
+#' in the gene set to `-1`, others should be set to `0`.
 #'
-#' @return a data.frame
 #' @export
 #' @importFrom ExperimentHub ExperimentHub
 #' @examples
@@ -14,21 +13,15 @@
 #' query2 <- data_logFC[1:60, 1, drop = FALSE]
 #' gcmap_kk <- ss_gcmap(input = query2, data = data_logFC)
 ss_gcmap <- function(input, data, higher = 1, lower = -1) {
-  if (is(input, "data.frame")) {
-    num <- sum(rownames(input) %in% rownames(data))
-    if (num <= 10) {
-      stop("the commom gene less than 10")
-    }
-    message(paste(
-      num, "/", length(rownames(data)),
-      "genes in input share identifiers with reference database"
-    ))
-    if (is.null(input)) {
-      stop(" Input is NULL !")
-    }
-  } else {
-    stop(" Input is not data.frame !")
+  stopifnot(is.data.frame(input))
+  num <- sum(rownames(input) %in% rownames(data))
+  if (num <= 10) {
+    stop("the commom gene less than 10")
   }
+  message(paste(
+    num, "/", length(rownames(data)),
+    "genes in input share identifiers with reference database"
+  ))
   data2 <- ifelse(data > higher, 1, ifelse(data > -lower, 0, -1))
   ## subset objects to shared genes
   matched.features <- match(rownames(input), rownames(data2))

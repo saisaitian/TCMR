@@ -48,10 +48,14 @@ ss_cmap <- function(input, data) {
   input$upset <- upset
   input$downset <- downset
 
-  rankLup <- lapply(colnames(data), function(x) sort(rank(-1 * data[, x])[upset]))
-  rankLdown <- lapply(
+  rankLup <- parallel::mclapply(
     colnames(data),
-    function(x) sort(rank(-1 * data[, x])[downset])
+    function(x) sort(rank(-1 * data[, x])[upset]),
+    mc.cores = parallel::detectCores())
+  rankLdown <- parallel::mclapply(
+    colnames(data),
+    function(x) sort(rank(-1 * data[, x])[downset]),
+    mc.cores = parallel::detectCores()
   )
   raw.score <- vapply(seq_along(rankLup), function(x) {
     .s(rankLup[[x]], rankLdown[[x]], n = nrow(data))
@@ -85,9 +89,7 @@ ss_cmap <- function(input, data) {
   return(result)
 }
 
-
-
-## Fct to compute a and b
+## Function to compute a and b
 .ks <- function(V, n) {
   t <- length(V)
   if (t == 0) {
@@ -108,7 +110,7 @@ ss_cmap <- function(input, data) {
   ifelse(sign(ks_up) == sign(ks_down), 0, ks_up - ks_down)
 }
 
-## Fct to scale scores
+# Function to scale scores
 .S <- function(scores) {
   p <- max(scores)
   q <- min(scores)

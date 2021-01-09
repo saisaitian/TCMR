@@ -28,14 +28,16 @@ ss_gcmap <- function(input, data, higher = 1, lower = -1) {
   matched.sets <- data2[stats::na.omit(matched.features), ]
 
   ## extract scores for each gene set
-  sets.up <- lapply(
+  sets.up <- parallel::mclapply(
     seq(ncol(matched.sets)),
-    function(x) which(matched.sets[, x] == 1)
+    function(x) which(matched.sets[, x] == 1),
+    mc.cores = parallel::detectCores()
   )
 
-  sets.down <- lapply(
+  sets.down <- parallel::mclapply(
     seq(ncol(matched.sets)),
-    function(x) which(matched.sets[, x] == -1)
+    function(x) which(matched.sets[, x] == -1),
+    mc.cores = parallel::detectCores()
   )
 
   ## transform experiment to (reverse) ranks

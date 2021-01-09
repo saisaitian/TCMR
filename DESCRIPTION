@@ -18,33 +18,35 @@ License: MIT + file LICENSE
 Depends: 
     R (>= 3.5)
 Imports: 
+    clusterProfiler,
+    CoreGx,
+    cowplot,
     data.table,
+    DOSE,
     dplyr,
+    enrichplot,
+    ExperimentHub,
+    forcats,
+    ggplot2,
     limma,
     magrittr,
-    stringr,
-    tibble,
-    purrr,
-    ggplot2,
-    clusterProfiler,
     org.Hs.eg.db,
-    DOSE,
-    enrichplot,
-    CoreGx,
+    parallel,
+    purrr,
+    stringr,
     SummarizedExperiment,
-    ExperimentHub,
-    cowplot,
-    forcats
+    tibble
 Suggests: 
-    R.utils,
-    testthat (>= 3.0.0),
     knitr,
-    rmarkdown
+    R.utils,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
 biocViews:
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("collate",
     "namespace", "rd", "roxytest::testthat_roclet"))
 RoxygenNote: 7.1.1
-VignetteBuilder: knitr
-Config/testthat/edition: 3

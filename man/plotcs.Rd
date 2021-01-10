@@ -33,6 +33,6 @@ Title Visualize Connectivity score
 data("data_logFC")
 query2 <- data_logFC[1:60, 1, drop = FALSE]
 gcmap_kk <- ss_gcmap(input = query2, data = data_logFC)
-test <- head(gcmap_kk,20)
-plotcs(test,x="raw_score",y='tcm',colby = "pvalue",color = c('blue','red'))
+test <- head(gcmap_kk, 20)
+plotcs(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
 }

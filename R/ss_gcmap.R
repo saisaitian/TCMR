@@ -87,7 +87,7 @@ ss_gcmap <- function(input, data, higher = 1, lower = -1) {
   )]
 
   results <- results[order(abs(results$scaled_score), decreasing = TRUE), ]
-  names(results) <- c("tcm", "direction", "raw_score","scaled_score", "pvalue", "fdr", "Nset")
+  names(results) <- c("tcm", "direction", "raw_score", "scaled_score", "pvalue", "fdr", "Nset")
 
   return(results)
 }

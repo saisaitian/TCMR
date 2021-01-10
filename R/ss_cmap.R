@@ -12,7 +12,6 @@
 #' downset <- rownames(data_logFC)[400:550]
 #' input <- list(upset = upset, downset = downset)
 #' cmap_kk <- ss_cmap(input = input, data = data_logFC)
-
 ss_cmap <- function(input, data) {
   stopifnot(all(c("upset", "downset") %in% names(input)), is.list(input))
   data <- as.matrix(data)
@@ -51,7 +50,8 @@ ss_cmap <- function(input, data) {
   rankLup <- parallel::mclapply(
     colnames(data),
     function(x) sort(rank(-1 * data[, x])[upset]),
-    mc.cores = parallel::detectCores())
+    mc.cores = parallel::detectCores()
+  )
   rankLdown <- parallel::mclapply(
     colnames(data),
     function(x) sort(rank(-1 * data[, x])[downset]),
@@ -84,7 +84,7 @@ ss_cmap <- function(input, data) {
     N_downset = length(downset), stringsAsFactors = FALSE
   )
   result <- result[order(abs(result$scaled_score), decreasing = TRUE), ]
-  names(result) <- c("tcm", "direction", "raw_score","scaled_score", "pvalue", "fdr", "Nupset",'Ndownset')
+  names(result) <- c("tcm", "direction", "raw_score", "scaled_score", "pvalue", "fdr", "Nupset", "Ndownset")
   rownames(result) <- NULL
   return(result)
 }

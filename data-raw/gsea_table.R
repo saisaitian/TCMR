@@ -37,5 +37,5 @@ topPathways <- c(topPathwaysUp, rev(topPathwaysDown))
 length(topPathways)
 
 plotGseaTable(hallmark.list[topPathways], logfc, kkk2,
-              gseaParam = 0.5
+  gseaParam = 0.5
 )

@@ -22,7 +22,7 @@ runGSEA(
 
 \item{res.path}{A string value to indicate the path for saving the results for functional pathways.}
 
-\item{dirct}{A string value to indicate the direction of identifying significant pathway. Allowed values contain c('up', 'down'); \code{up} means up-regulated pathway, and \code{down} means down-regulated pathway; "up" by default.}
+\item{dirct}{A string value to indicate the direction of identifying significant pathway. Allowed values contain c('up', 'down'); `up` means up-regulated pathway, and `down` means down-regulated pathway; "up" by default.}
 
 \item{n.path}{A integer value to indicate how many top pathways sorted by NES should be identified; 6 by default.}
 

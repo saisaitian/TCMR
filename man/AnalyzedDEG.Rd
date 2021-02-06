@@ -8,7 +8,7 @@
 A data.frame
 }
 \source{
-See \verb{data-raw/}
+See `data-raw/`
 }
 \description{
 Information of Analyzed DEG

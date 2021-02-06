@@ -45,8 +45,8 @@ runGSEA <- function(data = NULL,
                     maxGSSize = 500,
                     p.cutoff = 0.05,
                     p.adj.cutoff = NULL) {
-  geneList <- data$logFC
-  names(geneList) <- data$identifier
+    geneList <- data$logFC
+    names(geneList) <- data$identifier
   geneList <- sort(geneList, decreasing = TRUE) # ranked gene set
 
   # run gsea

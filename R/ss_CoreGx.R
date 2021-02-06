@@ -7,6 +7,9 @@
 #' data("data_logFC")
 #' query2 <- data_logFC[1:60, 1, drop = FALSE]
 #' txp <- ss_CoreGx(query2, data_logFC[1:3])
+#' @testexamples
+#' expect_is(txp, "data.frame")
+
 ss_CoreGx <- function(input, data) {
   stopifnot(is.data.frame(input))
   num <- sum(rownames(input) %in% rownames(data))

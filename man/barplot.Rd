@@ -15,7 +15,7 @@ barplot(
 )
 }
 \arguments{
-\item{data}{enrichResult object which is \code{data.frame} format.}
+\item{data}{enrichResult object which is `data.frame` format.}
 
 \item{color}{color to show}
 
@@ -30,7 +30,7 @@ barplot(
 \item{colby}{mapping colors by pvalue or p.adjust}
 }
 \value{
-A \code{ggplot} object
+A `ggplot` object
 }
 \description{
 Barplot of enrichResult
@@ -40,4 +40,5 @@ Barplot of enrichResult
 data("AnalyzedSigPathway")
 one_report <- load_AnalyzedSigPathway(1)
 barplot(one_report)
+
 }

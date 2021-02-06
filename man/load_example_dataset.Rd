@@ -10,7 +10,7 @@ load_example_dataset(id = "GSE85871")
 \item{id}{A dataset identifier.}
 }
 \value{
-a \code{list}.
+a `list`.
 }
 \description{
 Load Example Dataset for Analysis

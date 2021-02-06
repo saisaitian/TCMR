@@ -33,6 +33,9 @@
 #' data("AnalyzedSigPathway")
 #' one_report <- load_AnalyzedSigPathway(1)
 #' barplot(one_report)
+#'
+#' @tests
+#'
 barplot <- function(data,
                     color = c("blue", "red"),
                     linetype = "dashed",

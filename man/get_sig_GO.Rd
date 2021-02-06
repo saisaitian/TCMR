@@ -7,14 +7,14 @@
 get_sig_GO(
   data,
   p.cutoff = 0.05,
-  p.adj.cutoff = 0.2,
+  p.adj.cutoff = NULL,
   sortby = "pvalue",
   ont = "BP",
-  n.path = 10
+  n.path = NULL
 )
 }
 \arguments{
-\item{data}{A \code{data.frame} from a subset of \link{deg_caller} result.}
+\item{data}{A `data.frame` from a subset of [deg_caller] result.}
 
 \item{p.cutoff}{the p value cutoff.}
 
@@ -27,7 +27,7 @@ get_sig_GO(
 \item{n.path}{A integer value to indicate how many top pathways sorted by p value should be identified; 10 by default.}
 }
 \value{
-A \code{data.frame}.
+A `data.frame`.
 }
 \description{
 Get Enriched GO Sets

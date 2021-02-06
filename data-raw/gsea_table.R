@@ -7,21 +7,54 @@ options(stringsAsFactors = F)
 Sys.setenv(LANGUAGE = "en")
 # 感兴趣的signature
 gmtfile <- "G:/小丫/FigureYa136fgsea/h.all.v7.0.symbols.gmt"
-hallmark <- read.gmt(gmtfile)
-hallmark.list <- hallmark %>%
-  split(.$term) %>%
-  lapply("[[", 2)
-data("data_logFC")
-tmp <- data_logFC[1]
-tmp$symbol <- rownames(tmp)
-tmp <- tmp[order(tmp$Glycyrrhizic.acid, decreasing = T), ]
-logfc <- tmp$Glycyrrhizic.acid
-names(logfc) <- tmp$symbol
+msigdb.path <- system.file("extdata", "c2.cp.kegg.v7.2.symbols.gmt",
+                              package = "TCMR", mustWork = TRUE
+                            )
 
-clustergsea <- suppressWarnings(GSEA(
-  geneList = logfc, TERM2GENE = hallmark, verbose = F,
-  minGSSize = 15, maxGSSize = 500, nPerm = 10000, pvalueCutoff = 1
+hallmark <- read.gmt(gmtfile)
+
+hallmark <- read.gmt(msigdb.path)
+# hallmark.list <- hallmark %>%
+#   split(.$term) %>%
+#   lapply("[[", 2)
+data("data_logFC")
+
+geneList <- data_logFC[,1]
+names(geneList) <- rownames(data_logFC)
+geneList <- sort(geneList, decreasing = TRUE) # ranked gene set
+
+clustergsea <- suppressWarnings(clusterProfiler::GSEA(
+  geneList = geneList, TERM2GENE = hallmark, verbose = F,
+  minGSSize = 15, maxGSSize = 500, nPerm = 10000, seed = TRUE,pvalueCutoff = 1
 ))
+
+
+gsea.list <- suppressWarnings(clusterProfiler::GSEA(
+  geneList = geneList,
+  TERM2GENE = msigdb,
+  nPerm = nPerm,
+  minGSSize = minGSSize,
+  maxGSSize = maxGSSize,
+  seed = TRUE,
+  verbose = FALSE,
+  pvalueCutoff = 1
+))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 kkk <- clustergsea@result
 

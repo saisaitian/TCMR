@@ -20,6 +20,8 @@
 #' data("AnalyzedSigPathway")
 #' one_report <- load_AnalyzedSigPathway(1)
 #' getdotplot(one_report)
+#' @tests
+#'
 getdotplot <- function(data,
                        fill = "pvalue",
                        color = c("blue", "red")) {

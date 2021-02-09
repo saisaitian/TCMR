@@ -41,7 +41,7 @@ ss_CoreGx <- function(input, data) {
         stringsAsFactors = FALSE
       )
     },
-    mc.cores = parallel::detectCores()
+    mc.cores = set_cores()
   )
 
   result <- do.call(rbind, res_list)

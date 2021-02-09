@@ -31,13 +31,13 @@ ss_gcmap <- function(input, data, higher = 1, lower = -1) {
   sets.up <- parallel::mclapply(
     seq(ncol(matched.sets)),
     function(x) which(matched.sets[, x] == 1),
-    mc.cores = parallel::detectCores()
+    mc.cores = set_cores()
   )
 
   sets.down <- parallel::mclapply(
     seq(ncol(matched.sets)),
     function(x) which(matched.sets[, x] == -1),
-    mc.cores = parallel::detectCores()
+    mc.cores = set_cores()
   )
 
   ## transform experiment to (reverse) ranks

@@ -50,12 +50,12 @@ ss_cmap <- function(input, data) {
   rankLup <- parallel::mclapply(
     colnames(data),
     function(x) sort(rank(-1 * data[, x])[upset]),
-    mc.cores = parallel::detectCores()
+    mc.cores = set_cores()
   )
   rankLdown <- parallel::mclapply(
     colnames(data),
     function(x) sort(rank(-1 * data[, x])[downset]),
-    mc.cores = parallel::detectCores()
+    mc.cores = set_cores()
   )
   raw.score <- vapply(seq_along(rankLup), function(x) {
     .s(rankLup[[x]], rankLdown[[x]], n = nrow(data))

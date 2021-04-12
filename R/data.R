@@ -27,3 +27,12 @@ NULL
 #' @examples
 #' data("data_logFC")
 NULL
+
+#' Information of tfdata
+#' @docType data
+#' @name tfdata
+#' @format A data.frame
+#' @source See `data-raw/`
+#' @examples
+#' data("tfdata")
+NULL

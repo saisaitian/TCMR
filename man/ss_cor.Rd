@@ -7,9 +7,9 @@
 ss_cor(input, data, method = c("pearson", "spearman", "kendall"))
 }
 \arguments{
-\item{input}{A \code{data.frame} containing \code{logFC} value, which \code{rownames} should be gene symbols.}
+\item{input}{A `data.frame` containing `logFC` value, which `rownames` should be gene symbols.}
 
-\item{data}{A \code{data.frame} contains \code{logFC} value data from 103 compounds.}
+\item{data}{A `data.frame` contains `logFC` value data from 103 compounds.}
 
 \item{method}{A string specifying correlation calculation method, should be one of "pearson", "spearman", "kendall".}
 }

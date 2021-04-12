@@ -35,7 +35,11 @@ Imports:
     purrr,
     stringr,
     SummarizedExperiment,
-    tibble
+    tibble,
+    reshape2,
+    ape,
+    ggtree,
+    simplifyEnrichment
 Suggests: 
     knitr,
     R.utils,

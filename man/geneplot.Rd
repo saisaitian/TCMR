@@ -4,7 +4,7 @@
 \alias{geneplot}
 \title{Title gene expression plot}
 \usage{
-geneplot(data, num = 3, colors = c("skyblue", "white", "red"))
+geneplot(data, num = 3, colors = c("blue", "white", "red"))
 }
 \arguments{
 \item{data}{the expression data of compounds}
@@ -18,4 +18,9 @@ geneplot(data, num = 3, colors = c("skyblue", "white", "red"))
 }
 \description{
 Title gene expression plot
+}
+\examples{
+geneplot(data=as.matrix(data_logFC[1:6,]))
+geneplot(data=as.matrix(data_logFC[1:6,]),colors = c("blue", "white", "red"))
+geneplot(data=as.matrix(data_logFC[1:6,]),colors = c("skyblue", "white", "red"))
 }

@@ -8,8 +8,10 @@
 #' @return
 #' @export
 #'
-#' @examples geneplot(data=as.matrix(data_logFC[1:6,]))
-#'
+#' @examples
+#' geneplot(data=as.matrix(data_logFC[1:6,]))
+#' geneplot(data=as.matrix(data_logFC[1:6,]),colors = c("blue", "white", "red"))
+#' geneplot(data=as.matrix(data_logFC[1:6,]),colors = c("skyblue", "white", "red"))
 #' @tests
 #'
 
@@ -72,5 +74,4 @@ geneplot <- function(data,num=3,colors = c("blue", "white", "red")) {
   ComplexHeatmap::draw(lgd, x = unit(0.7, "npc"), y = unit(0.7, "npc"))
 }
 
-geneplot(data=as.matrix(data_logFC[1:6,]),colors = c("blue", "white", "red"))
-geneplot(data=as.matrix(data_logFC[1:6,]),colors = c("skyblue", "white", "red"))
+

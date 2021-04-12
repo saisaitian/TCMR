@@ -1,5 +1,6 @@
 #' CoreGx method for Signature Search
 #'
+#'
 #' @inherit ss_cor
 #' @export
 #'

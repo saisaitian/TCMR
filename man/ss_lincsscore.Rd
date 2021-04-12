@@ -7,9 +7,9 @@
 ss_lincsscore(input, data)
 }
 \arguments{
-\item{input}{A list containing UP (in \code{upset} element) and DOWN (in \code{downset} element) genes.}
+\item{input}{A list containing UP (in `upset` element) and DOWN (in `downset` element) genes.}
 
-\item{data}{A \code{data.frame} containing \code{logFC} value data from 103 compounds.}
+\item{data}{A `data.frame` containing `logFC` value data from 103 compounds.}
 }
 \value{
 A data.frame.

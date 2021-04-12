@@ -61,7 +61,11 @@ deg_caller <- function(data, group, ref_group) {
 }
 
 #' @rdname deg_caller
+#'
+#' @param data An expression dataset in `data.frame` format whose rows indicate genes and columns indicate samples.
+#' @param ref_group A string specifying the reference group.
 #' @param groups A character vector specifying the group which samples belong to. Should at least 2 groups.
+#'
 #' @export
 deg_batch_caller <- function(data, groups, ref_group) {
   stopifnot(is.data.frame(data), !is.null(rownames(data)), length(ref_group) == 1L)

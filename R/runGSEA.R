@@ -25,7 +25,7 @@
 #' @importFrom cowplot plot_grid
 #' @examples
 #' one_report <- load_analyzedDEG(2)
-#' msigdb.path <- system.file("extdata", "c2.cp.kegg.v7.2.symbols.gmt",
+#' msigdb.path <- system.file("extdata", "c2.cp.kegg.v6.2.symbols.gmt",
 #'   package = "TCMR", mustWork = TRUE
 #' )
 #' runGSEA(
@@ -36,7 +36,7 @@
 #'   p.cutoff = 0.05
 #' )
 runGSEA <- function(data = NULL,
-                    res.path = tempdir(),
+                    res.path = getwd(),
                     dirct = "up",
                     n.path = 6,
                     msigdb.path = NULL,
@@ -271,3 +271,6 @@ runGSEA <- function(data = NULL,
   res <- list(ES = ES, runningES = df)
   return(res)
 }
+
+
+

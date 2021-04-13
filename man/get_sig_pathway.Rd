@@ -34,7 +34,5 @@ data("AnalyzedDEG")
 one_report <- load_analyzedDEG(1)
 deg <- subset(one_report, abs(logFC) > 1 & P.Value < 0.05)
 path1 <- get_sig_pathway(deg, p.cutoff = 0.05, p.adj.cutoff = 0.5, n.path = 10)
-path1
 path2 <- get_sig_pathway(deg, p.cutoff = 0.05, p.adj.cutoff = 0.5, sortby = "p.adjust", n.path = 10)
-path2
 }

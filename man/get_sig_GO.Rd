@@ -36,11 +36,5 @@ Get Enriched GO Sets
 data("AnalyzedDEG")
 one_report <- load_analyzedDEG(1)
 deg <- subset(one_report, abs(logFC) > 1 & P.Value < 0.05)
-
 go <- get_sig_GO(deg, p.cutoff = 0.05, p.adj.cutoff = 0.5, n.path = 10)
-go
-dot <- dotplot(go)
-dot
-bar <- barplot(go)
-bar
 }

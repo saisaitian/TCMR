@@ -30,7 +30,6 @@ get_sig_pathway <- function(data,
                             p.adj.cutoff = 0.2,
                             sortby = "pvalue",
                             n.path = 10) {
-  data=deg
   stopifnot(is.data.frame(data), !is.null(rownames(data)))
   identifiers <- suppressWarnings(clusterProfiler::bitr(data$identifier, fromType = "SYMBOL", toType = "ENTREZID", OrgDb = "org.Hs.eg.db"))
   message("The number of gene is: ", paste0(nrow(identifiers), collapse = "  "), " for next analysis")

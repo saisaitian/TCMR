@@ -2,6 +2,7 @@
 #'
 #' @param input A list containing UP (in `upset` element) and DOWN (in `downset` element) genes.
 #' @param data A `data.frame` containing `logFC` value data from 103 compounds.
+#' @param cores Number of cores to run the task
 #'
 #' @return A data.frame.
 #' @export
@@ -12,7 +13,7 @@
 #' downset <- rownames(data_logFC)[400:550]
 #' input <- list(upset = upset, downset = downset)
 #' cmap_kk <- ss_cmap(input = input, data = data_logFC)
-ss_cmap <- function(input, data) {
+ss_cmap <- function(input, data, cores = 1L) {
   stopifnot(all(c("upset", "downset") %in% names(input)), is.list(input))
   data <- as.matrix(data)
   upset <- input$upset
@@ -50,12 +51,12 @@ ss_cmap <- function(input, data) {
   rankLup <- parallel::mclapply(
     colnames(data),
     function(x) sort(rank(-1 * data[, x])[upset]),
-    mc.cores = set_cores()
+    mc.cores = cores
   )
   rankLdown <- parallel::mclapply(
     colnames(data),
     function(x) sort(rank(-1 * data[, x])[downset]),
-    mc.cores = set_cores()
+    mc.cores = cores
   )
   raw.score <- vapply(seq_along(rankLup), function(x) {
     .s(rankLup[[x]], rankLdown[[x]], n = nrow(data))

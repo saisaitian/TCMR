@@ -7,14 +7,14 @@
 getdotplot(data, fill = "pvalue", color = c("blue", "red"))
 }
 \arguments{
-\item{data}{enrichResult result in `data.frame` format}
+\item{data}{enrichResult result in \code{data.frame} format}
 
 \item{fill}{Dot color}
 
 \item{color}{Color to show}
 }
 \value{
-A `ggplot` object
+A \code{ggplot} object
 }
 \description{
 Dotplot for enrichResult

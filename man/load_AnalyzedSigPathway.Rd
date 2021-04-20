@@ -7,10 +7,10 @@
 load_AnalyzedSigPathway(id)
 }
 \arguments{
-\item{id}{A vector for subset of `id` column in [AnalyzedSigPathway] or just a subset of [AnalyzedSigPathway].}
+\item{id}{A vector for subset of \code{id} column in \link{AnalyzedSigPathway} or just a subset of \link{AnalyzedSigPathway}.}
 }
 \value{
-A `data.frame` or a list of `data.frame`.
+A \code{data.frame} or a list of \code{data.frame}.
 }
 \description{
 Currently, the top ten pathways results are for GSE85871.

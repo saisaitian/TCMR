@@ -15,7 +15,7 @@ bar_plot(
 )
 }
 \arguments{
-\item{data}{enrichResult result in `data.frame` format}
+\item{data}{enrichResult result in \code{data.frame} format}
 
 \item{color}{Color to show}
 
@@ -30,7 +30,7 @@ bar_plot(
 \item{colby}{Mapping colors by pvalue or p.adjust}
 }
 \value{
-A `ggplot` object
+A \code{ggplot} object
 }
 \description{
 Barplot for enrichResult

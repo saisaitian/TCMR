@@ -10,7 +10,7 @@ deg_caller(data, group, ref_group)
 deg_batch_caller(data, groups, ref_group)
 }
 \arguments{
-\item{data}{An expression dataset in `data.frame` format whose rows indicate genes and columns indicate samples.}
+\item{data}{An expression dataset in \code{data.frame} format whose rows indicate genes and columns indicate samples.}
 
 \item{group}{A character vector specifying 1 of 2 groups which samples belong to.}
 
@@ -19,12 +19,14 @@ deg_batch_caller(data, groups, ref_group)
 \item{groups}{A character vector specifying the group which samples belong to. Should at least 2 groups.}
 }
 \value{
-A `data.frame` or a `list` of `data.frame`.
+A \code{data.frame} or a \code{list} of \code{data.frame}.
 }
 \description{
 The functions are designed to run DEA.
-* `deg_caller` is used to run two group differential expression analysis.
-* `deg_batch_caller` is used to run batch DEG analysis.
+\itemize{
+\item \code{deg_caller} is used to run two group differential expression analysis.
+\item \code{deg_batch_caller} is used to run batch DEG analysis.
+}
 }
 \examples{
 data <- load_example_dataset()

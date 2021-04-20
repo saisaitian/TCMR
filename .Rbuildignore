@@ -6,5 +6,5 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-gsea_up_result.txt
+gsea_up_results.txt
 tf_enrich_results.txt

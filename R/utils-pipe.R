@@ -9,11 +9,3 @@
 #' @importFrom magrittr %>%
 #' @usage lhs \%>\% rhs
 NULL
-
-set_cores <- function() {
-  if (xfun::is_windows()) {
-    1
-  } else {
-    as.integer(parallel::detectCores())
-  }
-}

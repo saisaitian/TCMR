@@ -12,7 +12,7 @@ gene_dot(data, color = c("red", "blue"))
 \item{color}{Color to distinguish between different trends}
 }
 \value{
-A `ggplot` object
+A \code{ggplot} object
 }
 \description{
 Dotplot of Special Genes in Special Compounds of logFC Matrix

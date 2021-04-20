@@ -54,8 +54,6 @@ VignetteBuilder:
 biocViews:
 Encoding: UTF-8
 LazyData: true
-Roxygen: list(roclets = c("namespace", "rd", 
-                          "roxytest::testthat_roclet",
-                          "roxytest::param_roclet",
-                          "roxytest::return_roclet"))
+Roxygen: list(markdown = TRUE, roclets = c("collate",
+    "namespace", "rd", "roxytest::testthat_roclet"))
 RoxygenNote: 7.1.1.9001

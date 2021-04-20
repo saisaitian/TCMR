@@ -7,14 +7,14 @@
 dotplot(data, fill = "pvalue", color = c("blue", "red"))
 }
 \arguments{
-\item{data}{enrichResult object which is `data.frame` format.}
+\item{data}{enrichResult object which is \code{data.frame} format.}
 
 \item{fill}{dot color}
 
 \item{color}{color to show}
 }
 \value{
-A `ggplot` object
+A \code{ggplot} object
 }
 \description{
 Dotplot of enrichResult

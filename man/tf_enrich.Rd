@@ -18,7 +18,7 @@ tf_enrich(
 
 \item{tfdata}{Transcription factor and gene correspondence table}
 
-\item{colby}{Mapping colors by `pvalue` or `p.adjust`}
+\item{colby}{Mapping colors by \code{pvalue} or \code{p.adjust}}
 
 \item{res.path}{A string value to indicate the path for saving the results for functional pathways.}
 
@@ -27,7 +27,7 @@ tf_enrich(
 \item{n}{An integer value to indicate how many top tfs sorted by GeneRatio should be identified; 20 by default.}
 }
 \value{
-A `ggplot` object
+A \code{ggplot} object
 }
 \description{
 TF Enrichment for Genes

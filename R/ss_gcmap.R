@@ -1,6 +1,7 @@
 #' gcmap Method for Signature Search
 #'
 #' @inherit ss_cor
+#' @inheritParams ss_cmap
 #' @param higher A cutoff value. If `logFC` larger than or equal to `higher` will be included
 #' in the gene set with  `+1`.
 #' @param lower A cutoff value. If `logFC` smaller than or equal to `higher` will be included
@@ -12,7 +13,7 @@
 #' data("data_logFC")
 #' query2 <- data_logFC[1:60, 1, drop = FALSE]
 #' gcmap_kk <- ss_gcmap(input = query2, data = data_logFC)
-ss_gcmap <- function(input, data, higher = 1, lower = -1) {
+ss_gcmap <- function(input, data, higher = 1, lower = -1, cores = 1L) {
   stopifnot(is.data.frame(input))
   num <- sum(rownames(input) %in% rownames(data))
   if (num <= 10) {
@@ -31,13 +32,13 @@ ss_gcmap <- function(input, data, higher = 1, lower = -1) {
   sets.up <- parallel::mclapply(
     seq(ncol(matched.sets)),
     function(x) which(matched.sets[, x] == 1),
-    mc.cores = set_cores()
+    mc.cores = cores
   )
 
   sets.down <- parallel::mclapply(
     seq(ncol(matched.sets)),
     function(x) which(matched.sets[, x] == -1),
-    mc.cores = set_cores()
+    mc.cores = cores
   )
 
   ## transform experiment to (reverse) ranks

@@ -4,6 +4,6 @@
 .Ruserdata
 .DS_Store
 inst/doc
-docs
-gsea_up_result.txt
+gsea_up_results.txt
 tf_enrich_results.txt
+

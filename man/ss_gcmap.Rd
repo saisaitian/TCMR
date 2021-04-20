@@ -4,21 +4,23 @@
 \alias{ss_gcmap}
 \title{gcmap Method for Signature Search}
 \usage{
-ss_gcmap(input, data, higher = 1, lower = -1)
+ss_gcmap(input, data, higher = 1, lower = -1, cores = 1L)
 }
 \arguments{
-\item{input}{A `data.frame` containing `logFC` value, which `rownames` should be gene symbols.}
+\item{input}{A \code{data.frame} containing \code{logFC} value, which \code{rownames} should be gene symbols.}
 
-\item{data}{A `data.frame` contains `logFC` value data from 103 compounds.}
+\item{data}{A \code{data.frame} contains \code{logFC} value data from 103 compounds.}
 
-\item{higher}{A cutoff value. If `logFC` larger than or equal to `higher` will be included
-in the gene set with  `+1`.}
+\item{higher}{A cutoff value. If \code{logFC} larger than or equal to \code{higher} will be included
+in the gene set with  \code{+1}.}
 
-\item{lower}{A cutoff value. If `logFC` smaller than or equal to `higher` will be included
-in the gene set to `-1`, others should be set to `0`.}
+\item{lower}{A cutoff value. If \code{logFC} smaller than or equal to \code{higher} will be included
+in the gene set to \code{-1}, others should be set to \code{0}.}
+
+\item{cores}{Number of cores to run the task}
 }
 \value{
-A `data.frame`.
+A \code{data.frame}.
 }
 \description{
 gcmap Method for Signature Search

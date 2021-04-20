@@ -8,7 +8,7 @@
 A data.frame
 }
 \source{
-See `data-raw/`
+See \verb{data-raw/}
 }
 \description{
 Information of tfdata

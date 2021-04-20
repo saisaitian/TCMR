@@ -7,10 +7,10 @@
 load_analyzedDEG(id)
 }
 \arguments{
-\item{id}{A vector for subset of `id` column in [AnalyzedDEG] or just a subset of [AnalyzedDEG].}
+\item{id}{A vector for subset of \code{id} column in \link{AnalyzedDEG} or just a subset of \link{AnalyzedDEG}.}
 }
 \value{
-A `data.frame` or a list of `data.frame`.
+A \code{data.frame} or a list of \code{data.frame}.
 }
 \description{
 Currently, the DEG results are for GSE85871.

@@ -4,15 +4,17 @@
 \alias{ss_CoreGx}
 \title{CoreGx method for Signature Search}
 \usage{
-ss_CoreGx(input, data)
+ss_CoreGx(input, data, cores = 2)
 }
 \arguments{
 \item{input}{A `data.frame` containing `logFC` value, which `rownames` should be gene symbols.}
 
 \item{data}{A `data.frame` contains `logFC` value data from 103 compounds.}
+
+\item{cores}{Number of cores to run the task}
 }
 \value{
-A data.frame.
+A `data.frame`.
 }
 \description{
 CoreGx method for Signature Search

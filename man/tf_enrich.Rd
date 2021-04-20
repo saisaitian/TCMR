@@ -2,7 +2,7 @@
 % Please edit documentation in R/enrichtf.R
 \name{tf_enrich}
 \alias{tf_enrich}
-\title{Title Tf enrichment for genes}
+\title{TF Enrichment for Genes}
 \usage{
 tf_enrich(
   gene,
@@ -16,25 +16,25 @@ tf_enrich(
 \arguments{
 \item{gene}{The special gene for enrichment}
 
-\item{tfdata}{the transcription factor and gene correspondence table}
+\item{tfdata}{Transcription factor and gene correspondence table}
 
-\item{colby}{mapping colors by pvalue or p.adjust}
+\item{colby}{Mapping colors by `pvalue` or `p.adjust`}
 
 \item{res.path}{A string value to indicate the path for saving the results for functional pathways.}
 
-\item{colours}{color to show}
+\item{colours}{Color to show}
 
-\item{n}{A integer value to indicate how many top tfs sorted by GeneRatio should be identified; 20 by default.}
+\item{n}{An integer value to indicate how many top tfs sorted by GeneRatio should be identified; 20 by default.}
 }
 \value{
-
+A `ggplot` object
 }
 \description{
-Title Tf enrichment for genes
+TF Enrichment for Genes
 }
 \examples{
 data("tfdata")
 gene <- tfdata$gene[100:500]
-tf_enrich(gene,tfdata = tfdata,colours=c("red","blue"),colby = "p.adjust")
-tf_enrich(gene,tfdata = tfdata,colours=c("red","blue"),colby = "pvalue")
+tf_enrich(gene, tfdata = tfdata, colours = c("red", "blue"), colby = "p.adjust")
+tf_enrich(gene, tfdata = tfdata, colours = c("red", "blue"), colby = "pvalue")
 }

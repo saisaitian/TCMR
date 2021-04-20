@@ -1,27 +1,15 @@
-#' Dotplot of enrichResult
+#' Dotplot for enrichResult
 #'
-#' @param data enrichResult object which is `data.frame` format.
-#' @param fill dot color
-#' @param color color to show
-#'
-#' @return ggplot object
+#' @param data enrichResult result in `data.frame` format
+#' @param fill Dot color
+#' @param color Color to show
+#' @return A `ggplot` object
 #' @export
-#' @importFrom ggplot2 ggplot
-#' @importFrom ggplot2 geom_point
-#' @importFrom ggplot2 aes
-#' @importFrom ggplot2 scale_color_gradientn
-#' @importFrom ggplot2 scale_size_continuous
-#' @importFrom ggplot2 scale_x_continuous
-#' @importFrom ggplot2 theme_bw
-#' @importFrom ggplot2 ylab
-#' @importFrom ggplot2 labs
-#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 ggplot geom_point aes scale_color_gradientn scale_size_continuous scale_x_continuous theme_bw ylab labs theme
 #' @examples
 #' data("AnalyzedSigPathway")
 #' one_report <- load_AnalyzedSigPathway(1)
 #' getdotplot(one_report)
-#' @tests
-#'
 getdotplot <- function(data,
                        fill = "pvalue",
                        color = c("blue", "red")) {

@@ -2,22 +2,22 @@
 % Please edit documentation in R/getdotplot.R
 \name{getdotplot}
 \alias{getdotplot}
-\title{Dotplot of enrichResult}
+\title{Dotplot for enrichResult}
 \usage{
 getdotplot(data, fill = "pvalue", color = c("blue", "red"))
 }
 \arguments{
-\item{data}{enrichResult object which is `data.frame` format.}
+\item{data}{enrichResult result in `data.frame` format}
 
-\item{fill}{dot color}
+\item{fill}{Dot color}
 
-\item{color}{color to show}
+\item{color}{Color to show}
 }
 \value{
-ggplot object
+A `ggplot` object
 }
 \description{
-Dotplot of enrichResult
+Dotplot for enrichResult
 }
 \examples{
 data("AnalyzedSigPathway")

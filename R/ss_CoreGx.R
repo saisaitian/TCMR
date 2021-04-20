@@ -2,6 +2,7 @@
 #'
 #'
 #' @inherit ss_cor
+#' @param cores Number of cores to run the task
 #' @export
 #'
 #' @examples
@@ -11,7 +12,7 @@
 #' @testexamples
 #' expect_is(txp, "data.frame")
 
-ss_CoreGx <- function(input, data) {
+ss_CoreGx <- function(input, data, cores = 2) {
   stopifnot(is.data.frame(input))
   num <- sum(rownames(input) %in% rownames(data))
   if (num <= 10) {
@@ -42,7 +43,7 @@ ss_CoreGx <- function(input, data) {
         stringsAsFactors = FALSE
       )
     },
-    mc.cores = set_cores()
+    mc.cores = if (cores > set_cores()) set_cores() else cores
   )
 
   result <- do.call(rbind, res_list)

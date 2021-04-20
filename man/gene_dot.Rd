@@ -2,25 +2,25 @@
 % Please edit documentation in R/gene_dot.R
 \name{gene_dot}
 \alias{gene_dot}
-\title{Title Dotplot of special genes in special compounds of logFC matrix}
+\title{Dotplot of Special Genes in Special Compounds of logFC Matrix}
 \usage{
 gene_dot(data, color = c("red", "blue"))
 }
 \arguments{
-\item{data}{the special genes expression data of special compounds}
+\item{data}{Special genes expression data of special compounds}
 
-\item{color}{the color to distinguish between different trends}
+\item{color}{Color to distinguish between different trends}
 }
 \value{
 A `ggplot` object
 }
 \description{
-Title Dotplot of special genes in special compounds of logFC matrix
+Dotplot of Special Genes in Special Compounds of logFC Matrix
 }
 \examples{
-data=as.matrix(data_logFC[1:6,])
-data <- data.frame(t(data),check.rows = F,check.names = F)
+data <- as.matrix(data_logFC[1:6, ])
+data <- data.frame(t(data), check.rows = FALSE, check.names = FALSE)
 data$compound <- rownames(data)
-data <- data[3:13,]
+data <- data[3:13, ]
 gene_dot(data)
 }

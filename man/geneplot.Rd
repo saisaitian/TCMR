@@ -2,25 +2,25 @@
 % Please edit documentation in R/geneplot.R
 \name{geneplot}
 \alias{geneplot}
-\title{Title gene expression plot}
+\title{Gene Expression Plot}
 \usage{
 geneplot(data, num = 3, colors = c("blue", "white", "red"))
 }
 \arguments{
-\item{data}{the expression data of compounds}
+\item{data}{Expression data of compounds}
 
-\item{num}{the numbers of cluster}
+\item{num}{Numbers of cluster}
 
-\item{colors}{the color to show expression level}
+\item{colors}{Color to show expression level}
 }
 \value{
-
+A plot
 }
 \description{
-Title gene expression plot
+Gene Expression Plot
 }
 \examples{
-geneplot(data=as.matrix(data_logFC[1:6,]))
-geneplot(data=as.matrix(data_logFC[1:6,]),colors = c("blue", "white", "red"))
-geneplot(data=as.matrix(data_logFC[1:6,]),colors = c("skyblue", "white", "red"))
+geneplot(data = as.matrix(data_logFC[1:6, ]))
+geneplot(data = as.matrix(data_logFC[1:6, ]), colors = c("blue", "white", "red"))
+geneplot(data = as.matrix(data_logFC[1:6, ]), colors = c("skyblue", "white", "red"))
 }

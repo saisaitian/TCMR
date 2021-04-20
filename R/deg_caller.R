@@ -1,7 +1,8 @@
 #' Differential Expression Analysis
 #'
-#' - `deg_caller` is used to run two group differential expression analysis.
-#' - `deg_batch_caller` is used to run batch DEG analysis.
+#' The functions are designed to run DEA.
+#' * `deg_caller` is used to run two group differential expression analysis.
+#' * `deg_batch_caller` is used to run batch DEG analysis.
 #'
 #' @param data An expression dataset in `data.frame` format whose rows indicate genes and columns indicate samples.
 #' @param group A character vector specifying 1 of 2 groups which samples belong to.
@@ -9,6 +10,7 @@
 #'
 #' @return A `data.frame` or a `list` of `data.frame`.
 #' @export
+#' @name deg_caller
 #'
 #' @examples
 #' data <- load_example_dataset()

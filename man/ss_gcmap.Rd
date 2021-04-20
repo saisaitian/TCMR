@@ -18,7 +18,7 @@ in the gene set with  `+1`.}
 in the gene set to `-1`, others should be set to `0`.}
 }
 \value{
-A data.frame.
+A `data.frame`.
 }
 \description{
 gcmap Method for Signature Search

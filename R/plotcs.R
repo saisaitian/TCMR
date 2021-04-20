@@ -6,12 +6,10 @@
 #' @param y y axis
 #' @param colby color sort by a variable
 #' @param color color to show
-#' @importFrom ggplot2 ggplot
-#' @importFrom ggplot2 scale_colour_gradientn
-#' @importFrom ggplot2 aes
-#' @importFrom ggplot2 theme_minimal
-#' @importFrom ggplot2 geom_point
 #' @importFrom forcats fct_reorder
+#' @importFrom stats median order.dendrogram
+#' @importFrom graphics par
+#' @importFrom ggplot2 scale_colour_gradientn theme_minimal unit
 #' @return a ggplot
 #' @export
 #'

@@ -1,4 +1,3 @@
-
 #' Get Enriched GO Sets
 #'
 #' @inheritParams get_sig_pathway
@@ -33,27 +32,25 @@ get_sig_GO <- function(data,
     readable = TRUE
   ))
   df <- as.data.frame(kk)
- if(is.numeric(p.cutoff)&&is.numeric(p.adj.cutoff)){
-  df <- df[df$pvalue<p.cutoff,]
-  df <- df[df$p.adjust<p.adj.cutoff,]
- }
-
-  if(is.numeric(p.cutoff)&&is.null(p.adj.cutoff)){
-    df <- df[df$pvalue<p.cutoff,]
+  if (is.numeric(p.cutoff) && is.numeric(p.adj.cutoff)) {
+    df <- df[df$pvalue < p.cutoff, ]
+    df <- df[df$p.adjust < p.adj.cutoff, ]
   }
-  if(is.null(p.cutoff)&&is.numeric(p.adj.cutoff)){
-    df <- df[df$p.adjust<p.adj.cutoff,]
+
+  if (is.numeric(p.cutoff) && is.null(p.adj.cutoff)) {
+    df <- df[df$pvalue < p.cutoff, ]
+  }
+  if (is.null(p.cutoff) && is.numeric(p.adj.cutoff)) {
+    df <- df[df$p.adjust < p.adj.cutoff, ]
   }
   df <- df[order(df[, sortby], df$GeneRatio), ]
   df$Description <- factor(df$Description, levels = df$Description)
   df$GeneRatio <- DOSE::parse_ratio(df$GeneRatio)
 
-if(is.numeric(n.path)){
-
-  if (nrow(df) > n.path) {
-    df <- df[1:n.path, ]
+  if (is.numeric(n.path)) {
+    if (nrow(df) > n.path) {
+      df <- df[1:n.path, ]
+    }
   }
-
-}
   return(df)
 }

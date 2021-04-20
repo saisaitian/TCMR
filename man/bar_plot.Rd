@@ -2,7 +2,7 @@
 % Please edit documentation in R/bar_plot.R
 \name{bar_plot}
 \alias{bar_plot}
-\title{Barplot of enrichResult}
+\title{Barplot for enrichResult}
 \usage{
 bar_plot(
   data,
@@ -15,30 +15,28 @@ bar_plot(
 )
 }
 \arguments{
-\item{data}{enrichResult object which is `data.frame` format.}
+\item{data}{enrichResult result in `data.frame` format}
 
-\item{color}{color to show}
+\item{color}{Color to show}
 
-\item{linetype}{linetype}
+\item{linetype}{Linetype}
 
-\item{linecol}{line color}
+\item{linecol}{Line color}
 
-\item{pointcol}{point color}
+\item{pointcol}{Point color}
 
-\item{filcol}{bar color}
+\item{filcol}{Bar color}
 
-\item{colby}{mapping colors by pvalue or p.adjust}
+\item{colby}{Mapping colors by pvalue or p.adjust}
 }
 \value{
 A `ggplot` object
 }
 \description{
-Barplot of enrichResult
+Barplot for enrichResult
 }
 \examples{
-
 data("AnalyzedSigPathway")
 one_report <- load_AnalyzedSigPathway(1)
 bar_plot(one_report)
-
 }

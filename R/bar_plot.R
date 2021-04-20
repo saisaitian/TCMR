@@ -1,48 +1,30 @@
-#' Barplot of enrichResult
-#' @param data  enrichResult object which is `data.frame` format.
-#' @param color color to show
-#' @param linetype linetype
-#' @param linecol  line color
-#' @param pointcol point color
-#' @param filcol bar color
-#' @param colby  mapping colors by pvalue or p.adjust
+#' Barplot for enrichResult
+#'
+#' @param data  enrichResult result in `data.frame` format
+#' @param color Color to show
+#' @param linetype Linetype
+#' @param linecol  Line color
+#' @param pointcol Point color
+#' @param filcol Bar color
+#' @param colby  Mapping colors by pvalue or p.adjust
 #' @importFrom graphics barplot
-#' @importFrom ggplot2 ggplot
-#' @importFrom ggplot2 geom_bar
-#' @importFrom ggplot2 aes
-#' @importFrom ggplot2 scale_fill_continuous
-#' @importFrom ggplot2 theme
-#' @importFrom ggplot2 geom_point
-#' @importFrom ggplot2 geom_line
-#' @importFrom ggplot2 ylim
-#' @importFrom ggplot2 labs
-#' @importFrom ggplot2 geom_text
-#' @importFrom ggplot2 theme_bw
-#' @importFrom ggplot2 scale_x_discrete
-#' @importFrom ggplot2 coord_flip
-#' @importFrom ggplot2 element_line
-#' @importFrom ggplot2 element_blank
-#' @importFrom ggplot2 element_rect
-#' @importFrom ggplot2 element_text
+#' @importFrom ggplot2 ggplot geom_bar aes scale_fill_continuous theme geom_point geom_line ylim labs geom_text theme_bw
+#' scale_x_discrete coord_flip element_line element_blank element_rect element_text
 #'
 #' @return A `ggplot` object
 #' @export
 #'
 #' @examples
-#'
 #' data("AnalyzedSigPathway")
 #' one_report <- load_AnalyzedSigPathway(1)
 #' bar_plot(one_report)
-#'
-#' @tests
-#'
 bar_plot <- function(data,
-                    color = c("blue", "red"),
-                    linetype = "dashed",
-                    linecol = "chocolate",
-                    pointcol = "black",
-                    filcol = "red",
-                    colby = "pvalue") {
+                     color = c("blue", "red"),
+                     linetype = "dashed",
+                     linecol = "chocolate",
+                     pointcol = "black",
+                     filcol = "red",
+                     colby = "pvalue") {
   if (!is.element(colby, c("pvalue", "p.adjust"))) {
     stop("the argument of distance should be one of pvalue, p.adjust.")
   }

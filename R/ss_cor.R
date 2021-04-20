@@ -4,7 +4,7 @@
 #' @param data A `data.frame` contains `logFC` value data from 103 compounds.
 #' @param method A string specifying correlation calculation method, should be one of "pearson", "spearman", "kendall".
 #'
-#' @return A data.frame.
+#' @return A `data.frame`.
 #' @export
 #'
 #' @examples

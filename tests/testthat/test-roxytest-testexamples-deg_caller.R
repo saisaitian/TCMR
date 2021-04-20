@@ -2,7 +2,7 @@
 
 context("File R/deg_caller.R: @testexamples")
 
-test_that("Function deg_caller() @ L34", {
+test_that("Function deg_caller() @ L36", {
   
   data <- load_example_dataset()
   

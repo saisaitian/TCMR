@@ -14,7 +14,7 @@ ss_cor(input, data, method = c("pearson", "spearman", "kendall"))
 \item{method}{A string specifying correlation calculation method, should be one of "pearson", "spearman", "kendall".}
 }
 \value{
-A data.frame.
+A `data.frame`.
 }
 \description{
 Cor method for for Signature Search

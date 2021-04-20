@@ -22,8 +22,9 @@ deg_batch_caller(data, groups, ref_group)
 A `data.frame` or a `list` of `data.frame`.
 }
 \description{
-- `deg_caller` is used to run two group differential expression analysis.
-- `deg_batch_caller` is used to run batch DEG analysis.
+The functions are designed to run DEA.
+* `deg_caller` is used to run two group differential expression analysis.
+* `deg_batch_caller` is used to run batch DEG analysis.
 }
 \examples{
 data <- load_example_dataset()

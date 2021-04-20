@@ -2,7 +2,7 @@
 
 context("File R/get_sig_GO.R: @testexamples")
 
-test_that("Function get_sig_GO() @ L18", {
+test_that("Function get_sig_GO() @ L17", {
   
   data("AnalyzedDEG")
   one_report <- load_analyzedDEG(1)

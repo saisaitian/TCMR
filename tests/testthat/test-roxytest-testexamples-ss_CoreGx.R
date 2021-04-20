@@ -2,7 +2,7 @@
 
 context("File R/ss_CoreGx.R: @testexamples")
 
-test_that("Function ss_CoreGx() @ L14", {
+test_that("Function ss_CoreGx() @ L15", {
   
   data("data_logFC")
   query2 <- data_logFC[1:60, 1, drop = FALSE]

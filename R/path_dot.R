@@ -21,9 +21,11 @@
 #' data("AnalyzedSigPathway")
 #' one_report <- load_AnalyzedSigPathway(1)
 #' dotplot(one_report)
+
 dotplot <- function(data,
                     fill = "pvalue",
                     color = c("blue", "red")) {
+
   if (!is.element(fill, c("pvalue", "p.adjust"))) {
     stop("the argument of distance should be one of pvalue, p.adjust.")
   }
@@ -60,4 +62,5 @@ dotplot <- function(data,
       axis.text.x = element_text(size = 8, color = "black"),
       axis.text.y = element_text(size = 12, face = "plain", color = "black")
     )
+
 }

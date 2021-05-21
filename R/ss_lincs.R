@@ -71,18 +71,7 @@ ss_lincsscore <- function(input, data) {
     sum(CSnull[abs(CSnull[, "WTCS"]) > abs(x), "Freq"]) / sum(CSnull[, "Freq"])
   }, FUN.VALUE = numeric(1))
   CS_fdr <- stats::p.adjust(CS_pval, "fdr")
-  # grouping <- paste(gsub("^.*?_", "", names(lincsout)),
-  #                   as.character(ifelse(ESout > 0, "up", "down")), sep="_")
 
-  # lincsout_na <- as.numeric(lincsout)
-  # lincsout_na[lincsout_na == 0] <- NA
-
-  # groupmean <- tapply(lincsout_na, grouping, mean, na.rm=TRUE)
-  # groupmean[is.na(groupmean)] <- 0
-  #
-  # groupmean[groupmean==0] <- 10^-12
-  #
-  # ncs <- as.numeric(lincsout) / abs(groupmean[grouping])
   score <- .S(lincsout)
 
   result <- data.frame(

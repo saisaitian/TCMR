@@ -28,14 +28,15 @@
 #' msigdb.path <- system.file("extdata", "c2.cp.kegg.v6.2.symbols.gmt",
 #'   package = "TCMR", mustWork = TRUE
 #' )
-#' runGSEA(
+#' getGSEA(
 #'   data = one_report,
 #'   dirct = "up",
 #'   msigdb.path = msigdb.path,
 #'   n.path = 3,
 #'   p.cutoff = 0.05
 #' )
-runGSEA <- function(data = NULL,
+
+getGSEA <- function(data = NULL,
                     res.path = getwd(),
                     dirct = "up",
                     n.path = 6,
@@ -49,7 +50,6 @@ runGSEA <- function(data = NULL,
   names(geneList) <- data$identifier
   geneList <- sort(geneList, decreasing = TRUE) # ranked gene set
 
-  # run gsea
   msigdb <- try(clusterProfiler::read.gmt(msigdb.path), silent = TRUE)
   if (class(msigdb) == "try-error") {
     stop("please provide correct ABSOLUTE PATH for MSigDB file.")
@@ -165,7 +165,6 @@ runGSEA <- function(data = NULL,
       axis.text = element_blank(),
       axis.line.x = element_blank()
     ) +
-    # scale_x_continuous(expand=c(0,0)) +
     scale_y_continuous(expand = c(0, 0))
 
   df2 <- p.res$data

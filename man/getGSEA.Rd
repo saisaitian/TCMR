@@ -6,7 +6,7 @@
 \usage{
 getGSEA(
   data = NULL,
-  res.path = getwd(),
+  res.path = tempdir(),
   dirct = "up",
   n.path = 6,
   msigdb.path = NULL,

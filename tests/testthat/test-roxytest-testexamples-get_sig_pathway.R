@@ -2,14 +2,13 @@
 
 context("File R/get_sig_pathway.R: @testexamples")
 
-test_that("Function get_sig_pathway() @ L27", {
+test_that("Function get_sig_pathway() @ L26", {
   
   data("AnalyzedDEG")
   one_report <- load_analyzedDEG(1)
   deg <- subset(one_report, abs(logFC) > 1 & P.Value < 0.05)
   path <- get_sig_pathway(deg, p.cutoff = 1, p.adj.cutoff = 1, n.path = 10)
   expect_is(deg, "data.frame")
-  expect_is(path1, "data.frame")
-  expect_is(path2, "data.frame")
+  expect_is(path, "data.frame")
 })
 

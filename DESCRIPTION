@@ -48,6 +48,7 @@ Suggests:
     dendextend,
     R.utils,
     rmarkdown,
+    prettydoc,
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
@@ -56,4 +57,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("collate",
     "namespace", "rd", "roxytest::testthat_roclet"))
-RoxygenNote: 7.1.1.9001
+RoxygenNote: 7.1.1

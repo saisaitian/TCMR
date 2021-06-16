@@ -10,7 +10,6 @@
 #' geneplot(data = as.matrix(data_logFC[1:6, ]))
 #' geneplot(data = as.matrix(data_logFC[1:6, ]), colors = c("blue", "white", "red"))
 #' geneplot(data = as.matrix(data_logFC[1:6, ]), colors = c("skyblue", "white", "red"))
-
 geneplot <- function(data, num = 3, colors = c("blue", "white", "red")) {
   lable1 <- row.names(data)
   lable2 <- substring(colnames(data), 1, 10)

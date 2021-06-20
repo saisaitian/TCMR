@@ -19,10 +19,6 @@
 #' one_report <- load_analyzedDEG(1)
 #' deg <- subset(one_report, abs(logFC) > 1 & P.Value < 0.05)
 #' path <- get_sig_pathway(deg, p.cutoff = 1, p.adj.cutoff = 1, n.path = 10)
-#' @testexamples
-#' expect_is(deg, "data.frame")
-#' expect_is(path1, "data.frame")
-#' expect_is(path2, "data.frame")
 
 get_sig_pathway <- function(data,
                             p.cutoff = 0.05,

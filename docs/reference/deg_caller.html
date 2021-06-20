@@ -150,8 +150,8 @@ deg_batch_caller is used to run batch DEG analysis.
     <p>A <code>data.frame</code> or a <code>list</code> of <code>data.frame</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='load_example_dataset.html'>load_example_dataset</a></span><span class='op'>(</span><span class='op'>)</span>
-
+    <pre class="examples"><div class='input'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='load_example_dataset.html'>load_example_dataset</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading dataset GSE85871...</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
 <span class='co'># Get a subset of expression dataset</span>
 <span class='va'>ix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>61</span>, <span class='fl'>62</span><span class='op'>)</span>
 <span class='va'>expr</span> <span class='op'>&lt;-</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>expr</span><span class='op'>[</span>, <span class='va'>ix</span><span class='op'>]</span>
@@ -159,14 +159,45 @@ deg_batch_caller is used to run batch DEG analysis.
 
 <span class='co'># Run DEG analysis</span>
 <span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>deg_caller</span><span class='op'>(</span><span class='va'>expr</span>, group <span class='op'>=</span> <span class='va'>group</span>, ref_group <span class='op'>=</span> <span class='va'>group</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>report</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='message'>Info: Glycyrrhizic acid vs DMSO (reference group)</span></div><div class='output co'>#&gt; <span class='message'>N: DMSO:#2  Glycyrrhizic acid:#2</span></div><div class='output co'>#&gt; <span class='message'>Constructing design matrix...</span></div><div class='output co'>#&gt; <span class='message'>Running DEG analysis with limma...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Zero sample variances detected, have been offset away from zero</span></div><div class='output co'>#&gt; <span class='message'>Reporting results...</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>report</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    identifier     logFC  AveExpr         t      P.Value adj.P.Val         B
+#&gt; 1:      CDH12  3.411526 1.981608  30.80083 5.441761e-05 0.2925089 1.1921795
+#&gt; 2:      NLGN1 -3.204683 1.645785 -26.29158 8.915954e-05 0.2925089 1.0903322
+#&gt; 3:       HCRT  3.181742 3.144149  22.99756 1.353037e-04 0.2925089 0.9811453
+#&gt; 4:    SOSTDC1  3.582065 1.791032  22.73374 1.402533e-04 0.2925089 0.9706183
+#&gt; 5:   SERPINB2 -2.191310 2.182794 -20.95775 1.806605e-04 0.2925089 0.8909550
+#&gt; 6:   ATP6V1G2  2.698387 3.463790  20.22094 2.019340e-04 0.2925089 0.8527498</div><div class='input'>
 <span class='co'># Run batch DEG analysis</span>
 <span class='va'>reports</span> <span class='op'>&lt;-</span> <span class='fu'>deg_batch_caller</span><span class='op'>(</span><span class='va'>expr</span>, groups <span class='op'>=</span> <span class='va'>group</span>, ref_group <span class='op'>=</span> <span class='va'>group</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>reports</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='message'>Info: Glycyrrhizic acid vs DMSO (reference group)</span></div><div class='output co'>#&gt; <span class='message'>N: DMSO:#2  Glycyrrhizic acid:#2</span></div><div class='output co'>#&gt; <span class='message'>Constructing design matrix...</span></div><div class='output co'>#&gt; <span class='message'>Running DEG analysis with limma...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Zero sample variances detected, have been offset away from zero</span></div><div class='output co'>#&gt; <span class='message'>Reporting results...</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>reports</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $`Glycyrrhizic acid:DMSO`
+#&gt;        identifier         logFC  AveExpr             t      P.Value adj.P.Val
+#&gt;     1:      CDH12  3.411526e+00 1.981608  3.080083e+01 5.441761e-05 0.2925089
+#&gt;     2:      NLGN1 -3.204683e+00 1.645785 -2.629158e+01 8.915954e-05 0.2925089
+#&gt;     3:       HCRT  3.181742e+00 3.144149  2.299756e+01 1.353037e-04 0.2925089
+#&gt;     4:    SOSTDC1  3.582065e+00 1.791032  2.273374e+01 1.402533e-04 0.2925089
+#&gt;     5:   SERPINB2 -2.191310e+00 2.182794 -2.095775e+01 1.806605e-04 0.2925089
+#&gt;    ---                                                                       
+#&gt; 12544:    ZNF280B -3.608800e-04 2.389466 -2.983343e-04 9.997800e-01 1.0000000
+#&gt; 12545:      PSMF1 -2.715000e-05 9.237362 -1.651653e-04 9.998782e-01 1.0000000
+#&gt; 12546:      CFLAR -1.104091e-05 6.116883 -9.067181e-05 9.999331e-01 1.0000000
+#&gt; 12547:   CCDC102B  0.000000e+00 0.000000  0.000000e+00 1.000000e+00 1.0000000
+#&gt; 12548:      RPE65  0.000000e+00 0.000000  0.000000e+00 1.000000e+00 1.0000000
+#&gt;                 B
+#&gt;     1:  1.1921795
+#&gt;     2:  1.0903322
+#&gt;     3:  0.9811453
+#&gt;     4:  0.9706183
+#&gt;     5:  0.8909550
+#&gt;    ---           
+#&gt; 12544: -6.5415101
+#&gt; 12545: -6.5415101
+#&gt; 12546: -6.5415101
+#&gt; 12547: -6.5415101
+#&gt; 12548: -6.5415101
+#&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='va'>report</span>, <span class='va'>reports</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
-</pre>
+</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

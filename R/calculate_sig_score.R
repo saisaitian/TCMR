@@ -1,5 +1,5 @@
 
-#' Calculating signature score using z-score method
+#' #' Calculating signature score using z-score method
 #'
 #' @param eset transcriptomic data,please make sure a microarray profile or a normalized expression data [FPKM or TPM without log2 transformation is recommended] was provided.
 #' @param signature List of gene signatures
@@ -23,7 +23,7 @@ calculate_sig_score_zscore<-function(eset,
   signature<-signature[lapply(signature,function(x) sum(x%in%rownames(eset)==TRUE))>= mini_gene_count]
 
   ###########################
-  #calculating signature score
+  ##calculating signature score
   goi <- names(signature)
   for (sig in goi) {
     pdata[, sig] <- NA

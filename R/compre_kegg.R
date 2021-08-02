@@ -1,5 +1,5 @@
 
-#' Title drug special pathway analysis
+#' #' Title drug special pathway analysis
 #'
 #' @param index the index of colunm in data_logFC matrix
 #' @param group the compare variable including group and class

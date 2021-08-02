@@ -2,7 +2,7 @@
 % Please edit documentation in R/compre_kegg.R
 \name{drug_special_pathway}
 \alias{drug_special_pathway}
-\title{Title drug special pathway analysis}
+\title{#' Title drug special pathway analysis}
 \usage{
 drug_special_pathway(
   index = c(1, 3, 5),
@@ -30,7 +30,7 @@ drug_special_pathway(
 data frame
 }
 \description{
-Title drug special pathway analysis
+#' Title drug special pathway analysis
 }
 \examples{
 drug_special_pathway(group=c('drug'))

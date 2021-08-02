@@ -2,7 +2,7 @@
 % Please edit documentation in R/calculate_sig_score.R
 \name{calculate_sig_score_zscore}
 \alias{calculate_sig_score_zscore}
-\title{Calculating signature score using z-score method}
+\title{#' Calculating signature score using z-score method}
 \usage{
 calculate_sig_score_zscore(eset, signature, mini_gene_count)
 }
@@ -17,7 +17,7 @@ calculate_sig_score_zscore(eset, signature, mini_gene_count)
 data frame with pdata and signature scores for gene sets; signatures in columns, samples in rows
 }
 \description{
-Calculating signature score using z-score method
+#' Calculating signature score using z-score method
 }
 \examples{
 There is no example and please refer to vignette.

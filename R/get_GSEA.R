@@ -35,9 +35,14 @@
 #'   n.path = 3,
 #'   p.cutoff = 0.05
 #' )
+<<<<<<< HEAD:R/get_GSEA.R
 
 get_GSEA <- function(data = NULL,
                     res.path = getwd(),
+=======
+getGSEA <- function(data = NULL,
+                    res.path = tempdir(),
+>>>>>>> 11c625afa98502d9325c1202b79784f0646e3d26:R/getGSEA.R
                     dirct = "up",
                     n.path = 6,
                     msigdb.path = NULL,

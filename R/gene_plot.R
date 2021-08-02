@@ -9,11 +9,18 @@
 #' @return A plot
 #' @export
 #' @examples
+<<<<<<< HEAD:R/gene_plot.R
 #' gene_plot(data = as.matrix(data_logFC[1:6, ]))
 #' gene_plot(data = as.matrix(data_logFC[1:6, ]), colors = c("blue", "white", "red"))
 #' gene_plot(data = as.matrix(data_logFC[1:10, ]), colors = c("skyblue", "white", "red"))
 
 gene_plot <- function(data, num = 3, colors = c("blue", "white", "red"),shownames=T) {
+=======
+#' geneplot(data = as.matrix(data_logFC[1:6, ]))
+#' geneplot(data = as.matrix(data_logFC[1:6, ]), colors = c("blue", "white", "red"))
+#' geneplot(data = as.matrix(data_logFC[1:6, ]), colors = c("skyblue", "white", "red"))
+geneplot <- function(data, num = 3, colors = c("blue", "white", "red")) {
+>>>>>>> 11c625afa98502d9325c1202b79784f0646e3d26:R/geneplot.R
   lable1 <- row.names(data)
   lable2 <- substring(colnames(data), 1, 10)
   dend <- stats::as.dendrogram(stats::hclust(stats::dist(t(as.matrix(data)))))

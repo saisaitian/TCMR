@@ -19,19 +19,25 @@
 #' one_report <- load_analyzedDEG(1)
 #' deg <- subset(one_report, abs(logFC) > 1 & P.Value < 0.05)
 #' path <- get_sig_pathway(deg, p.cutoff = 1, p.adj.cutoff = 1, n.path = 10)
+<<<<<<< HEAD
+=======
+#' @testexamples
+#' expect_is(deg, "data.frame")
+#' expect_is(path, "data.frame")
+>>>>>>> 11c625afa98502d9325c1202b79784f0646e3d26
 
 get_sig_pathway <- function(data,
                             p.cutoff = 0.05,
                             p.adj.cutoff = 0.2,
                             sortby = "pvalue",
                             n.path = 10) {
-  options (warn = -1)
+  options(warn = -1)
   stopifnot(is.data.frame(data), !is.null(rownames(data)))
   identifiers <- suppressWarnings(clusterProfiler::bitr(data$identifier, fromType = "SYMBOL", toType = "ENTREZID", OrgDb = "org.Hs.eg.db"))
   message("The number of gene is: ", paste0(nrow(identifiers), collapse = "  "), " for next analysis")
   kk <- suppressWarnings(clusterProfiler::enrichKEGG(
     gene = identifiers$ENTREZID,
-    organism = 'hsa',
+    organism = "hsa",
     pvalueCutoff = p.cutoff,
     qvalueCutoff = p.adj.cutoff
   ))

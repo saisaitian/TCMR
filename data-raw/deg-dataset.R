@@ -29,6 +29,7 @@ AnalyzedDEG <- data.frame(
   filename = paste0("GSE85871-DEG-", 1:103, ".rds")
 )
 
+
 purrr::map2(reports2, AnalyzedDEG$filename, function(DEG, filename) {
   saveRDS(DEG, file = paste0("inst/extdata/", filename))
 })
@@ -50,11 +51,13 @@ rownames(data) <- data$identifier
 data <- data[, -1]
 data_logFC <- data
 
+names(data_logFC)[c(76,91,96)] <- c('beta_ecdysterone','6_gingerol','(+)2-(1-hydroxyl-4-oxocyclohexyl) ethyl caffeate')
 
+AnalyzedDEG$vs[c(76,91,96)] <- c('beta_ecdysterone','6_gingerol','(+)2-(1-hydroxyl-4-oxocyclohexyl) ethyl caffeate')
 
-names(data_logFC) <- gsub("尾.", "", names(data_logFC))
+AnalyzedDEG <- AnalyzedDEG[1:102,]
 
-AnalyzedDEG$vs <- gsub("尾-", "", AnalyzedDEG$vs)
+data_logFC <- data_logFC[,1:102]
 
 usethis::use_data(data_logFC, overwrite = TRUE)
 

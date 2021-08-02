@@ -36,3 +36,45 @@ NULL
 #' @examples
 #' data("tfdata")
 NULL
+
+
+#' Information of SMILES
+#' @docType data
+#' @name SMILES
+#' @format A data.frame
+#' @source See `data-raw/`
+#' @examples
+#' data("SMILES")
+NULL
+
+#' Information of signature_tme
+#' @docType data
+#' @name signature_tme
+#' @format A list
+#' @source See `data-raw/`
+#' @examples
+#' data("signature_tme")
+NULL
+
+#' Information of TCM_expr
+#' @docType data
+#' @name TCM_expr
+#' @format A data.frame
+#' @source See `data-raw/`
+#' @examples
+#' data("TCM_expr")
+NULL
+
+#' Information of TCM_pdata
+#' @docType data
+#' @name TCM_pdata
+#' @format A data.frame
+#' @source See `data-raw/`
+#' @examples
+#' data("TCM_pdata")
+NULL
+
+
+
+
+

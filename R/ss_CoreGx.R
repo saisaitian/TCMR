@@ -1,6 +1,4 @@
 #' CoreGx method for Signature Search
-#'
-#'
 #' @inherit ss_cor
 #' @inheritParams ss_cmap
 #' @export
@@ -18,6 +16,7 @@ ss_CoreGx <- function(input, data, cores = 1L) {
   if (num <= 10) {
     stop("the commom gene less than 10")
   }
+  message(paste0("\n", ">>> Running ", "ss_CoreGx"))
   message(paste(
     num, "/", length(rownames(data)),
     "genes in input share identifiers with reference database"

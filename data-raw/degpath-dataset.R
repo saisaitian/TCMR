@@ -26,4 +26,6 @@ AnalyzedSigPathway <- Analyzedsigpath
 
 AnalyzedSigPathway$vs <- gsub("尾-", "", AnalyzedSigPathway$vs)
 
+AnalyzedSigPathway <- AnalyzedSigPathway[1:102,]
+
 usethis::use_data(AnalyzedSigPathway, overwrite = TRUE)

@@ -37,6 +37,7 @@ exprdf_uniq
 
 library(dplyr)
 expr <- exprdf_uniq %>% tibble::rownames_to_column("symbol")
+
 # 减少一些磁盘占用
 vroom::vroom_write(expr, path = "../inst/extdata/GSE85871_expr.tsv.gz")
 vroom::vroom_write(pdata, path = "../inst/extdata/GSE85871_pdata.tsv.gz")

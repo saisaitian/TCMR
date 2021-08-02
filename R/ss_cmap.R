@@ -23,6 +23,7 @@ ss_cmap <- function(input, data, cores = 1L) {
     if (num <= 10) {
       stop("the up gene less than 10")
     }
+    message(paste0("\n", ">>> Running ", "ss_cmap"))
     message(paste(
       sum(upset %in% rownames(data)), "/", length(upset),
       "genes in up set share identifiers with reference database"

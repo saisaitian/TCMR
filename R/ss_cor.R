@@ -20,6 +20,7 @@ ss_cor <- function(input, data, method = c("pearson", "spearman", "kendall")) {
   if (num <= 10) {
     stop("the commom gene less than 10")
   }
+  message(paste0("\n", ">>> Running ", "ss_cor"))
   message(paste(
     num, "/", length(rownames(data)),
     "genes in input share identifiers with reference database"

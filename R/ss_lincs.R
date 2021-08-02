@@ -9,8 +9,8 @@
 #' upset <- rownames(data_logFC)[1:100]
 #' downset <- rownames(data_logFC)[400:550]
 #' input <- list(upset = upset, downset = downset)
-#' lincs_kk <- ss_lincsscore(input, data_logFC)
-ss_lincsscore <- function(input, data) {
+#' lincs_kk <- ss_lincs(input, data_logFC)
+ss_lincs <- function(input, data) {
   stopifnot(all(c("upset", "downset") %in% names(input)), is.list(input))
   data <- as.matrix(data)
 
@@ -21,6 +21,7 @@ ss_lincsscore <- function(input, data) {
     if (num <= 10) {
       stop("the up gene less than 10")
     }
+    message(paste0("\n", ">>> Running ", "ss_lincs"))
     message(paste(
       sum(upset %in% rownames(data)), "/", length(upset),
       "genes in up set share identifiers with reference database"

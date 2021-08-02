@@ -35,7 +35,8 @@ load_analyzedDEG <- function(id) {
       stop("When input a data.frame, should be a subset of AnalyzedDEG!")
     }
   } else if (is.numeric(id)) {
-    AnalyzedDEG <- get("AnalyzedDEG", envir = as.environment("package:TCMR"))
+    #AnalyzedDEG <- get("AnalyzedDEG", envir = as.environment("package:TCMR"))
+    AnalyzedDEG <- get("AnalyzedDEG")
     filename <- AnalyzedDEG[AnalyzedDEG$id %in% as.integer(id), ]$filename
   } else {
     stop("Invalid input for 'id', check the documentation!")

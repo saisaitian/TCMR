@@ -20,6 +20,3 @@ data frame with pdata and signature scores for gene sets; signatures in columns,
 \description{
 Calculating signature score using ssGSEA method
 }
-\examples{
-There is no example and please refer to vignette.
-}

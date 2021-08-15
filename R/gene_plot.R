@@ -12,7 +12,7 @@
 #' gene_plot(data = as.matrix(data_logFC[1:6, ]), colors = c("blue", "white", "red"))
 #' gene_plot(data = as.matrix(data_logFC[1:10, ]), colors = c("skyblue", "white", "red"))
 
-geneplot <- function(data, num = 3, colors = c("blue", "white", "red")) {
+gene_plot <- function(data, num = 3, colors = c("blue", "white", "red"),shownames=TRUE) {
   lable1 <- row.names(data)
   lable2 <- substring(colnames(data), 1, 10)
   dend <- stats::as.dendrogram(stats::hclust(stats::dist(t(as.matrix(data)))))

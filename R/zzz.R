@@ -1,9 +1,5 @@
 
 .onLoad <- function(libname, pkgname) {
-
-  invisible(suppressPackageStartupMessages(library("ComplexHeatmap")))
-  invisible(suppressPackageStartupMessages(library("tidyHeatmap")))
-
   invisible(suppressPackageStartupMessages(
     sapply(c("tibble", "tidyverse", "survival", "survminer", "ggplot2",
              "ggpubr","limma","limSolve","preprocessCore","e1071","GSVA"),

@@ -1,15 +1,11 @@
 
 #' #' Calculating signature score using z-score method
 #'
-#' @param eset transcriptomic data,please make sure a microarray profile or a normalized expression data [FPKM or TPM without log2 transformation is recommended] was provided.
+#' @param eset transcriptomic data,please make sure a microarray profile or a normalized expression data was provided.
 #' @param signature List of gene signatures
 #' @param mini_gene_count filter out signatures with genes less than minimal gene in expression set;
 #' @return data frame with pdata and signature scores for gene sets; signatures in columns, samples in rows
 #' @export
-#' @examples There is no example and please refer to vignette.
-#'
-
-
 calculate_sig_score_zscore<-function(eset,
                                      signature,
                                      mini_gene_count){
@@ -30,7 +26,8 @@ calculate_sig_score_zscore<-function(eset,
     genes <- signature[[sig]]
     genes <- genes[genes %in% rownames(eset)]
     tmp <- eset[genes, , drop=FALSE]
-    pdata[, sig] <- sigScore(tmp,methods = "zscore")
+    pdata[, sig] <- colMeans(tmp)
+
   }
   if ("TMEscoreA_CIR"%in%goi &"TMEscoreB_CIR" %in% goi) {
     pdata[,"TMEscore_CIR"]<-pdata[,"TMEscoreA_CIR"]-pdata[,"TMEscoreB_CIR"]
@@ -41,10 +38,10 @@ calculate_sig_score_zscore<-function(eset,
   pdata<-tibble::as_tibble(pdata)
   return(pdata)
 }
+
 ###################################################
-
-
 #' Calculating signature score using ssGSEA method
+#'
 #' @param eset normalizated  transcriptomic data: normalized (CPM, TPM, RPKM, FPKM, etc.)
 #' @param signature List of gene signatures
 #' @param mini_gene_count filter out signatures with genes less than minimal gene in expression set; default is 5;
@@ -52,7 +49,6 @@ calculate_sig_score_zscore<-function(eset,
 #' @return data frame with pdata and signature scores for gene sets; signatures in columns, samples in rows
 #' @export
 #' @import tibble
-#' @examples There is no example and please refer to vignette.
 
 calculate_sig_score_ssgsea<-function(eset,
                                      signature,
@@ -66,7 +62,7 @@ calculate_sig_score_ssgsea<-function(eset,
   ############################
 
   ##############################
-  res <- GSVA:: gsva(as.matrix(eset),
+  res <- GSVA::gsva(as.matrix(eset),
                      signature,
                      method="ssgsea",
                      kcdf="Gaussian",
@@ -97,9 +93,11 @@ calculate_sig_score_ssgsea<-function(eset,
 #' @param method he methods currently supported are `ssgsea`, `zscore`
 #' @param mini_gene_count filter out signatures with genes less than minimal gene in expression set;
 #' default is zscore funciion
+#' @importFrom stats cor
+#' @importFrom stats na.omit
+#' @importFrom stats prcomp
 #' @return data frame with pdata and signature scores for gene sets; signatures in columns, samples in rows
 #' @export
-#' @examples There is no example and please refer to vignette.
 #' @references 1. Hänzelmann S, Castelo R, Guinney J (2013). “GSVA: gene set variation analysis for microarray and RNA-Seq data.” BMC Bioinformatics, 14, 7. doi: 10.1186/1471-2105-14-7
 #' 2. Mariathasan, S., Turley, S., Nickles, D. et al. TGFβ attenuates tumour response to PD-L1 blockade by contributing to exclusion of T cells. Nature 554, 544–548 (2018).
 #'
@@ -110,7 +108,7 @@ calculate_sig_score<-function(eset,
 
 
   if(class(signature)=="list"){
-    signature<-lapply(signature,function(x) na.omit(x))
+    signature<-lapply(signature,function(x) stats::na.omit(x))
     signature<-lapply(signature,function(x) as.character(x))
     signature<-lapply(signature,function(x) unique(x))
     signature<-lapply(signature,function(x) x[!x==""])
@@ -131,4 +129,3 @@ calculate_sig_score<-function(eset,
                                                    mini_gene_count = mini_gene_count))
   return(res)
 }
-

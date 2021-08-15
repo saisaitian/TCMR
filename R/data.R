@@ -74,6 +74,14 @@ NULL
 #' data("TCM_pdata")
 NULL
 
+#' Information of apfp
+#' @docType data
+#' @name apfp
+#' @format A data.frame
+#' @source See `data-raw/`
+#' @examples
+#' data("apfp")
+NULL
 
 
 

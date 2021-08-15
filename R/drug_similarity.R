@@ -11,44 +11,28 @@
 #'
 #' @examples
 #' data("SMILES")
-#' drug_similarity(smile_a = SMILES[1,],smile_b = SMILES[2,],method = 'fp',plot = T)
-
+#' drug_similarity(smile_a = SMILES[1, ], smile_b = SMILES[2, ], method = "fp", plot = TRUE)
 drug_similarity <- function(smile_a,
                             smile_b,
-                            method='ap',
-                            plot=T){
-
+                            method = "fp",
+                            plot = T) {
   message(paste0("\n", ">>> Calculating ", "drug_similarity"))
 
-  sdf <- suppressWarnings(ChemmineR::smiles2sdf(c(smile_a,smile_b)))
-  cid(sdf) <- c('Molecular A','Molecular B')
-  ap <- sdf2ap(sdf)
-  if(method=="ap"){
-    index <- cmp.similarity(ap[1],ap[2])
+  sdf <- suppressWarnings(ChemmineR::smiles2sdf(c(smile_a, smile_b)))
+  ChemmineR::cid(sdf) <- c("Molecular A", "Molecular B")
+  ap <- ChemmineR::sdf2ap(sdf)
+  if (method == "ap") {
+    index <- ChemmineR::cmp.similarity(ap[1], ap[2])
   }
-  if(method=="fp"){
-  fp <- ChemmineR::desc2fp(ap)
-  index <- fpSim(fp[1], fp[2])
-  names(index) <- ""
+  if (method == "fp") {
+    # suppressWarnings(library(BioMedR))
+    fp <- ChemmineR::desc2fp(ap)
+    index <- ChemmineR::fpSim(fp[1], fp[2])
+    names(index) <- ""
   }
- if(plot==T){
-
-   plot(sdf[1:2], regenCoords=TRUE,print=FALSE) # 'print=TRUE' returns SDF summaries
+  if (plot == T) {
+    ChemmineR::plot(sdf[1:2], regenCoords = TRUE, print = FALSE) # 'print=TRUE' returns SDF summaries
   }
 
   return(index)
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -54,7 +54,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 if (!require("devtools")) 
     install.packages("devtools")
-devtools::install_github("saisaitian/TCMR")
+#devtools::install_github("saisaitian/TCMR")
 ```
 
 When you are installing MOVICS, you may encounter some errors saying that some packages are not installed. These errors are caused by recursively depending on R packages, so if one package was not installed properly on your computer, MOVICS would fail. To solve these errors, you simply need to check those error messages, find out which packages required are missing, then install it with command `BiocManager::install("YourErrorPackage")` or `install.packages("YourErrorPackage")` or `devtools::install_github("username/YourErrorPackage")` directly. After that, retry installing MOVICS, it may take several times, but eventually it should work. Or, we highly suggest that you referred to the `Imports` in the [DESCRIPTION](https://github.com/xlucpu/MOVICS/blob/master/DESCRIPTION) file, try to install all the R dependencies, and then install MOVICS. We also summarized several common problems that you may meet when installing MOVICS, please refer to [Troubleshooting](https://github.com/xlucpu/MOVICS) if applicable. After installation, you should be able to load the MOVICS package in your R session:
@@ -62,7 +62,7 @@ When you are installing MOVICS, you may encounter some errors saying that some p
 library("TCMR")
 library("dplyr")
 library("knitr")
-library("kableExtra")
+library(kableExtra)
 ```
 
 # <a id="Section.3" style="color:#159957;">3. Real Data Scenario</a>
@@ -156,11 +156,6 @@ gsea.up$gsea.list[1:6,3:6] %>%
 
 #### <a id="Section.4.2.3.4" style="color:#159957;">4) run pathway enrichment analysis</a>
 For all the new defined molecular subtypes, it is critical to depict its characteristics validated by different signatures of gene sets. MOVICS provides a simple function which uses gene set variation analysis to calculate enrichment score of each sample in each subtype based on given gene set list of interest. First, we must prepare a gene list of interest in hand saved as [GMT format](https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29).
-```{r, eval=TRUE}
-# MUST locate ABSOLUTE path of gene set file
-GSET.FILE <- 
-  system.file("extdata", "gene sets of interest.gmt", package = "MOVICS", mustWork = TRUE)
-```
 
 Then we can calculate single sample enrichment score based on specified method and given gene set of interest.
 ```{r,echo=FALSE, eval=TRUE}
@@ -243,7 +238,7 @@ input <- list(upset = upset, downset = downset)
 ```
 
 ```{r, eval=TRUE}
-lincs_kk <- ss_lincsscore(input, data_logFC)
+lincs_kk <- ss_lincs(input, data_logFC)
 test <- head(lincs_kk, 20)
 ```
 

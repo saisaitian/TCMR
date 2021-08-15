@@ -12,10 +12,13 @@
 #' @export
 #'
 #' @examples
-#' drug_special_pathway(group=c('drug'))
+#' data(data_logFC)
+#' drug_special_pathway(group = 'drug',
+#'                      data=  data_logFC)
 
 drug_special_pathway <-function(index=c(1,3,5),
-                                group=c('drug'),
+                                data=data_logFC,
+                                group= 'drug',
                                 num=10,
                                 colorby='pvalue',
                                 res.path    = getwd(),
@@ -23,7 +26,7 @@ drug_special_pathway <-function(index=c(1,3,5),
 
   message(paste0("\n", ">>> Calculating drug special KEGG pathway"))
 
-  tmp <- data_logFC[,index]
+  tmp <- data[,index]
 
   compname <- names(tmp)
 
@@ -50,23 +53,32 @@ drug_special_pathway <-function(index=c(1,3,5),
 
   if(length(group)==2){
 
-    formula_res <- suppressWarnings(compareCluster(ENTREZID ~ eval(parse(text = group[1]))+eval(parse(text = group[2])),
+    formula_res <- suppressWarnings(compareCluster(ENTREZID ~ eval(parse(text = group[1]))+ drug+class,
                                 data=newdata,
                                 fun= 'enrichKEGG',
                                 pvalueCutoff=0.05))
   }
 
-  if(length(group)==1){
+  if(group=='drug'){
 
-    formula_res <- suppressWarnings(clusterProfiler::compareCluster(ENTREZID ~ eval(parse(text = group)),
+    formula_res <- suppressWarnings(clusterProfiler::compareCluster(ENTREZID ~ drug,
                                                    data=newdata,
                                                    fun= 'enrichKEGG',
                                                    pvalueCutoff=0.05))
   }
 
+
+  if(group=='class'){
+
+    formula_res <- suppressWarnings(clusterProfiler::compareCluster(ENTREZID ~ class,
+                                                                    data=newdata,
+                                                                    fun= 'enrichKEGG',
+                                                                    pvalueCutoff=0.05))
+  }
+
   formula_res <- DOSE::setReadable(formula_res, org.Hs.eg.db, keyType = "ENTREZID")
 
-  outfile <- file.path(res.path, paste('compare_',fun,"_result.",".txt", sep = ""))
+  outfile <- file.path(res.path, paste('compare_KEGG',"_result.",".txt", sep = ""))
 
   write.table(as.data.frame(formula_res), file = outfile, row.names = FALSE, sep = "\t", quote = FALSE)
 

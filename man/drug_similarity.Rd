@@ -4,7 +4,7 @@
 \alias{drug_similarity}
 \title{Title The similarity calculation between two drugs}
 \usage{
-drug_similarity(smile_a, smile_b, method = "ap", plot = T)
+drug_similarity(smile_a, smile_b, method = "fp", plot = T)
 }
 \arguments{
 \item{smile_a}{the smile of drug a}
@@ -23,5 +23,5 @@ Title The similarity calculation between two drugs
 }
 \examples{
 data("SMILES")
-drug_similarity(smile_a = SMILES[1,],smile_b = SMILES[2,],method = 'fp',plot = T)
+drug_similarity(smile_a = SMILES[1, ], smile_b = SMILES[2, ], method = "fp", plot = TRUE)
 }

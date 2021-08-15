@@ -1,7 +1,7 @@
 
 #' Title druglike analysis
 #'
-#' @param smi SMILES of compounds
+#' @param smiles SMILES of compounds
 #'
 #' @return a data frame
 #' @export
@@ -9,7 +9,6 @@
 #' @examples
 #' data("SMILES")
 #' druglike_calculate(SMILES)
-
 
 druglike_calculate <- function(smiles){
   message(paste0("\n", ">>> Calculating ", "Lipinski Rule of Five - Druglikeness"))
@@ -30,7 +29,7 @@ druglike_calculate <- function(smiles){
     mw[i] <- ob[11]
     TPSA[i] <- ob[13]
   }
-  stats <- cbind(smi,formula, hba1, hbd, logp, mw,TPSA)
+  stats <- cbind(smiles,formula, hba1, hbd, logp, mw,TPSA)
   colnames(stats) <- c("SMILES",'Formula', "Hydrogen Bond Donors", "Hydrogen Bond Acceptors", "Octanol/Water Partition Coefficient (logP)", "Molecular Weight",'TPSA')
   return(stats)
 }

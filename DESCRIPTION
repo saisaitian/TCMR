@@ -39,7 +39,15 @@ Imports:
     reshape2,
     ape,
     ggtree,
-    xfun
+    xfun,
+    ChemmineR,
+    ChemmineOB,
+    BioMedR,
+    GSVA,
+    kableExtra,
+    RCurl,
+    plyr,
+    jsonlite
 Suggests: 
     knitr,
     simplifyEnrichment,

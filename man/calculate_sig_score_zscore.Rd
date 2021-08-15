@@ -7,7 +7,7 @@
 calculate_sig_score_zscore(eset, signature, mini_gene_count)
 }
 \arguments{
-\item{eset}{transcriptomic data,please make sure a microarray profile or a normalized expression data \link{FPKM or TPM without log2 transformation is recommended} was provided.}
+\item{eset}{transcriptomic data,please make sure a microarray profile or a normalized expression data was provided.}
 
 \item{signature}{List of gene signatures}
 
@@ -18,8 +18,4 @@ data frame with pdata and signature scores for gene sets; signatures in columns,
 }
 \description{
 #' Calculating signature score using z-score method
-}
-\examples{
-There is no example and please refer to vignette.
-
 }

@@ -7,7 +7,7 @@
 druglike_calculate(smiles)
 }
 \arguments{
-\item{smi}{SMILES of compounds}
+\item{smiles}{SMILES of compounds}
 }
 \value{
 a data frame

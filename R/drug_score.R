@@ -1,14 +1,13 @@
 
-#' #' Calculating signature score using z-score method
+#' #' Calculating drug score using z-score method
 #'
 #' @param eset transcriptomic data,please make sure a microarray profile or a normalized expression data was provided.
 #' @param signature List of gene signatures
-#' @param mini_gene_count filter out signatures with genes less than minimal gene in expression set;
 #' @return data frame with pdata and signature scores for gene sets; signatures in columns, samples in rows
 #' @export
-calculate_sig_score_zscore<-function(eset,
-                                     signature,
-                                     mini_gene_count){
+
+calculate_zscore<-function(eset,
+                           signature){
 
   message(paste0("\n", ">>> Calculating signature score using z-score method"))
 
@@ -16,12 +15,13 @@ calculate_sig_score_zscore<-function(eset,
   ###########################
   pdata<-data.frame("Index" = 1:length(colnames(eset)),"ID" = colnames(eset))
 
-  signature<-signature[lapply(signature,function(x) sum(x%in%rownames(eset)==TRUE))>= mini_gene_count]
+  #filter signatures
+  signature<-signature[lapply(signature,function(x) sum(x%in%rownames(eset)==TRUE))>= 2]
 
-  ###########################
   ##calculating signature score
-  goi <- names(signature)
-  for (sig in goi) {
+  sigs <- names(signature)
+
+  for (sig in sigs) {
     pdata[, sig] <- NA
     genes <- signature[[sig]]
     genes <- genes[genes %in% rownames(eset)]
@@ -40,28 +40,23 @@ calculate_sig_score_zscore<-function(eset,
 }
 
 ###################################################
-#' Calculating signature score using ssGSEA method
+#' Calculating drug score using ssGSEA method
 #'
 #' @param eset normalizated  transcriptomic data: normalized (CPM, TPM, RPKM, FPKM, etc.)
 #' @param signature List of gene signatures
-#' @param mini_gene_count filter out signatures with genes less than minimal gene in expression set; default is 5;
-#' the minimal gene count for ssGSEA methods should larger than 5 for the robustness of the calculation
 #' @return data frame with pdata and signature scores for gene sets; signatures in columns, samples in rows
 #' @export
 #' @import tibble
 
-calculate_sig_score_ssgsea<-function(eset,
-                                     signature,
-                                     mini_gene_count){
+calculate_ssgsea<-function(eset,
+                           signature){
 
   message(paste0("\n", ">>> Calculating signature score using ssGSEA method"))
 
-  signature<-signature[lapply(signature,function(x) sum(x%in%rownames(eset)==TRUE))>= mini_gene_count]
+  #filter signatures
+  signature<-signature[lapply(signature,function(x) sum(x%in%rownames(eset)==TRUE))>= 5]
 
-  if(mini_gene_count<=5) mini_gene_count <- 5
   ############################
-
-  ##############################
   res <- GSVA::gsva(as.matrix(eset),
                      signature,
                      method="ssgsea",
@@ -85,13 +80,12 @@ calculate_sig_score_ssgsea<-function(eset,
 }
 ###################################################
 
-#' Calculating signature score  on a gene expression dataset
+#' Calculating drug score  on a gene expression dataset
 #'
 #' @param eset normalizaed  transcriptomic data: normalized (CPM, TPM, RPKM, FPKM, etc.)
 #' @param signature List of gene signatures;
 #' such as `signature_tme`
-#' @param method he methods currently supported are `ssgsea`, `zscore`
-#' @param mini_gene_count filter out signatures with genes less than minimal gene in expression set;
+#' @param method the methods currently supported are `ssgsea`, `zscore`
 #' default is zscore funciion
 #' @importFrom stats cor
 #' @importFrom stats na.omit
@@ -101,11 +95,9 @@ calculate_sig_score_ssgsea<-function(eset,
 #' @references 1. Hänzelmann S, Castelo R, Guinney J (2013). “GSVA: gene set variation analysis for microarray and RNA-Seq data.” BMC Bioinformatics, 14, 7. doi: 10.1186/1471-2105-14-7
 #' 2. Mariathasan, S., Turley, S., Nickles, D. et al. TGFβ attenuates tumour response to PD-L1 blockade by contributing to exclusion of T cells. Nature 554, 544–548 (2018).
 #'
-calculate_sig_score<-function(eset,
-                              signature = signature_collection,
-                              method = "zscore",
-                              mini_gene_count = 3){
-
+drug_score<-function(eset,
+                     signature = signature_collection,
+                     method = "zscore"){
 
   if(class(signature)=="list"){
     signature<-lapply(signature,function(x) stats::na.omit(x))
@@ -119,13 +111,12 @@ calculate_sig_score<-function(eset,
   method<-tolower(method)
 
   if(!method%in%c("zscore","ssgsea")) stop("At present, we only provide two methods to calculate the score: zscore, ssGSEA")
+
   # run selected method
   res = switch(method,
-               ssgsea = calculate_sig_score_ssgsea(eset,
-                                                   signature = signature,
-                                                   mini_gene_count = mini_gene_count),
-               zscore = calculate_sig_score_zscore(eset,
-                                                   signature = signature,
-                                                   mini_gene_count = mini_gene_count))
+               ssgsea = calculate_ssgsea(eset,
+                                         signature = signature),
+               zscore = calculate_zscore(eset,
+                                         signature = signature))
   return(res)
 }

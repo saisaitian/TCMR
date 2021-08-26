@@ -19,6 +19,7 @@
 #' gcmap_kk <- ss_gcmap(input = query2, data = data_logFC)
 #' test <- head(gcmap_kk, 20)
 #' cs_plot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
+
 cs_plot <- function(data,
                    x = "scaled_score",
                    y = "tcm",
@@ -36,10 +37,17 @@ cs_plot <- function(data,
     theme_minimal() +
     theme(panel.background = element_rect(
       colour = "black",
-      size = 0.5
-    )) +
+      size = 0.5),
+      title = element_text(
+        size = 12, color = "black",
+        face = "plain", hjust = 0.2, lineheight = 0.2
+      ),
+      axis.title.x = element_text(size = 12, face = "plain", color = "black", hjust = 0.5),
+      axis.title.y = element_text(size = 14, color = "black"),
+      axis.text.x = element_text(size = 12, face = "plain",color = "black"),
+      axis.text.y = element_text(size = 12, face = "plain", color = "black")) +
     labs(
-      x = "Score", y = "Compounds",
+      x = "Score",
       size = "Score",
       col = colby
     )

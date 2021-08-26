@@ -6,7 +6,7 @@
 #' @examples
 #' data("data_logFC")
 #' query2 <- data_logFC[1:60, 1, drop = FALSE]
-#' txp <- ss_CoreGx(query2, data_logFC[1:3])
+#' txp <- ss_CoreGx(query2, data_logFC[1:10])
 #' @testexamples
 #' expect_is(txp, "data.frame")
 
@@ -30,6 +30,7 @@ ss_CoreGx <- function(input, data, cores = 1L) {
     seq_len(ncol(data)),
     function(i) {
       tt <- suppressWarnings(CoreGx::connectivityScore(data[, i, drop = F], input2, method = "fgsea", nperm = 1e4, nthread = 1))
+      #tt <- suppressWarnings(PharmacoGx:::connectivityScore(data[, i, drop = F], input2, method = "fgsea", nperm = 1e4, nthread = 1))
       direction <- tt[1]
       direction[direction >= 0] <- "up"
       direction[direction < 0] <- "down"
@@ -57,3 +58,13 @@ ss_CoreGx <- function(input, data, cores = 1L) {
   rownames(result) <- NULL
   return(result)
 }
+
+
+
+timestart<-Sys.time();
+txp <- ss_CoreGx(query2, data_logFC[1:10])
+timeend<-Sys.time()
+runningtime<-timeend-timestart
+print(runningtime)
+
+

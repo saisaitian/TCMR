@@ -61,10 +61,3 @@ ss_CoreGx <- function(input, data, cores = 1L) {
 
 
 
-timestart<-Sys.time();
-txp <- ss_CoreGx(query2, data_logFC[1:10])
-timeend<-Sys.time()
-runningtime<-timeend-timestart
-print(runningtime)
-
-

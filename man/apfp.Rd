@@ -6,13 +6,18 @@
 \title{Information of apfp}
 \format{
 A data.frame
+
+A data.frame
 }
 \source{
 See \verb{data-raw/}
 }
 \description{
 Information of apfp
+
+Information of brca_disease
 }
 \examples{
 data("apfp")
+data("brca_disease")
 }

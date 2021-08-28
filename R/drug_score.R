@@ -29,10 +29,10 @@ calculate_zscore<-function(eset,
     pdata[, sig] <- colMeans(tmp)
 
   }
-  if ("TMEscoreA_CIR"%in%goi &"TMEscoreB_CIR" %in% goi) {
+  if ("TMEscoreA_CIR"%in%sigs &"TMEscoreB_CIR" %in% sigs) {
     pdata[,"TMEscore_CIR"]<-pdata[,"TMEscoreA_CIR"]-pdata[,"TMEscoreB_CIR"]
   }
-  if ("TMEscoreA_plus"%in%goi &"TMEscoreB_plus" %in% goi) {
+  if ("TMEscoreA_plus"%in%sigs &"TMEscoreB_plus" %in% sigs) {
     pdata[,"TMEscore_plus"]<-pdata[,"TMEscoreA_plus"]-pdata[,"TMEscoreB_plus"]
   }
   pdata<-tibble::as_tibble(pdata)
@@ -61,7 +61,6 @@ calculate_ssgsea<-function(eset,
                      signature,
                      method="ssgsea",
                      kcdf="Gaussian",
-                     min.sz= mini_gene_count,
                      ssgsea.norm=T)
 
   res <- as.data.frame(t(res))

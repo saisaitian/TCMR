@@ -52,7 +52,7 @@ Compare_drug <-function(index=c(1,3,5),
 
   if(length(group)==2){
 
-    formula_res <- suppressWarnings(compareCluster(ENTREZID ~ eval(parse(text = group[1]))+ drug+class,
+    formula_res <- suppressWarnings(clusterProfiler::compareCluster(ENTREZID ~ eval(parse(text = group[1]))+ drug+class,
                                                    data=newdata,
                                                    fun= 'enrichKEGG',
                                                    pvalueCutoff=0.05))

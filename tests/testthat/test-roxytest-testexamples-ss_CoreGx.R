@@ -6,7 +6,7 @@ test_that("Function ss_CoreGx() @ L13", {
   
   data("data_logFC")
   query2 <- data_logFC[1:60, 1, drop = FALSE]
-  txp <- ss_CoreGx(query2, data_logFC[1:3])
+  txp <- ss_CoreGx(query2, data_logFC[1:10])
   expect_is(txp, "data.frame")
 })
 

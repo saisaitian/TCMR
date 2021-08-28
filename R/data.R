@@ -83,6 +83,13 @@ NULL
 #' data("apfp")
 NULL
 
+#' Information of brca_disease
+#' @docType data
+#' @name apfp
+#' @format A data.frame
+#' @examples
+#' data("brca_disease")
+NULL
 
 
 

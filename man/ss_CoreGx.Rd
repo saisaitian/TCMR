@@ -22,5 +22,5 @@ CoreGx method for Signature Search
 \examples{
 data("data_logFC")
 query2 <- data_logFC[1:60, 1, drop = FALSE]
-txp <- ss_CoreGx(query2, data_logFC[1:3])
+txp <- ss_CoreGx(query2, data_logFC[1:10])
 }

@@ -1,60 +1,97 @@
-library(dplyr)
-data("data_logFC")
 
-load("D:/github/TCMR/data/TCGA_BRCA_signature.Rdata")
+#' Title Drug Pair Seeker
+#'
+#' @param data the logFC matrix of TCM
+#' @param disease the disease of you intersted
+#' @param cutoff DEG cutoff
+#'
+#' @return the data.frame
+#' @export
+#'
+#' @examples
+#' data("data_logFC")
+#' data("tcga_disease")
+#' tmp <- drugpair_seeker(data = data_logFC,disease = res_RNA2)
 
-idx <- intersect(res_RNA2$row,rownames(data_logFC))
+drugpair_seeker <- function(data = NULL,disease = NULL,cutoff=1) {
 
-res3 <- res_RNA2[res_RNA2$row%in%idx,]
+  message(paste0("\n", ">>> Calculating ", "drug pairs to treat the disease"))
 
-DERNA=res3%>%subset(abs(log2FoldChange)>2&padj<0.05)
+# obtain common genes -----------------------------------------------------
 
-data_logFC2 <- data_logFC[idx,]
+  idx <- intersect(rownames(data),rownames(disease))
 
-drug1 <- data_logFC2$Puerarin
-drug2 <- data_logFC2$Anhydroicaritin
+  data <- data[idx,]
 
-names(drug1) <- rownames(data_logFC2)
-names(drug2) <- rownames(data_logFC2)
+  DEG_disease <- disease[idx,,drop=F]%>%
+    subset(abs(log2FoldChange)>cutoff)
 
-down_gene1 <- drug1[order(-drug1)]%>%
-  tail(500)%>%
-  names()
+# disease_down ------------------------------------------------------------
 
-up_gene1 <- drug1[order(-drug1)]%>%
-  head(500)%>%
-  names()
+  down_disease <- DEG_disease%>%
+    subset(log2FoldChange<0)%>%
+    rownames()
+
+# disease_up ------------------------------------------------------------
+
+  up_disease <- DEG_disease%>%
+    subset(log2FoldChange>0)%>%
+    rownames()
+
+# calculate drug pair -----------------------------------------------------
+
+  aa <- data.frame(t(utils::combn(names(data),2)),check.rows = F,check.names = F,stringsAsFactors = F)
+
+  colnames(aa) <- c('DrugA','DrugB')
+
+  aa$synergy_score <- 0
+
+  for (i in 1:nrow(aa)) {
+
+    drug_a <- aa[i,1]
+
+    drug_b <- aa[i,2]
+
+    drug_a <- data[,drug_a]
+
+    names(drug_a) <- rownames(data)
+
+    down_drug_a <- drug_a[order(-drug_a)]%>%tail(500)%>%names()
+
+    up_drug_a <- drug_a[order(-drug_a)]%>%head(500)%>%names()
+
+    drug_b <- data[,drug_b]
+
+    names(drug_b) <- rownames(data)
+
+    down_drug_b <- drug_b[order(-drug_b)]%>%tail(500)%>%names()
+
+    up_drug_b <- drug_b[order(-drug_b)]%>%head(500)%>%names()
+
+    synergyscore <- length(intersect(up_disease,down_drug_a))+
+      length(intersect(up_disease,down_drug_b))+
+      length(intersect(down_disease,up_drug_a))+
+      length(intersect(down_disease,up_drug_b))-
+      length(intersect(up_disease,up_drug_a))-
+      length(intersect(up_disease,up_drug_b))-
+      length(intersect(down_disease,down_drug_a))-
+      length(intersect(down_disease,down_drug_b))
+
+   aa[i,3] <- synergyscore
+
+  }
+
+  message('Done')
+
+  aa <- aa[order(-synergyscore),]
+
+  return(aa)
+}
 
 
-down_gene2 <- drug2[order(-drug2)]%>%
-  tail(500)%>%
-  names()
-
-up_gene2 <- drug2[order(-drug2)]%>%
-  head(500)%>%
-  names()
-
-# disease_siguature ----------------------------------------------------------
-
-
-down_disease <- DERNA%>%
-  filter(log2FoldChange<0)%>%
-  select(row)
-
-up_disease <- DERNA%>%
-  filter(log2FoldChange>0)%>%
-  select(row)
 
 
 
-id1 <- length(Reduce(intersect,list(up_disease$row,down_gene1,down_gene2)))
-
-id2 <- length(Reduce(intersect,list(down_disease$row,up_gene1,up_gene2)))
-
-id3 <- length(Reduce(intersect,list(up_disease$row,up_gene1,up_gene2)))
-
-id4 <- length(Reduce(intersect,list(down_disease$row,down_gene1,down_gene2)))
 
 
-synergyscore <- id1+id2-id3-id4
 

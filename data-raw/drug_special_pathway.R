@@ -13,81 +13,77 @@
 #'
 #' @examples
 #' data(data_logFC)
-#' drug_special_pathway(group = 'drug',
-#'                      data=  data_logFC)
-
-drug_special_pathway <-function(index=c(1,3,5),
-                                data=data_logFC,
-                                group= 'drug',
-                                num=10,
-                                colorby='pvalue',
-                                res.path    = getwd(),
-                                plot=T){
-
+#' drug_special_pathway(
+#'   group = "drug",
+#'   data = data_logFC
+#' )
+drug_special_pathway <- function(index = c(1, 3, 5),
+                                 data = data_logFC,
+                                 group = "drug",
+                                 num = 10,
+                                 colorby = "pvalue",
+                                 res.path = getwd(),
+                                 plot = T) {
   message(paste0("\n", ">>> Calculating drug special KEGG pathway"))
 
-  tmp <- data[,index]
+  tmp <- data[, index]
 
   compname <- names(tmp)
 
   tmp <- tibble::rownames_to_column(tmp)
 
-  newdata <- reshape2::melt(tmp,id.vars = 'rowname')
+  newdata <- reshape2::melt(tmp, id.vars = "rowname")
 
-  newdata <- newdata[abs(newdata$value)>1,]
+  newdata <- newdata[abs(newdata$value) > 1, ]
 
   names(newdata)[1] <- "SYMBOL"
 
-  eg = suppressWarnings(suppressMessages(clusterProfiler::bitr(newdata$SYMBOL,
-                                              fromType="SYMBOL",
-                                              toType="ENTREZID",
-                                              OrgDb="org.Hs.eg.db")))
+  eg <- suppressWarnings(suppressMessages(clusterProfiler::bitr(newdata$SYMBOL,
+    fromType = "SYMBOL",
+    toType = "ENTREZID",
+    OrgDb = "org.Hs.eg.db"
+  )))
 
-  newdata <- merge(eg,newdata,by = 'SYMBOL')
+  newdata <- merge(eg, newdata, by = "SYMBOL")
 
   newdata$class <- "up"
 
-  newdata$class[newdata$value< 0] <- "down"
+  newdata$class[newdata$value < 0] <- "down"
 
-  names(newdata)[3] <- 'drug'
+  names(newdata)[3] <- "drug"
 
-  if(length(group)==2){
-
-    formula_res <- suppressWarnings(compareCluster(ENTREZID ~ eval(parse(text = group[1]))+ drug+class,
-                                data=newdata,
-                                fun= 'enrichKEGG',
-                                pvalueCutoff=0.05))
+  if (length(group) == 2) {
+    formula_res <- suppressWarnings(compareCluster(ENTREZID ~ eval(parse(text = group[1])) + drug + class,
+      data = newdata,
+      fun = "enrichKEGG",
+      pvalueCutoff = 0.05
+    ))
   }
 
-  if(group=='drug'){
-
+  if (group == "drug") {
     formula_res <- suppressWarnings(clusterProfiler::compareCluster(ENTREZID ~ drug,
-                                                   data=newdata,
-                                                   fun= 'enrichKEGG',
-                                                   pvalueCutoff=0.05))
+      data = newdata,
+      fun = "enrichKEGG",
+      pvalueCutoff = 0.05
+    ))
   }
 
 
-  if(group=='class'){
-
+  if (group == "class") {
     formula_res <- suppressWarnings(clusterProfiler::compareCluster(ENTREZID ~ class,
-                                                                    data=newdata,
-                                                                    fun= 'enrichKEGG',
-                                                                    pvalueCutoff=0.05))
+      data = newdata,
+      fun = "enrichKEGG",
+      pvalueCutoff = 0.05
+    ))
   }
 
   formula_res <- DOSE::setReadable(formula_res, org.Hs.eg.db, keyType = "ENTREZID")
 
-  outfile <- file.path(res.path, paste('compare_KEGG',"_result.",".txt", sep = ""))
+  outfile <- file.path(res.path, paste("compare_KEGG", "_result.", ".txt", sep = ""))
 
   write.table(as.data.frame(formula_res), file = outfile, row.names = FALSE, sep = "\t", quote = FALSE)
 
-  if(plot==T){
-     enrichplot::dotplot(formula_res, color = colorby,showCategory = num)
+  if (plot == T) {
+    enrichplot::tcm.EnrichDotplot(formula_res, color = colorby, showCategory = num)
   }
-
-
 }
-
-
-

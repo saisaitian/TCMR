@@ -92,7 +92,7 @@
 <span class="co">#&gt; The following object is masked from 'package:graphics':</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     barplot</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/load_example_dataset.html">load_example_dataset</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tcm.LoadExampleDataset.html">tcm.LoadExampleDataset</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Loading dataset GSE85871...</span>
 <span class="co">#&gt; Done.</span></code></pre></div>
 </div>
@@ -112,7 +112,7 @@
 <p>Use a subset of <code>AnalyzedDEG</code> to select corresponding DEG results.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">head5_reports</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">AnalyzedDEG</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/load_analyzedDEG.html">load_analyzedDEG</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu"><a href="reference/tcm.LoadAnalyzedDEG.html">tcm.LoadAnalyzedDEG</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">head5_reports</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; List of 6</span>
@@ -129,7 +129,7 @@
 <span class="co">#&gt;  $ :Classes 'data.table' and 'data.frame':   12548 obs. of  7 variables:</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">one_report</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/load_analyzedDEG.html">load_analyzedDEG</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">one_report</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tcm.LoadAnalyzedDEG.html">tcm.LoadAnalyzedDEG</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">one_report</span><span class="op">)</span>
 <span class="co">#&gt;    identifier     logFC  AveExpr         t      P.Value adj.P.Val         B</span>
 <span class="co">#&gt; 1:     ADAM30 -3.319485 3.497113 -34.74913 4.466436e-05 0.3022539 0.9008748</span>
@@ -148,7 +148,7 @@
 <span class="va">group</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">pdata</span><span class="op">$</span><span class="va">perturbagen</span><span class="op">[</span><span class="va">ix</span><span class="op">]</span>
 
 <span class="co"># Run DEG analysis</span>
-<span class="va">report</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/deg_caller.html">deg_caller</a></span><span class="op">(</span><span class="va">expr</span>, group <span class="op">=</span> <span class="va">group</span>, ref_group <span class="op">=</span> <span class="va">group</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>
+<span class="va">report</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tcm.RunDEG.html">tcm.RunDEG</a></span><span class="op">(</span><span class="va">expr</span>, group <span class="op">=</span> <span class="va">group</span>, ref_group <span class="op">=</span> <span class="va">group</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; Info: Glycyrrhizic acid vs DMSO (reference group)</span>
 <span class="co">#&gt; N: DMSO:#2  Glycyrrhizic acid:#2</span>
 <span class="co">#&gt; Constructing design matrix...</span>
@@ -164,7 +164,7 @@
 <span class="co">#&gt; 4:    SOSTDC1  3.582065 1.791032  22.73374 1.402533e-04 0.2925089 0.9706183</span>
 <span class="co">#&gt; 5:   SERPINB2 -2.191310 2.182794 -20.95775 1.806605e-04 0.2925089 0.8909550</span>
 <span class="co">#&gt; 6:   ATP6V1G2  2.698387 3.463790  20.22094 2.019340e-04 0.2925089 0.8527498</span></code></pre></div>
-<p>See <code><a href="reference/deg_caller.html">?deg_caller</a></code> for more details.</p>
+<p>See <code><a href="reference/tcm.RunDEG.html">?tcm.RunDEG</a></code> for more details.</p>
 </div>
 </div>
 </div>

@@ -12,12 +12,16 @@ Authors@R:
              role = c("aut", "ctb"),
              email = "w_shixiang@163.com",
              comment = c(ORCID = "0000-0001-9855-7357")))
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: More about what it does (maybe more than one line) Use four
+    spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
 Depends: 
     R (>= 3.5)
 Imports: 
+    ape,
+    BioMedR,
+    ChemmineOB,
+    ChemmineR,
     clusterProfiler,
     CoreGx,
     cowplot,
@@ -28,41 +32,37 @@ Imports:
     ExperimentHub,
     forcats,
     ggplot2,
+    ggtree,
+    GSVA,
+    jsonlite,
+    kableExtra,
     limma,
     magrittr,
     org.Hs.eg.db,
     parallel,
+    plyr,
     purrr,
+    RCurl,
+    reshape2,
     stringr,
     SummarizedExperiment,
     tibble,
-    reshape2,
-    ape,
-    ggtree,
-    xfun,
-    ChemmineR,
-    ChemmineOB,
-    BioMedR,
-    GSVA,
-    kableExtra,
-    RCurl,
-    plyr,
-    jsonlite
+    xfun
 Suggests: 
-    knitr,
-    simplifyEnrichment,
-    ComplexHeatmap,
     circlize,
+    ComplexHeatmap,
     dendextend,
+    knitr,
+    prettydoc,
     R.utils,
     rmarkdown,
-    prettydoc,
+    simplifyEnrichment,
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
 biocViews:
 Encoding: UTF-8
 LazyData: true
-Roxygen: list(markdown = TRUE, roclets = c("collate",
-    "namespace", "rd", "roxytest::testthat_roclet"))
+Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
+    "roxytest::testthat_roclet"))
 RoxygenNote: 7.1.1

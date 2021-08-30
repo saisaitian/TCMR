@@ -4,7 +4,7 @@ library(purrr)
 library(clusterProfiler)
 library(ggplot2)
 data("AnalyzedDEG")
-one_report <- load_analyzedDEG(1)
+one_report <- tcm.LoadAnalyzedDEG(1)
 names(one_report)
 
 deg <- subset(one_report, abs(logFC) > 1 & P.Value < 0.05)

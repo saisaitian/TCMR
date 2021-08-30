@@ -1,3 +1,6 @@
+.zenodo_dir <- "https://zenodo.org/record/5336709/files"
+.zenodo_local <- getOption("zenodo", default = path.expand("~/.tcmR"))
+
 #' Load Example Dataset for Analysis
 #'
 #' @param id A dataset identifier.
@@ -14,15 +17,9 @@
 tcm.LoadExampleDataset <- function(id = "GSE85871") {
   message("Loading dataset ", id, "...")
   if (id == "GSE85871") {
-    expr <- data.table::fread(system.file(
-      "extdata", "GSE85871_expr.tsv.gz",
-      package = "TCMR", mustWork = TRUE
-    ), data.table = FALSE) %>%
+    expr <- data.table::fread(tcm.LoadData("GSE85871_expr.tsv.gz", just_query = TRUE), data.table = FALSE) %>%
       tibble::column_to_rownames("symbol")
-    pdata <- data.table::fread(system.file(
-      "extdata", "GSE85871_pdata.tsv.gz",
-      package = "TCMR", mustWork = TRUE
-    ), data.table = FALSE)
+    pdata <- data.table::fread(tcm.LoadData("GSE85871_pdata.tsv.gz", just_query = TRUE), data.table = FALSE)
     message("Done.")
     return(list(
       expr = expr,
@@ -78,7 +75,7 @@ tcm.LoadAnalyzedDEG <- function(id) {
 
   res <- list()
   for (i in seq_along(filename)) {
-    res[[i]] <- readRDS(system.file("extdata", filename[i], package = "TCMR", mustWork = TRUE))
+    res[[i]] <- readRDS(tcm.LoadData(filename[i], just_query = TRUE))
   }
 
   if (length(res) == 1L) {
@@ -138,6 +135,84 @@ tcm.LoadAnalyzedSigPathway <- function(id) {
     res[[1]]
   } else {
     res
+  }
+}
+
+
+# Utils to get data from remote -------------------------------------------
+
+#' Load builtin/remote dataset
+#'
+#' @param name a dataset name, e.g., "brca_disease", "TCM_expr", "tfdata".
+#' Check <https://zenodo.org/record/5336709> for remote data.
+#' @param just_query if `TRUE`, (download and) load data. Only set `TRUE` for
+#' data in `rda` format.
+#'
+#' @return a data or a string represting data path.
+#' @export
+#'
+#' @examples
+#' tcm.LoadData("SMILES")
+tcm.LoadData <- function(name, just_query = FALSE) {
+  stopifnot(length(name) == 1)
+  name2 <- if (just_query) name else paste0(name, ".rda")
+  data_path <- file.path(.zenodo_local, name2)
+  if (!dir.exists(dirname(data_path))) dir.create(dirname(data_path), showWarnings = FALSE, recursive = TRUE)
+
+  # Keep in remote "brca_disease", "TCM_expr", "tfdata"
+
+  # builtin datasets
+  available_datasets <- c(
+    "TCM_pdata",
+    "SMILES",
+    "signature_tme",
+    "data_logFC",
+    "apfp",
+    "AnalyzedSigPathway",
+    "AnalyzedDEG"
+  )
+  if (name %in% available_datasets) {
+    # The data is builtin
+    data(list = name, package = "UCSCXenaShiny", envir = environment())
+  } else {
+    if (!file.exists(data_path)) {
+      data_url <- file.path(.zenodo_dir, name2)
+      message("Loading data from remote: ", data_url, ", please wait...")
+      name <- FALSE
+      tryCatch(
+        {
+          download.file(data_url, data_path)
+          message("Data has been saved to ", data_path)
+        },
+        error = function(e) {
+          message("Data load failed, please check your input and the internet.\n NULL will be returned.")
+          if (file.exists(data_path)) unlink(data_path, recursive = TRUE, force = TRUE)
+          name <<- TRUE
+        }
+      )
+      if (isTRUE(name)) {
+        return(invisible(NULL))
+      }
+    }
+    if (!just_query) {
+      tryCatch(
+        load(data_path, envir = environment()),
+        error = function(e) {
+          message("Data load failed, probably due to broken download file, please try again.\n This time NULL will be returned.")
+          if (file.exists(data_path)) unlink(data_path, recursive = TRUE, force = TRUE)
+          name <<- TRUE
+        }
+      )
+    }
+    if (isTRUE(name)) {
+      return(invisible(NULL))
+    }
+  }
+
+  if (!just_query) {
+    return(get(setdiff(ls(), c("name2", "name", "data_path", "data_url", "available_datasets", "just_query"))))
+  } else {
+    return(data_path)
   }
 }
 

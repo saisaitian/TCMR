@@ -2,7 +2,7 @@
 
 # File R/"load-data.R": @testexamples
 
-test_that("Function tcm.LoadExampleDataset() @ L14", {
+test_that("Function tcm.LoadExampleDataset() @ L17", {
   
   x <- tcm.LoadExampleDataset()
   head(x$expr)
@@ -11,7 +11,7 @@ test_that("Function tcm.LoadExampleDataset() @ L14", {
 })
 
 
-test_that("Function tcm.LoadAnalyzedDEG() @ L65", {
+test_that("Function tcm.LoadAnalyzedDEG() @ L62", {
   
   
   # Firstly, check the dataset

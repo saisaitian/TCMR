@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{cs_plot}
 \alias{cs_plot}
-\title{Title Visualize Connectivity score}
+\title{Visualize Connectivity score}
 \usage{
 cs_plot(
   data,
@@ -27,7 +27,7 @@ cs_plot(
 a ggplot
 }
 \description{
-Title Visualize Connectivity score
+Visualize Connectivity score
 }
 \examples{
 data("data_logFC")

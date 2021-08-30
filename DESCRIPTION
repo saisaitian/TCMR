@@ -1,6 +1,6 @@
 Type: Package
 Package: TCMR
-Title: What the Package Does (Title Case)
+Title: Traditional Chinese Medicine Research Toolbox
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Saisai",
@@ -12,8 +12,8 @@ Authors@R:
              role = c("aut", "ctb"),
              email = "w_shixiang@163.com",
              comment = c(ORCID = "0000-0001-9855-7357")))
-Description: More about what it does (maybe more than one line) Use four
-    spaces when indenting paragraphs within the Description.
+Description: Provides functions for analyzing traditional Chinese drugs in
+    gene expression arrays.
 License: MIT + file LICENSE
 Depends: 
     R (>= 3.5)

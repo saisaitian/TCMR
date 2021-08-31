@@ -17,12 +17,12 @@
 #'   data = data_logFC
 #' )
 tcm.GetDrugSpecificPathway <- function(index = c(1, 3, 5),
-                         data = data_logFC,
-                         group = "drug",
-                         num = 10,
-                         colorby = "pvalue",
-                         res.path = getwd(),
-                         plot = T) {
+                                       data = data_logFC,
+                                       group = "drug",
+                                       num = 10,
+                                       colorby = "pvalue",
+                                       res.path = getwd(),
+                                       plot = T) {
   message(paste0("\n", ">>> Calculating drug specific KEGG pathway"))
 
   tmp <- data[, index]

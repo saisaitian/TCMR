@@ -111,7 +111,7 @@ Data used for this vignette should be first extracted from the function of `tcm.
 # print name of example tcm expression data
 data <- tcm.LoadExampleDataset()
 names(data)
-data("tfdata")
+tfdata <- tcm.LoadData("tfdata")
 ```
 
 ### <a id="Section.4.2.1.2" style="color:#159957;">2) DEG analysis </a>
@@ -229,7 +229,7 @@ test[1:6,1:6] %>%
 
 
 ```{r, fig.align="center", fig.width=7, fig.height=7, fig.cap="Figure 15. Heatmap of subtype-specific upregulated pathways using edgeR algorithm for 5 identified subtypes in TCGA-BRCA cohort.", eval=TRUE}
-cs_plot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
+tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
 ```
 
 
@@ -259,7 +259,7 @@ test[1:6,1:6] %>%
 
 
 ```{r, fig.align="center", fig.width=7, fig.height=7, fig.cap="Figure 15. Heatmap of subtype-specific upregulated pathways using edgeR algorithm for 5 identified subtypes in TCGA-BRCA cohort.", eval=TRUE}
-cs_plot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
+tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
 ```
 
 #### <a id="Section.5" style="color:#159957;">3) gcmap</a>
@@ -286,7 +286,7 @@ test[1:6,1:6] %>%
 
 
 ```{r, fig.align="center", fig.width=7, fig.height=7, fig.cap="Figure 15. Heatmap of subtype-specific upregulated pathways using edgeR algorithm for 5 identified subtypes in TCGA-BRCA cohort.", eval=TRUE}
-cs_plot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
+tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
 ```
 
 
@@ -314,7 +314,7 @@ test[1:6,1:6] %>%
 
 
 ```{r, fig.align="center", fig.width=7, fig.height=7, fig.cap="Figure 15. Heatmap of subtype-specific upregulated pathways using edgeR algorithm for 5 identified subtypes in TCGA-BRCA cohort.", eval=TRUE}
-cs_plot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
+tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
 ```
 
 
@@ -335,7 +335,7 @@ test[1:6,1:6] %>%
 
 
 ```{r, fig.align="center", fig.width=7, fig.height=7, fig.cap="Figure 15. Heatmap of subtype-specific upregulated pathways using edgeR algorithm for 5 identified subtypes in TCGA-BRCA cohort.", eval=TRUE}
-cs_plot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
+tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
 ```
 
 
@@ -356,7 +356,7 @@ test[1:6,1:6] %>%
 
 
 ```{r, fig.align="center", fig.width=7, fig.height=7, fig.cap="Figure 15. Heatmap of subtype-specific upregulated pathways using edgeR algorithm for 5 identified subtypes in TCGA-BRCA cohort.", eval=TRUE}
-cs_plot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
+tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
 ```
 
 
@@ -385,7 +385,7 @@ test[1:6,1:6] %>%
 
 
 ```{r, fig.align="center", fig.width=7, fig.height=7, fig.cap="Figure 15. Heatmap of subtype-specific upregulated pathways using edgeR algorithm for 5 identified subtypes in TCGA-BRCA cohort.", eval=TRUE}
-cs_plot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
+tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
 ```
 
 
@@ -418,5 +418,5 @@ data <- data[3:13, ]
 ```
 
 ```{r, fig.align="center", fig.width=7, fig.height=7, fig.cap="Figure 15. Heatmap of subtype-specific upregulated pathways using edgeR algorithm for 5 identified subtypes in TCGA-BRCA cohort.", eval=TRUE}
-gene_dot(data)
+tcm.MatrixDotplot(data)
 ```

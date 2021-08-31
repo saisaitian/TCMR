@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{tcm.CircleHeatmap}
 \alias{tcm.CircleHeatmap}
-\title{Title Gene Expression Plot}
+\title{Gene Expression Plot}
 \usage{
 tcm.CircleHeatmap(
   data,
@@ -24,7 +24,7 @@ tcm.CircleHeatmap(
 A plot
 }
 \description{
-Title Gene Expression Plot
+Gene Expression Plot
 }
 \examples{
 tcm.CircleHeatmap(data = as.matrix(data_logFC[1:6, ]))

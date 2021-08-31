@@ -38,15 +38,15 @@
 #'   p.cutoff = 0.05
 #' )
 tcm.EnrichGSEA <- function(data = NULL,
-                     res.path = tempdir(),
-                     dirct = "up",
-                     n.path = 6,
-                     msigdb.path = NULL,
-                     nPerm = 1000,
-                     minGSSize = 10,
-                     maxGSSize = 500,
-                     p.cutoff = 0.05,
-                     p.adj.cutoff = NULL) {
+                           res.path = tempdir(),
+                           dirct = "up",
+                           n.path = 6,
+                           msigdb.path = NULL,
+                           nPerm = 1000,
+                           minGSSize = 10,
+                           maxGSSize = 500,
+                           p.cutoff = 0.05,
+                           p.adj.cutoff = NULL) {
   geneList <- data$logFC
   names(geneList) <- data$identifier
   geneList <- sort(geneList, decreasing = TRUE) # ranked gene set
@@ -485,7 +485,7 @@ tcm.EnrichTF <- function(gene,
   if (colby == "pvalue") {
     pvalue <- sortdf[, colby]
     p <- ggplot(sortdf, aes(GeneRatio, Description,
-                            colour = pvalue
+      colour = pvalue
     )) + # 横坐标、纵坐标、颜色代表p-value
       geom_point(aes(size = Count)) + # 圆点的大小代表组内基因数
       scale_color_gradientn(colours = colours) + # 可以自己改颜色
@@ -502,7 +502,7 @@ tcm.EnrichTF <- function(gene,
     p.adjust <- sortdf[, colby]
 
     p <- ggplot(sortdf, aes(GeneRatio, Description,
-                            colour = p.adjust
+      colour = p.adjust
     )) + # 横坐标、纵坐标、颜色代表p-value
       geom_point(aes(size = Count)) + # 圆点的大小代表组内基因数
       scale_color_gradientn(colours = colours) + # 可以自己改颜色

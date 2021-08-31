@@ -27,7 +27,10 @@ tcm.GetDrugScore <- function(eset,
     })
   }
 
-  f <- switch(method, ssgsea = calculate_ssgsea, zscore = calculate_zscore)
+  f <- switch(method,
+    ssgsea = calculate_ssgsea,
+    zscore = calculate_zscore
+  )
   return(f(eset, signature))
 }
 

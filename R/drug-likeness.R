@@ -1,5 +1,4 @@
-
-#' Title druglike analysis
+#' Druglikeness analysis
 #'
 #' @param smiles SMILES of compounds
 #'
@@ -8,8 +7,8 @@
 #'
 #' @examples
 #' data("SMILES")
-#' druglike_calculate(SMILES)
-druglike_calculate <- function(smiles) {
+#' tcm.GetDrugLikeness(SMILES)
+tcm.GetDrugLikeness <- function(smiles) {
   message(paste0("\n", ">>> Calculating ", "Lipinski Rule of Five - Druglikeness"))
   sdf <- apply(smiles, 1, ChemmineR::smiles2sdf) # 1 = rows, convert smiles to sdfs
   openbabel <- lapply(sdf, ChemmineR::propOB)

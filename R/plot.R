@@ -46,8 +46,8 @@ tcm.EnrichBarplot <- function(data,
     geom_bar(stat = "identity") +
     scale_fill_continuous(low = color[1], high = color[2]) +
     geom_line(aes(x = Description, y = -log10(colbys)),
-              stat = "identity",
-              linetype = linetype, color = linecol, size = 1.2
+      stat = "identity",
+      linetype = linetype, color = linecol, size = 1.2
     ) +
     geom_point(shape = 21, color = pointcol, fill = filcol, size = 5) +
     scale_x_discrete(limits = rev(data$Description)) +
@@ -98,12 +98,12 @@ tcm.EnrichBarplot <- function(data,
 #' query2 <- data_logFC[1:60, 1, drop = FALSE]
 #' gcmap_kk <- tcm.SSwithGCMAP(input = query2, data = data_logFC)
 #' test <- head(gcmap_kk, 20)
-#' cs_plot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
-cs_plot <- function(data,
-                    x = "scaled_score",
-                    y = "tcm",
-                    colby = "pvalue",
-                    color = c("blue", "red")) {
+#' tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
+tcm.ConnectivityPlot <- function(data,
+                                 x = "scaled_score",
+                                 y = "tcm",
+                                 colby = "pvalue",
+                                 color = c("blue", "red")) {
   score <- data[, x]
   y <- data[, y]
   Pval <- data[, colby]
@@ -150,9 +150,9 @@ cs_plot <- function(data,
 #' data <- data.frame(t(data), check.rows = FALSE, check.names = FALSE)
 #' data$compound <- rownames(data)
 #' data <- data[3:13, ]
-#' gene_dot(data)
-gene_dot <- function(data,
-                     color = c("red", "blue")) {
+#' tcm.MatrixDotplot(data)
+tcm.MatrixDotplot <- function(data,
+                              color = c("red", "blue")) {
   tmp <- reshape2::melt(data = data, id.vars = "compound")
 
   tmp$type <- ifelse(tmp$value > 0, "UP", "Down")
@@ -179,7 +179,7 @@ gene_dot <- function(data,
     )
 }
 
-#' Title Gene Expression Plot
+#' Gene Expression Plot
 #'
 #' @param data Expression data of compounds
 #' @param num Numbers of cluster

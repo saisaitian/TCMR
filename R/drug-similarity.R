@@ -12,9 +12,9 @@
 #' data("SMILES")
 #' tcm.GetDrugSimilarity(smile_a = SMILES[1, ], smile_b = SMILES[2, ], method = "fp", plot = TRUE)
 tcm.GetDrugSimilarity <- function(smile_a,
-                            smile_b,
-                            method = "fp",
-                            plot = T) {
+                                  smile_b,
+                                  method = "fp",
+                                  plot = T) {
   message(paste0("\n", ">>> Calculating ", "tcm.GetDrugSimilarity"))
 
   sdf <- suppressWarnings(ChemmineR::smiles2sdf(c(smile_a, smile_b)))

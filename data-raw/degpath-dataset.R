@@ -1,10 +1,10 @@
 library(purrr)
 data("AnalyzedDEG")
-one_report <- load_analyzedDEG(2)
+one_report <- tcm.LoadAnalyzedDEG(2)
 # DMSO are the controls
 
 degreports <- purrr::map(1:103, function(i) {
-  one_report <- load_analyzedDEG(i)
+  one_report <- tcm.LoadAnalyzedDEG(i)
   deg <- subset(one_report, abs(logFC) > 1 & P.Value < 0.05)
   aa <- getsigpath(deg, p.cutoff = 0.05, p.adj.cutoff = 1, n.path = 10)
   return(aa)
@@ -26,6 +26,6 @@ AnalyzedSigPathway <- Analyzedsigpath
 
 AnalyzedSigPathway$vs <- gsub("尾-", "", AnalyzedSigPathway$vs)
 
-AnalyzedSigPathway <- AnalyzedSigPathway[1:102,]
+AnalyzedSigPathway <- AnalyzedSigPathway[1:102, ]
 
 usethis::use_data(AnalyzedSigPathway, overwrite = TRUE)

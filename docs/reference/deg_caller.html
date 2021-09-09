@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Differential Expression Analysis — deg_caller • TCMR</title>
+<title>Differential Expression Analysis — tcm.RunDEG • TCMR</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,10 @@
 
 
 
-<meta property="og:title" content="Differential Expression Analysis — deg_caller" />
+<meta property="og:title" content="Differential Expression Analysis — tcm.RunDEG" />
 <meta property="og:description" content="The functions are designed to run DEA.
-deg_caller is used to run two group differential expression analysis.
-deg_batch_caller is used to run batch DEG analysis.
+tcm.RunDEG is used to run two group differential expression analysis.
+tcm.RunBatchDEG is used to run batch DEG analysis.
 
 " />
 
@@ -109,20 +109,20 @@ deg_batch_caller is used to run batch DEG analysis.
     <div class="page-header">
     <h1>Differential Expression Analysis</h1>
     
-    <div class="hidden name"><code>deg_caller.Rd</code></div>
+    <div class="hidden name"><code>tcm.RunDEG.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>The functions are designed to run DEA.</p><ul>
-<li><p><code>deg_caller</code> is used to run two group differential expression analysis.</p></li>
-<li><p><code>deg_batch_caller</code> is used to run batch DEG analysis.</p></li>
+<li><p><code>tcm.RunDEG</code> is used to run two group differential expression analysis.</p></li>
+<li><p><code>tcm.RunBatchDEG</code> is used to run batch DEG analysis.</p></li>
 </ul>
 
     </div>
 
-    <pre class="usage"><span class='fu'>deg_caller</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>group</span>, <span class='va'>ref_group</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>tcm.RunDEG</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>group</span>, <span class='va'>ref_group</span><span class='op'>)</span>
 
-<span class='fu'>deg_batch_caller</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>groups</span>, <span class='va'>ref_group</span><span class='op'>)</span></pre>
+<span class='fu'>tcm.RunBatchDEG</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>groups</span>, <span class='va'>ref_group</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,7 +150,7 @@ deg_batch_caller is used to run batch DEG analysis.
     <p>A <code>data.frame</code> or a <code>list</code> of <code>data.frame</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='load_example_dataset.html'>load_example_dataset</a></span><span class='op'>(</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tcm.LoadExampleDataset.html'>tcm.LoadExampleDataset</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading dataset GSE85871...</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'>
 <span class='co'># Get a subset of expression dataset</span>
 <span class='va'>ix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>61</span>, <span class='fl'>62</span><span class='op'>)</span>
@@ -158,7 +158,7 @@ deg_batch_caller is used to run batch DEG analysis.
 <span class='va'>group</span> <span class='op'>&lt;-</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>pdata</span><span class='op'>$</span><span class='va'>perturbagen</span><span class='op'>[</span><span class='va'>ix</span><span class='op'>]</span>
 
 <span class='co'># Run DEG analysis</span>
-<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>deg_caller</span><span class='op'>(</span><span class='va'>expr</span>, group <span class='op'>=</span> <span class='va'>group</span>, ref_group <span class='op'>=</span> <span class='va'>group</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>tcm.RunDEG</span><span class='op'>(</span><span class='va'>expr</span>, group <span class='op'>=</span> <span class='va'>group</span>, ref_group <span class='op'>=</span> <span class='va'>group</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Info: Glycyrrhizic acid vs DMSO (reference group)</span></div><div class='output co'>#&gt; <span class='message'>N: DMSO:#2  Glycyrrhizic acid:#2</span></div><div class='output co'>#&gt; <span class='message'>Constructing design matrix...</span></div><div class='output co'>#&gt; <span class='message'>Running DEG analysis with limma...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Zero sample variances detected, have been offset away from zero</span></div><div class='output co'>#&gt; <span class='message'>Reporting results...</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>report</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    identifier     logFC  AveExpr         t      P.Value adj.P.Val         B
 #&gt; 1:      CDH12  3.411526 1.981608  30.80083 5.441761e-05 0.2925089 1.1921795
@@ -168,7 +168,7 @@ deg_batch_caller is used to run batch DEG analysis.
 #&gt; 5:   SERPINB2 -2.191310 2.182794 -20.95775 1.806605e-04 0.2925089 0.8909550
 #&gt; 6:   ATP6V1G2  2.698387 3.463790  20.22094 2.019340e-04 0.2925089 0.8527498</div><div class='input'>
 <span class='co'># Run batch DEG analysis</span>
-<span class='va'>reports</span> <span class='op'>&lt;-</span> <span class='fu'>deg_batch_caller</span><span class='op'>(</span><span class='va'>expr</span>, groups <span class='op'>=</span> <span class='va'>group</span>, ref_group <span class='op'>=</span> <span class='va'>group</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>reports</span> <span class='op'>&lt;-</span> <span class='fu'>tcm.RunBatchDEG</span><span class='op'>(</span><span class='va'>expr</span>, groups <span class='op'>=</span> <span class='va'>group</span>, ref_group <span class='op'>=</span> <span class='va'>group</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Info: Glycyrrhizic acid vs DMSO (reference group)</span></div><div class='output co'>#&gt; <span class='message'>N: DMSO:#2  Glycyrrhizic acid:#2</span></div><div class='output co'>#&gt; <span class='message'>Constructing design matrix...</span></div><div class='output co'>#&gt; <span class='message'>Running DEG analysis with limma...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Zero sample variances detected, have been offset away from zero</span></div><div class='output co'>#&gt; <span class='message'>Reporting results...</span></div><div class='output co'>#&gt; <span class='message'>Done.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>reports</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $`Glycyrrhizic acid:DMSO`
 #&gt;        identifier         logFC  AveExpr             t      P.Value adj.P.Val

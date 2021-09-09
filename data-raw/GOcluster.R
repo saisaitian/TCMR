@@ -7,7 +7,7 @@ library(scales)
 library(cowplot)
 
 library(simplifyEnrichment)
-# go <- get_sig_GO(deg, p.cutoff =NULL, p.adj.cutoff = 0.05, n.path = 20)
+# go <- tcm.EnrichGO(deg, p.cutoff =NULL, p.adj.cutoff = 0.05, n.path = 20)
 
 GOcluster <- function(data,
                       num = 4,

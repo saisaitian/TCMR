@@ -1,31 +1,38 @@
-
-.onLoad <- function(libname, pkgname) {
-  invisible(suppressPackageStartupMessages(
-    sapply(c("tibble", "tidyverse", "survival", "survminer", "ggplot2",
-             "ggpubr","limma","limSolve","preprocessCore","e1071","GSVA"),
-           requireNamespace, quietly = TRUE)
-  ))
-}
+# 如果包已经在 import 中，不需要进行这样的检查
+#
+# .onLoad <- function(libname, pkgname) {
+#   invisible(suppressPackageStartupMessages(
+#     sapply(c(
+#       "tibble", "tidyverse", "survival", "survminer", "ggplot2",
+#       "ggpubr", "limma", "limSolve", "preprocessCore", "e1071", "GSVA"
+#     ),
+#     requireNamespace,
+#     quietly = TRUE
+#     )
+#   ))
+# }
 
 
 
 ##' @importFrom utils packageDescription
 .onAttach <- function(libname, pkgname) {
-  pkgVersion <- packageDescription(pkgname, fields="Version")
-  msg <- paste0("==========================================================================\n",
-                " ", pkgname, " v", pkgVersion, "  ",
+  pkgVersion <- packageDescription(pkgname, fields = "Version")
+  msg <- paste0(
+    "==========================================================================\n",
+    " ", pkgname, " v", pkgVersion, "  ",
+    "  For help: https://github.com/XXXX", "\n\n"
+  )
 
-                "  For help: https://github.com/XXXX", "\n\n")
-
-  citation <-paste0(" If you use ", pkgname, " in published research, please cite:\n",
-                    " SSSSS*.\n",
-                    " TCMR: XXXXXXXXXXXXX \n ",
-                    " XXXXXXXXXXXXXX. XXXXXXXXXXXX. XXXXXXX. \n",
-                    # " XXXX, 2020", "\n",
-                    " DOI: XXXXXX\n",
-                    # " PMID:  ","\n",
-                    "==========================================================================")
+  citation <- paste0(
+    " If you use ", pkgname, " in published research, please cite:\n",
+    " SSSSS*.\n",
+    " TCMR: XXXXXXXXXXXXX \n ",
+    " XXXXXXXXXXXXXX. XXXXXXXXXXXX. XXXXXXX. \n",
+    # " XXXX, 2020", "\n",
+    " DOI: XXXXXX\n",
+    # " PMID:  ","\n",
+    "=========================================================================="
+  )
 
   packageStartupMessage(paste0(msg, citation))
 }
-

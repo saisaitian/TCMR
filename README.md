@@ -41,7 +41,7 @@ library(TCMR)
 #> The following object is masked from 'package:graphics':
 #> 
 #>     barplot
-data <- load_example_dataset()
+data <- tcm.LoadExampleDataset()
 #> Loading dataset GSE85871...
 #> Done.
 ```
@@ -64,7 +64,7 @@ Use a subset of `AnalyzedDEG` to select corresponding DEG results.
 
 ``` r
 head5_reports <- head(AnalyzedDEG) %>% 
-  load_analyzedDEG()
+  tcm.LoadAnalyzedDEG()
 
 str(head5_reports, max.level = 1)
 #> List of 6
@@ -83,7 +83,7 @@ str(head5_reports, max.level = 1)
 ```
 
 ``` r
-one_report <- load_analyzedDEG(2)
+one_report <- tcm.LoadAnalyzedDEG(2)
 head(one_report)
 #>    identifier     logFC  AveExpr         t      P.Value adj.P.Val         B
 #> 1:     ADAM30 -3.319485 3.497113 -34.74913 4.466436e-05 0.3022539 0.9008748
@@ -102,7 +102,7 @@ expr <- data$expr[, ix]
 group <- data$pdata$perturbagen[ix]
 
 # Run DEG analysis
-report <- deg_caller(expr, group = group, ref_group = group[3])
+report <- tcm.RunDEG(expr, group = group, ref_group = group[3])
 #> Info: Glycyrrhizic acid vs DMSO (reference group)
 #> N: DMSO:#2  Glycyrrhizic acid:#2
 #> Constructing design matrix...
@@ -120,4 +120,4 @@ head(report)
 #> 6:   ATP6V1G2  2.698387 3.463790  20.22094 2.019340e-04 0.2925089 0.8527498
 ```
 
-See `?deg_caller` for more details.
+See `?tcm.RunDEG` for more details.

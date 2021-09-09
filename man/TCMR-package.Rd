@@ -4,10 +4,10 @@
 \name{TCMR-package}
 \alias{TCMR}
 \alias{TCMR-package}
-\title{TCMR: What the Package Does (Title Case)}
+\title{TCMR: Traditional Chinese Medicine Research Toolbox}
 \description{
-More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Provides functions for analyzing traditional Chinese drugs in
+    gene expression arrays.
 }
 \author{
 \strong{Maintainer}: Saisai Tian \email{saisaitian@somewhere.net}

@@ -81,8 +81,7 @@ signedRankSumTest <- function(statistics,
     mu <- n1 * n2 / 2
     if (correlation == 0 || n1 == 1) {
       sigma2 <- n1 * n2 * (n + 1) / 12
-    }
-    else {
+    } else {
       sigma2 <- asin(1) * n1 * n2 + asin(0.5) * n1 * n2 * (n2 - 1)
       +asin(correlation / 2) * n1 * (n1 - 1) * n2 * (n2 - 1)
       +asin((correlation + 1) / 2) * n1 * (n1 - 1) * n2

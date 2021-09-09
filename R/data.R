@@ -90,6 +90,3 @@ NULL
 #' @examples
 #' data("brca_disease")
 NULL
-
-
-

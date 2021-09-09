@@ -1,7 +1,7 @@
 devtools::load_all()
 library(purrr)
 
-data <- load_example_dataset()
+data <- tcm.LoadExampleDataset()
 
 groups <- data$pdata$perturbagen
 
@@ -16,7 +16,7 @@ batch_list <- list(
 reports <- purrr::map(batch_list, function(b) {
   batch_groups <- groups[b]
   df <- data$expr[, b]
-  deg_batch_caller(df, batch_groups, ref_group = "DMSO")
+  tcm.RunBatchDEG(df, batch_groups, ref_group = "DMSO")
 })
 
 head(str(reports))
@@ -51,13 +51,13 @@ rownames(data) <- data$identifier
 data <- data[, -1]
 data_logFC <- data
 
-names(data_logFC)[c(76,91,96)] <- c('beta_ecdysterone','6_gingerol','(+)2-(1-hydroxyl-4-oxocyclohexyl) ethyl caffeate')
+names(data_logFC)[c(76, 91, 96)] <- c("beta_ecdysterone", "6_gingerol", "(+)2-(1-hydroxyl-4-oxocyclohexyl) ethyl caffeate")
 
-AnalyzedDEG$vs[c(76,91,96)] <- c('beta_ecdysterone','6_gingerol','(+)2-(1-hydroxyl-4-oxocyclohexyl) ethyl caffeate')
+AnalyzedDEG$vs[c(76, 91, 96)] <- c("beta_ecdysterone", "6_gingerol", "(+)2-(1-hydroxyl-4-oxocyclohexyl) ethyl caffeate")
 
-AnalyzedDEG <- AnalyzedDEG[1:102,]
+AnalyzedDEG <- AnalyzedDEG[1:102, ]
 
-data_logFC <- data_logFC[,1:102]
+data_logFC <- data_logFC[, 1:102]
 
 usethis::use_data(data_logFC, overwrite = TRUE)
 

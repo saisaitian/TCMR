@@ -6,7 +6,7 @@ job1 <- launchCMTool("pubchemID2SDF", 2244)
 status(job1)
 result1 <- result(job1)
 
-job2 <- launchCMTool('Fingerprint Search', result1, 'Similarity Cutoff'=0.95, 'Max Compounds Returned'=200)
+job2 <- launchCMTool("Fingerprint Search", result1, "Similarity Cutoff" = 0.95, "Max Compounds Returned" = 200)
 result2 <- result(job2)
 job3 <- launchCMTool("pubchemID2SDF", result2)
 result3 <- result(job3)

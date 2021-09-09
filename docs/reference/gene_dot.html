@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dotplot of Special Genes in Special Compounds of logFC Matrix — gene_dot • TCMR</title>
+<title>Dotplot of Special Genes in Special Compounds of logFC Matrix — tcm.MatrixDotplot • TCMR</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Dotplot of Special Genes in Special Compounds of logFC Matrix — gene_dot" />
+<meta property="og:title" content="Dotplot of Special Genes in Special Compounds of logFC Matrix — tcm.MatrixDotplot" />
 <meta property="og:description" content="Dotplot of Special Genes in Special Compounds of logFC Matrix" />
 
 
@@ -105,14 +105,14 @@
     <div class="page-header">
     <h1>Dotplot of Special Genes in Special Compounds of logFC Matrix</h1>
     
-    <div class="hidden name"><code>gene_dot.Rd</code></div>
+    <div class="hidden name"><code>tcm.MatrixDotplot.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Dotplot of Special Genes in Special Compounds of logFC Matrix</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gene_dot</span><span class='op'>(</span><span class='va'>data</span>, color <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='st'>"blue"</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tcm.MatrixDotplot</span><span class='op'>(</span><span class='va'>data</span>, color <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='st'>"blue"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,8 +136,8 @@
 <span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>, check.rows <span class='op'>=</span> <span class='cn'>FALSE</span>, check.names <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>data</span><span class='op'>$</span><span class='va'>compound</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
 <span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>data</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>13</span>, <span class='op'>]</span>
-<span class='fu'>gene_dot</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
-</div><div class='img'><img src='gene_dot-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>tcm.MatrixDotplot</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
+</div><div class='img'><img src='tcm.MatrixDotplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CMAP method for Signature Search — ss_cmap • TCMR</title>
+<title>CMAP method for Signature Search — tcm.SSwithCMAP • TCMR</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="CMAP method for Signature Search — ss_cmap" />
+<meta property="og:title" content="CMAP method for Signature Search — tcm.SSwithCMAP" />
 <meta property="og:description" content="CMAP method for Signature Search" />
 
 
@@ -105,14 +105,14 @@
     <div class="page-header">
     <h1>CMAP method for Signature Search</h1>
     
-    <div class="hidden name"><code>ss_cmap.Rd</code></div>
+    <div class="hidden name"><code>tcm.SSwithCMAP.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>CMAP method for Signature Search</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ss_cmap</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>data</span>, cores <span class='op'>=</span> <span class='fl'>1L</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tcm.SSwithCMAP</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>data</span>, cores <span class='op'>=</span> <span class='fl'>1L</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,7 +140,7 @@
 <span class='va'>upset</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>data_logFC</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>]</span>
 <span class='va'>downset</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>data_logFC</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>400</span><span class='op'>:</span><span class='fl'>550</span><span class='op'>]</span>
 <span class='va'>input</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>upset <span class='op'>=</span> <span class='va'>upset</span>, downset <span class='op'>=</span> <span class='va'>downset</span><span class='op'>)</span>
-<span class='va'>cmap_kk</span> <span class='op'>&lt;-</span> <span class='fu'>ss_cmap</span><span class='op'>(</span>input <span class='op'>=</span> <span class='va'>input</span>, data <span class='op'>=</span> <span class='va'>data_logFC</span><span class='op'>)</span>
+<span class='va'>cmap_kk</span> <span class='op'>&lt;-</span> <span class='fu'>tcm.SSwithCMAP</span><span class='op'>(</span>input <span class='op'>=</span> <span class='va'>input</span>, data <span class='op'>=</span> <span class='va'>data_logFC</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>100 / 100 genes in up set share identifiers with reference database</span></div><div class='output co'>#&gt; <span class='message'>151 / 151 genes in down set share identifiers with reference database</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

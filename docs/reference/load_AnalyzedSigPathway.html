@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load Analyzed Pathways Results — load_AnalyzedSigPathway • TCMR</title>
+<title>Load Analyzed Pathways Results — tcm.LoadAnalyzedSigPathway • TCMR</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Load Analyzed Pathways Results — load_AnalyzedSigPathway" />
+<meta property="og:title" content="Load Analyzed Pathways Results — tcm.LoadAnalyzedSigPathway" />
 <meta property="og:description" content="Currently, the top ten pathways results are for GSE85871." />
 
 
@@ -105,14 +105,14 @@
     <div class="page-header">
     <h1>Load Analyzed Pathways Results</h1>
     
-    <div class="hidden name"><code>load_AnalyzedSigPathway.Rd</code></div>
+    <div class="hidden name"><code>tcm.LoadAnalyzedSigPathway.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Currently, the top ten pathways results are for GSE85871.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>load_AnalyzedSigPathway</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tcm.LoadAnalyzedSigPathway</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,10 +147,10 @@
 <span class='co'># e.g. head 5 sets</span>
 <span class='va'>head5_reports</span> <span class='op'>&lt;-</span> <span class='va'>AnalyzedSigPathway</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>load_AnalyzedSigPathway</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='fu'>tcm.LoadAnalyzedSigPathway</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># only the second</span>
-<span class='va'>one_report</span> <span class='op'>&lt;-</span> <span class='fu'>load_AnalyzedSigPathway</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>one_report</span> <span class='op'>&lt;-</span> <span class='fu'>tcm.LoadAnalyzedSigPathway</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

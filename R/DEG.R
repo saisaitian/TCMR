@@ -1,4 +1,4 @@
-#' Differential Expression Analysis
+#' Differential Expression Analysi
 #'
 #' The functions are designed to run DEA.
 #' * `tcm.RunDEG` is used to run two group differential expression analysis.

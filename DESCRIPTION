@@ -17,19 +17,18 @@ Description: Provides functions for analyzing traditional Chinese drugs in
 License: MIT + file LICENSE
 Depends: 
     R (>= 3.5)
+biocViews:
 Imports: 
     ape,
     BioMedR,
     ChemmineOB,
     ChemmineR,
     clusterProfiler,
-    CoreGx,
     cowplot,
     data.table,
     DOSE,
     dplyr,
     enrichplot,
-    ExperimentHub,
     forcats,
     ggplot2,
     ggtree,
@@ -45,7 +44,6 @@ Imports:
     RCurl,
     reshape2,
     stringr,
-    SummarizedExperiment,
     tibble,
     xfun
 Suggests: 
@@ -60,9 +58,8 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
-biocViews:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxytest::testthat_roclet"))
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

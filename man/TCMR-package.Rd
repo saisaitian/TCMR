@@ -6,8 +6,7 @@
 \alias{TCMR-package}
 \title{TCMR: Traditional Chinese Medicine Research Toolbox}
 \description{
-Provides functions for analyzing traditional Chinese drugs in
-    gene expression arrays.
+Provides functions for analyzing traditional Chinese drugs in gene expression arrays.
 }
 \author{
 \strong{Maintainer}: Saisai Tian \email{saisaitian@somewhere.net}

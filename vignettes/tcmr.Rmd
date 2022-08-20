@@ -57,7 +57,7 @@ if (!require("devtools"))
 #devtools::install_github("saisaitian/TCMR")
 ```
 
-When you are installing MOVICS, you may encounter some errors saying that some packages are not installed. These errors are caused by recursively depending on R packages, so if one package was not installed properly on your computer, MOVICS would fail. To solve these errors, you simply need to check those error messages, find out which packages required are missing, then install it with command `BiocManager::install("YourErrorPackage")` or `install.packages("YourErrorPackage")` or `devtools::install_github("username/YourErrorPackage")` directly. After that, retry installing MOVICS, it may take several times, but eventually it should work. Or, we highly suggest that you referred to the `Imports` in the [DESCRIPTION](https://github.com/xlucpu/MOVICS/blob/master/DESCRIPTION) file, try to install all the R dependencies, and then install MOVICS. We also summarized several common problems that you may meet when installing MOVICS, please refer to [Troubleshooting](https://github.com/xlucpu/MOVICS) if applicable. After installation, you should be able to load the MOVICS package in your R session:
+
 ```{r, eval=TRUE, warning=FALSE, message=FALSE}
 library("TCMR")
 library("dplyr")
@@ -92,7 +92,10 @@ This package contains two pre-processed real expression datasets of TCMs on brea
     * `tcm.SSwithLINCS()`: CMAP Search Method from Subramanian et al
     * `tcm.SSwithGCMAP()`: gCMAP.
     * `tcm.SSwithCorrelation()`: Correlation-based similarity metrics, such as Spearman or Pearson coefficients, can also be used as GESS methods
-    * `tcm.SSwithCoreGx()`: Correlation-based similarity metrics, such as Spearman or Pearson coefficients, can also be used as GESS methods
+    * `tcm.SSwithZS`: Correlation-based similarity metrics, such as Spearman or Pearson coefficients, can also be used as GESS methods
+    * `tcm.SSwithXCos`: Correlation-based similarity metrics, such as Spearman or Pearson coefficients, can also be used as GESS methods
+    * `tcm.SSwithXSum`: Correlation-based similarity metrics, such as Spearman or Pearson coefficients, can also be used as GESS methods
+    
 </br>
 
 * <div style="color:orange">**Visualization Module: two plotting methods (circle heatmap and matrix tcm.EnrichDotplot) were used to visualize the special genesets in TCM profiles.**</div> 
@@ -361,16 +364,18 @@ tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color =
 
 
 
-#### <a id="Section.5" style="color:#159957;">5) CoreGx</a>
+#### <a id="Section.5" style="color:#159957;">5) tcm.SSwithZS</a>
 
 ```{r, eval=TRUE}
 data("data_logFC")
-query <- data_logFC[1:60, 1, drop = FALSE]
+upset <- rownames(data_logFC)[1:100]
+downset <- rownames(data_logFC)[400:550]
+input <- list(upset = upset, downset = downset)
 ```
 
 ```{r, eval=TRUE}
-CoreGx_kk <- tcm.SSwithCoreGx(query, data_logFC[1:20])
-test <- head(CoreGx_kk, 10)
+ZS_kk <- tcm.SSwithZS(input, data_logFC)
+test <- head(ZS_kk, 10)
 ```
 
 ```{r, eval=FALSE,echo=TRUE}
@@ -387,6 +392,78 @@ test[1:6,1:6] %>%
 ```{r, fig.align="center", fig.width=7, fig.height=7, fig.cap="Figure 15. Heatmap of subtype-specific upregulated pathways using edgeR algorithm for 5 identified subtypes in TCGA-BRCA cohort.", eval=TRUE}
 tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
 ```
+
+
+
+#### <a id="Section.5" style="color:#159957;">6) tcm.SSwithXCos</a>
+
+```{r, eval=TRUE}
+data("data_logFC")
+input <- data_logFC[, 1, drop = FALSE]
+```
+
+```{r, eval=TRUE}
+XCos_kk <- tcm.SSwithXCos(input,data_logFC)
+test <- head(XCos_kk, 10)
+```
+
+```{r, eval=FALSE,echo=TRUE}
+test[1:6,1:6]
+```
+
+```{r, eval=TRUE,echo=FALSE}
+test[1:6,1:6] %>%
+  kbl(caption = "Table 8. Demo of GSEA results for the first cancer subtype (CS1) of breast cancer in TCGA-BRCA cohort.") %>%
+  kable_classic(full_width = TRUE, html_font = "Calibri")
+```
+
+
+```{r, fig.align="center", fig.width=7, fig.height=7, fig.cap="Figure 15. Heatmap of subtype-specific upregulated pathways using edgeR algorithm for 5 identified subtypes in TCGA-BRCA cohort.", eval=TRUE}
+tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
+```
+
+
+
+#### <a id="Section.5" style="color:#159957;">7) tcm.SSwithXSum</a>
+
+```{r, eval=TRUE}
+data("data_logFC")
+upset <- rownames(data_logFC)[1:100]
+downset <- rownames(data_logFC)[400:550]
+input <- list(upset = upset, downset = downset)
+```
+
+```{r, eval=TRUE}
+XSum_kk <- tcm.SSwithXSum(input,data_logFC)
+test <- head(XSum_kk, 10)
+```
+
+```{r, eval=FALSE,echo=TRUE}
+test[1:6,1:6]
+```
+
+```{r, eval=TRUE,echo=FALSE}
+test[1:6,1:6] %>%
+  kbl(caption = "Table 8. Demo of GSEA results for the first cancer subtype (CS1) of breast cancer in TCGA-BRCA cohort.") %>%
+  kable_classic(full_width = TRUE, html_font = "Calibri")
+```
+
+
+```{r, fig.align="center", fig.width=7, fig.height=7, fig.cap="Figure 15. Heatmap of subtype-specific upregulated pathways using edgeR algorithm for 5 identified subtypes in TCGA-BRCA cohort.", eval=TRUE}
+tcm.ConnectivityPlot(test, x = "raw_score", y = "tcm", colby = "pvalue", color = c("blue", "red"))
+```
+
+#### <a id="Section.6" style="color:#159957;">1) drug synergy </a>
+
+
+
+
+
+
+
+
+
+
 
 
 

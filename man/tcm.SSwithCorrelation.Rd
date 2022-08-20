@@ -25,8 +25,8 @@ Cor method for for Signature Search
 }
 \examples{
 data("data_logFC")
-query2 <- data_logFC[1:60, 1, drop = FALSE]
-aa <- tcm.SSwithCorrelation(query2, data_logFC, method = "pearson")
-aaa <- tcm.SSwithCorrelation(query2, data_logFC, method = "spearman")
-aaaa <- tcm.SSwithCorrelation(query2, data_logFC, method = "kendall")
+query <- data_logFC[1:60, 1, drop = FALSE]
+aa <- tcm.SSwithCorrelation(query, data_logFC, method = "pearson")
+aaa <- tcm.SSwithCorrelation(query, data_logFC, method = "spearman")
+aaaa <- tcm.SSwithCorrelation(query, data_logFC, method = "kendall")
 }

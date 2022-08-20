@@ -19,3 +19,8 @@ A data.frame.
 \description{
 tcm.SSwithXCos method for Signature Search
 }
+\examples{
+data <- data_logFC
+input <- data_logFC[, 1, drop = FALSE]
+tcm.SSwithXCos(input,data)
+}

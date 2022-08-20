@@ -24,5 +24,5 @@ data("data_logFC")
 upset <- rownames(data_logFC)[1:100]
 downset <- rownames(data_logFC)[400:550]
 input <- list(upset = upset, downset = downset)
-lincs_kk <- tcm.SSwithZS(input, data_logFC)
+ZS_kk <- tcm.SSwithZS(input, data_logFC)
 }

@@ -89,7 +89,7 @@ tcm.SSwithCMAP <- function(input, data, cores = 1L) {
       FUN.VALUE = numeric(1)
       )
       raw.score
-    }, .progress = TRUE)
+    }, .progress = TRUE, .options = furrr_options(seed = T))
   )
   permuteScore <- do.call(cbind,result)
   permuteScore[is.na(permuteScore)] <- 0
@@ -153,10 +153,10 @@ tcm.SSwithCMAP <- function(input, data, cores = 1L) {
 #'
 #' @examples
 #' data("data_logFC")
-#' query2 <- data_logFC[1:60, 1, drop = FALSE]
-#' aa <- tcm.SSwithCorrelation(query2, data_logFC, method = "pearson")
-#' aaa <- tcm.SSwithCorrelation(query2, data_logFC, method = "spearman")
-#' aaaa <- tcm.SSwithCorrelation(query2, data_logFC, method = "kendall")
+#' query <- data_logFC[1:60, 1, drop = FALSE]
+#' aa <- tcm.SSwithCorrelation(query, data_logFC, method = "pearson")
+#' aaa <- tcm.SSwithCorrelation(query, data_logFC, method = "spearman")
+#' aaaa <- tcm.SSwithCorrelation(query, data_logFC, method = "kendall")
 tcm.SSwithCorrelation <- function(input, data, method = c("pearson", "spearman", "kendall")) {
   stopifnot(is.data.frame(input))
   method <- match.arg(method)
@@ -194,7 +194,7 @@ tcm.SSwithCorrelation <- function(input, data, method = c("pearson", "spearman",
   result <- do.call(rbind, res_list)
   result$fdr <- stats::p.adjust(result$p, "fdr")
   result$scaled_score <- .S(result$raw_score)
-  result$direction = ifelse(scaled_score > 0.3, 'up', ifelse(scaled_score > -0.3, 'none', 'down'))
+  result$direction = ifelse(result$scaled_score > 0.3, 'up', ifelse(result$scaled_score > -0.3, 'none', 'down'))
   result <- result[order(abs(result$scaled_score), decreasing = TRUE), ]
   result <- result[, c(
     "tcm", "direction", "raw_score",
@@ -298,7 +298,7 @@ tcm.SSwithGCMAP <- function(input, data, higher = 1, lower = -1, cores = 1L) {
       raw.score <- matrix(raw.score, ncol = ncol(input))
       raw.score
 
-    }, .progress = TRUE)
+    }, .progress = TRUE, .options = furrr_options(seed = T))
   )
 
   permuteScore <- as.matrix(do.call(cbind,result))
@@ -346,9 +346,9 @@ tcm.SSwithGCMAP <- function(input, data, higher = 1, lower = -1, cores = 1L) {
 #' upset <- rownames(data_logFC)[1:100]
 #' downset <- rownames(data_logFC)[400:550]
 #' input <- list(upset = upset, downset = downset)
-#' lincs_kk <- tcm.SSwithLINCS(input, data_logFC)
+#' lincs_kk <- tcm.SSwithLINCS(input, data_logFC,cores=1L)
 
-tcm.SSwithLINCS <- function(input, data) {
+tcm.SSwithLINCS <- function(input, data,cores=1L) {
   stopifnot(all(c("upset", "downset") %in% names(input)), is.list(input))
   data <- as.matrix(data)
   upset <- input$upset
@@ -439,7 +439,7 @@ tcm.SSwithLINCS <- function(input, data) {
       as.vector(lincsout)
 
 
-    }, .progress = TRUE)
+    }, .progress = TRUE, .options = furrr_options(seed = T))
   )
 
   permuteScore <- do.call(cbind,result)
@@ -495,7 +495,7 @@ calES <- function(sigvec, Q) {
 #' upset <- rownames(data_logFC)[1:100]
 #' downset <- rownames(data_logFC)[400:550]
 #' input <- list(upset = upset, downset = downset)
-#' lincs_kk <- tcm.SSwithZS(input, data_logFC)
+#' ZS_kk <- tcm.SSwithZS(input, data_logFC)
 
 tcm.SSwithZS <- function(input, data, cores = 1L) {
 
@@ -592,10 +592,12 @@ tcm.SSwithZS <- function(input, data, cores = 1L) {
                                   mc.cores = cores)
   raw.score <- as.vector(do.call(rbind, raw.score))
 
+  names(raw.score) <- colnames(data)
+
   library(furrr)
   plan(multisession, workers = cores) # availableCores()-1
   system.time(
-    result <- furrr::future_map(1:1000, function(i) {
+    result <- furrr::future_map(1:10, function(i) {
 
       bootSample <- sample(c(-1,1), replace = TRUE,
                            size = length(upset) + length(downset))
@@ -604,7 +606,9 @@ tcm.SSwithZS <- function(input, data, cores = 1L) {
 
       bootScore <- parallel::mclapply(refList, computeScore, queryRank = bootSample,
                                       mc.cores = cores)
-    }, .progress = TRUE)
+      bootScore <- as.vector(do.call(rbind, bootScore))
+
+    }, .progress = TRUE, .options = furrr_options(seed = T))
   )
 
   permuteScore <- do.call(cbind,result)
@@ -612,7 +616,7 @@ tcm.SSwithZS <- function(input, data, cores = 1L) {
   permuteScore[is.na(permuteScore)] <- 0
 
   ## Compute the p-value based on bootstrap method
-  pValue <- rowSums(abs(permuteScore) >= abs(score)) / 1000
+  pValue <- rowSums(abs(permuteScore) >= abs(raw.score)) / 1000
   ## Compute the adjusted p-value. The adjusting method can be reseted
   pAdjust <- stats::p.adjust(pValue, "fdr")
   score <- .S(raw.score)
@@ -648,7 +652,9 @@ tcm.SSwithZS <- function(input, data, cores = 1L) {
 #' @export
 #'
 #' @examples
-
+#' data <- data_logFC
+#' input <- data_logFC[, 1, drop = FALSE]
+#' tcm.SSwithXCos(input,data)
 tcm.SSwithXCos <- function(input, data, cores = 1L) {
 
   stopifnot(is.data.frame(input))
@@ -716,14 +722,15 @@ tcm.SSwithXCos <- function(input, data, cores = 1L) {
   ## The permuteNum can be reseted. Notice large permuteNum means low speed.
 
   library(furrr)
-  plan(multisession, workers = 16L) # availableCores()-1
+  plan(multisession, workers = cores) # availableCores()-1
   system.time(
     result <- furrr::future_map(1:1000, function(i) {
 
       names(input3) <- sample(rownames(data), size = length(input3))
       ## Compute the random scores for each sample in the reference lists
       bootScore <- parallel::mclapply(refList, XCos, query = input3, mc.cores = cores)
-    }, .progress = TRUE)
+      bootScore <- as.vector(do.call(rbind, bootScore))
+    }, .progress = TRUE, .options = furrr_options(seed = T))
   )
 
   permuteScore <- do.call(cbind,result)
@@ -844,10 +851,10 @@ tcm.SSwithXSum <- function(input, data, cores = 1L) {
   }
 
   ## Prepare the ranked reference lists
-  refList <- matrixToRankedList(refMatrix)
+  refList <- matrixToRankedList(data)
   ## Compute the scores for each sample in the reference lists. mcCore is the
   ## number of cores to use for parallel computing. Set it based on your computer.
-  raw.score <- mclapply(refList, XSum, upset = upset,
+  raw.score <- parallel::mclapply(refList, XSum, upset = upset,
                     downset = downset, mc.cores = cores)
   raw.score <- as.vector(do.call(rbind, raw.score))
   score <- .S(raw.score)
@@ -856,16 +863,17 @@ tcm.SSwithXSum <- function(input, data, cores = 1L) {
   ## The permuteNum can be reseted. Notice large permuteNum means low speed.
 
   library(furrr)
-  plan(multisession, workers = 16L) # availableCores()-1
+  plan(multisession, workers = cores) # availableCores()-1
   system.time(
     result <- furrr::future_map(1:1000, function(i) {
       ## Prepare the random query signatures
       bootUp <- sample(rownames(data), size = length(upset))
       bootDown <- sample(rownames(data), size = length(downset))
       ## Compute the random scores for each sample in the reference lists
-      bootScore <- mclapply(refList, XSum, upset = bootUp,
+      bootScore <- parallel::mclapply(refList, XSum, upset = bootUp,
                             downset = bootDown, mc.cores = cores)
-    }, .progress = TRUE)
+      bootScore <- as.vector(do.call(rbind, bootScore))
+    }, .progress = TRUE, .options = furrr_options(seed = T))
   )
 
   permuteScore <- do.call(cbind,result)
@@ -873,7 +881,7 @@ tcm.SSwithXSum <- function(input, data, cores = 1L) {
   permuteScore[is.na(permuteScore)] <- 0
 
   ## Compute the p-value based on bootstrap method
-  pValue <- rowSums(abs(permuteScore) >= abs(score)) / permuteNum
+  pValue <- rowSums(abs(permuteScore) >= abs( raw.score )) / 1000
   ## Compute the adjusted p-value. The adjusting method can be reseted
 
   pAdjust <- stats::p.adjust(pValue, "fdr")

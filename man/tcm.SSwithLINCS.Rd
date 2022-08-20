@@ -4,12 +4,14 @@
 \alias{tcm.SSwithLINCS}
 \title{Lincs method for Signature Search}
 \usage{
-tcm.SSwithLINCS(input, data)
+tcm.SSwithLINCS(input, data, cores = 1L)
 }
 \arguments{
 \item{input}{A list containing UP (in \code{upset} element) and DOWN (in \code{downset} element) genes.}
 
 \item{data}{A \code{data.frame} containing \code{logFC} value data from 103 compounds.}
+
+\item{cores}{Number of cores to run the task}
 }
 \value{
 A data.frame.
@@ -22,5 +24,5 @@ data("data_logFC")
 upset <- rownames(data_logFC)[1:100]
 downset <- rownames(data_logFC)[400:550]
 input <- list(upset = upset, downset = downset)
-lincs_kk <- tcm.SSwithLINCS(input, data_logFC)
+lincs_kk <- tcm.SSwithLINCS(input, data_logFC,cores=1L)
 }

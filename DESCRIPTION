@@ -2,22 +2,16 @@ Type: Package
 Package: TCMR
 Title: Traditional Chinese Medicine Research Toolbox
 Version: 0.1.0
-Authors@R: 
-    c(person(given = "Saisai",
-             family = "Tian",
-             role = c("aut", "cre"),
-             email = "saisaitian@somewhere.net"),
-      person(given = "Shixiang",
-             family = "Wang",
-             role = c("aut", "ctb"),
-             email = "w_shixiang@163.com",
-             comment = c(ORCID = "0000-0001-9855-7357")))
+Authors@R: c(
+    person("Saisai", "Tian", , "saisaitian@somewhere.net", role = c("aut", "cre")),
+    person("Shixiang", "Wang", , "w_shixiang@163.com", role = c("aut", "ctb"),
+           comment = c(ORCID = "0000-0001-9855-7357"))
+  )
 Description: Provides functions for analyzing traditional Chinese drugs in
     gene expression arrays.
 License: MIT + file LICENSE
 Depends: 
     R (>= 3.5)
-biocViews:
 Imports: 
     ape,
     BioMedR,
@@ -58,6 +52,9 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
+Remotes:
+    wind22zhu/BioMedR
+biocViews:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",

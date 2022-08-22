@@ -24,6 +24,7 @@ Imports:
     dplyr,
     enrichplot,
     forcats,
+    furrr,
     ggplot2,
     ggtree,
     GSVA,

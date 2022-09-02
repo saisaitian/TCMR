@@ -1,3 +1,4 @@
+
 #' CMAP method for Signature Search
 #'
 #' @param input A list containing UP (in `upset` element) and DOWN (in `downset` element) genes.
@@ -107,38 +108,10 @@ tcm.SSwithCMAP <- function(input, data, cores = 1L) {
     FDR = pAdjust,
     stringsAsFactors = FALSE
   )
-  result <- result[order(abs(result$scaled_score), decreasing = TRUE), ]
+  # result <- result[order(result$scaled_score), ]
   names(result) <- c("tcm", "direction", "raw_score", "scaled_score", "pvalue", "fdr")
   rownames(result) <- NULL
   return(result)
-}
-
-## Function to compute a and b
-.ks <- function(V, n) {
-  t <- length(V)
-  if (t == 0) {
-    return(0)
-  } else {
-    if (is.unsorted(V)) V <- sort(V)
-    d <- seq_len(t) / t - V / n
-    a <- max(d)
-    b <- -min(d) + 1 / t
-    ifelse(a > b, a, -b)
-  }
-}
-
-
-.s <- function(V_up, V_down, n) {
-  ks_up <- .ks(V_up, n)
-  ks_down <- .ks(V_down, n)
-  ifelse(sign(ks_up) == sign(ks_down), 0, ks_up - ks_down)
-}
-
-# Function to scale scores
-.S <- function(scores) {
-  p <- max(scores)
-  q <- min(scores)
-  ifelse(scores == 0, 0, ifelse(scores > 0, scores / p, -scores / q))
 }
 
 
@@ -195,7 +168,7 @@ tcm.SSwithCorrelation <- function(input, data, method = c("pearson", "spearman",
   result$fdr <- stats::p.adjust(result$p, "fdr")
   result$scaled_score <- .S(result$raw_score)
   result$direction = ifelse(result$scaled_score > 0.3, 'up', ifelse(result$scaled_score > -0.3, 'none', 'down'))
-  result <- result[order(abs(result$scaled_score), decreasing = TRUE), ]
+  # result <- result[order(result$scaled_score), ]
   result <- result[, c(
     "tcm", "direction", "raw_score",
     "scaled_score", "p", "fdr"
@@ -325,7 +298,7 @@ tcm.SSwithGCMAP <- function(input, data, higher = 1, lower = -1, cores = 1L) {
   ## Apply scaling of scores to full data set
   results[, "scaled_score"] <- .S(results$raw_score)
 
-  results <- results[order(abs(results$scaled_score), decreasing = TRUE), ]
+  # results <- results[order(result$scaled_score), ]
   results <- results[, c(
     "tcm", "direction", "raw_score",
     "scaled_score", "Pval", "FDR"
@@ -458,31 +431,14 @@ tcm.SSwithLINCS <- function(input, data,cores=1L) {
     scaled_score = score,
     Pval = pValue,
     FDR = pAdjust,
-    N_upset = length(upset),
     stringsAsFactors = FALSE
   )
-  result <- result[order(abs(result$scaled_score), decreasing = TRUE), ]
+  # result <- result[order(result$scaled_score), ]
   names(result) <- c("tcm", "direction", "raw_score", "scaled_score", "pvalue", "fdr")
   row.names(result) <- NULL
   return(result)
 }
 
-calES <- function(sigvec, Q) {
-  L <- names(sigvec)
-  N <- length(L)
-  NH <- length(Q)
-  Ns <- N - NH
-  hit_index <- as.numeric(L %in% Q)
-  miss_index <- 1 - hit_index
-  R <- abs(as.numeric(sigvec))
-  NR <- sum(R[hit_index == 1])
-  if (NR == 0) {
-    return(0)
-  }
-  ESvec <- cumsum((hit_index * R * 1 / NR) - (miss_index * 1 / Ns))
-  ES <- ESvec[which.max(abs(ESvec))]
-  return(ES)
-}
 
 
 #' ZS method for Signature Search
@@ -630,7 +586,7 @@ tcm.SSwithZS <- function(input, data, cores = 1L) {
     stringsAsFactors = FALSE
   )
 
-  results <- results[order(abs(results$scaled_score), decreasing = TRUE), ]
+  # results <- results[order(results$scaled_score), ]
   results <- results[, c(
     "tcm", "direction", "raw_score",
     "scaled_score", "Pval", "FDR"
@@ -754,7 +710,7 @@ tcm.SSwithXCos <- function(input, data, cores = 1L) {
     stringsAsFactors = FALSE
   )
 
-  results <- results[order(abs(results$scaled_score), decreasing = TRUE), ]
+  # results <- results[order(results$scaled_score), ]
   results <- results[, c(
     "tcm", "direction", "raw_score",
     "scaled_score", "Pval", "FDR"
@@ -896,7 +852,7 @@ tcm.SSwithXSum <- function(input, data, cores = 1L) {
     stringsAsFactors = FALSE
   )
 
-  results <- results[order(abs(results$scaled_score), decreasing = TRUE), ]
+  # results <- results[order(abs(results$scaled_score), decreasing = TRUE), ]
   results <- results[, c(
     "tcm", "direction", "raw_score",
     "scaled_score", "Pval", "FDR"
@@ -907,6 +863,146 @@ tcm.SSwithXSum <- function(input, data, cores = 1L) {
   return(results)
 }
 ################################################################################
+#' tcm.SSwithIntegration method for Signature Search
+#'
+#' @param input A `data.frame` containing `logFC` value, which `rownames` should be gene symbols.
+#' @param data A `data.frame` contains `logFC` value data from 103 compounds.
+#' @param cores Number of cores to run the task
+#'
+#' @return A data.frame.
+#' @export
+#'
+#' @examples
+#' data <- data_logFC
+#' input <- data_logFC[, 1, drop = FALSE]
+#' tcm.SSwithIntegration(input,data)
+
+tcm.SSwithIntegration <- function(input, data,
+                    methodslist = list("CMAP", "Correlation", "GCMAP", "LINCS", "ZS", "XSum", "XCos"),
+                    type = "spearman",
+                    threshold=1,
+                    direction="down",
+                    top=10,
+                    cores = 1L){
+
+  # check argument
+  stopifnot(is.data.frame(input))
+  stopifnot(tolower(direction)=="down"||tolower(direction)=="up")
+  direct = tolower(direction) ## need to convert it to make dplyr work
+
+  if(is.vector(methodslist)) {methodslist <- as.list(methodslist)}
+  if(!all(is.element(unlist(methodslist), c("CMAP", "Correlation", "GCMAP", "LINCS", "ZS", "XSum", "XCos")))) {
+    stop("current version of TCMR supports 7 algorithms. Allowed values contain c('CMAP', 'Correlation', 'GCMAP', 'LINCS', 'ZS', 'XSum', 'XCos').")
+  }
+
+  num.methods <- length(unlist(methodslist))
+  if(num.methods > 1) {
+    message("--you choose more than 1 algorithm and all of them shall be run with parameters by default.")
+  }
+
+
+  if(num.methods > 7){
+    stop('current verision of TCMR can support up to 7 methods.')
+  }
+  if(num.methods < 2){
+    stop('current verision of TCMR needs at least 2 methods.')
+  }
+
+  message(paste0("\n", ">>> Running ", "tcm.SSwithIntegration"))
+  star_glist <- list()
+  reslist <- list()
+  for (method in unlist(methodslist)) {
+    dosearch <- switch(method,
+                     "CMAP"              = tcm.SSwithCMAP,
+                     "Correlation"       = tcm.SSwithCorrelation,
+                     "GCMAP"             = tcm.SSwithGCMAP,
+                     "LINCS"             = tcm.SSwithLINCS,
+                     "XSum"              = tcm.SSwithXSum,
+                     "XCos"              = tcm.SSwithXCos,
+                     "ZS"                = tcm.SSwithZS
+    )
+
+    if(method %in% c('CMAP','LINCS','ZS','XSum')){
+
+      upset <- rownames(input)[ input>=threshold]
+      downset <- rownames(input)[ input<=-threshold]
+      input2 <- list(upset = upset, downset = downset)
+
+      tmp <- dosearch(input2,
+                      data,
+                      cores = cores)
+      tmp <- dplyr::arrange(tmp,desc(abs(scaled_score)))
+
+      rra_pre <- data.frame(
+        name=  dplyr::filter(tmp,direction==direct)$tcm[1:top],
+        method = method
+      )  %>% na.omit()
+    }
+
+    if(method%in% c("GCMAP","XCos")){
+
+      tmp <- dosearch(input,
+                      data,
+                      cores = cores)
+      tmp <- dplyr::arrange(tmp,desc(abs(scaled_score)))
+
+      rra_pre <- data.frame(
+        name=  dplyr::filter(tmp,direction==direct)$tcm[1:top],
+        method = method
+      )  %>% na.omit()
+
+    }
+
+    if(method%in% c('Correlation')){
+
+      tmp <- dosearch(input,
+                      data,
+                      method = type)
+      tmp <- dplyr::arrange(tmp,desc(abs(scaled_score)))
+
+      rra_pre <- data.frame(
+        name=  dplyr::filter(tmp,direction==direct)$tcm[1:top],
+        method = method
+      )  %>% na.omit()
+    }
+
+    reslist[[method]] <- rra_pre
+
+    message(paste0(method," done..."))
+  }
+
+  CA <- as.data.frame(do.call(rbind,reslist))
+
+  summary <- CA %>% dplyr::group_by(name) %>% dplyr::summarise(Freq=dplyr::n(), method = paste(method, collapse = ", ")) %>% na.omit() %>% dplyr::arrange(desc(Freq))
+
+  star_rra <- RobustRankAggreg::aggregateRanks(split(CA$name,CA$method))
+  star_rra <- cbind(star_rra, "rra_rank" = seq(1,nrow(star_rra)))
+
+  colnames(star_rra) <- tolower(colnames(star_rra))
+
+  summary <- dplyr::left_join(star_rra, summary, by="name")
+
+  return(summary)
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

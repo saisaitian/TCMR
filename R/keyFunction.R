@@ -1,24 +1,3 @@
-
-rankLup <- parallel::mclapply(
-  colnames(data),
-  function(x) sort(rank(-1 * data[, x])[upset]),
-  mc.cores = cores
-)
-rankLdown <- parallel::mclapply(
-  colnames(data),
-  function(x) sort(rank(-1 * data[, x])[downset]),
-  mc.cores = cores
-)
-
-
-
-
-
-
-
-
-
-
 ## Function to compute a and b
 .ks <- function(V, n) {
   t <- length(V)

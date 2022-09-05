@@ -84,6 +84,6 @@ drug_special_pathway <- function(index = c(1, 3, 5),
   write.table(as.data.frame(formula_res), file = outfile, row.names = FALSE, sep = "\t", quote = FALSE)
 
   if (plot == T) {
-    enrichplot::tcm.EnrichDotplot(formula_res, color = colorby, showCategory = num)
+    tcm.EnrichDotplot(formula_res, color = colorby, showCategory = num)
   }
 }

@@ -34,9 +34,11 @@ data frame
 Drug specific pathway analysis
 }
 \examples{
+\donttest{
 data(data_logFC)
 tcm.GetDrugSpecificPathway(
   group = "drug",
   data = data_logFC
 )
+}
 }

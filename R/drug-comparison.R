@@ -11,11 +11,13 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' data(data_logFC)
 #' tcm.GetDrugSpecificPathway(
 #'   group = "drug",
 #'   data = data_logFC
 #' )
+#' }
 tcm.GetDrugSpecificPathway <- function(index = c(1, 3, 5),
                                        data = data_logFC,
                                        group = "drug",
@@ -36,6 +38,8 @@ tcm.GetDrugSpecificPathway <- function(index = c(1, 3, 5),
   newdata <- newdata[abs(newdata$value) > 1, ]
 
   names(newdata)[1] <- "SYMBOL"
+
+  eval(parse(text = "library('org.Hs.eg.db')"))
 
   eg <- suppressWarnings(suppressMessages(clusterProfiler::bitr(newdata$SYMBOL,
     fromType = "SYMBOL",
@@ -83,6 +87,6 @@ tcm.GetDrugSpecificPathway <- function(index = c(1, 3, 5),
   write.table(as.data.frame(formula_res), file = outfile, row.names = FALSE, sep = "\t", quote = FALSE)
 
   if (plot == T) {
-    enrichplot::tcm.EnrichDotplot(formula_res, color = colorby, showCategory = num)
+    tcm.EnrichDotplot(formula_res, color = colorby, showCategory = num)
   }
 }
